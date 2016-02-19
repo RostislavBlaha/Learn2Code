@@ -3,10 +3,11 @@ import CardList from './List/CardList';
 
 export default class App extends Component {
     removeItem(id) {
-      this.setState({
-          data: update(this.state.data, {$splice: [[id, 1]]})
-      })
-    console.log(id);
+      this.setState({data: this.state.data.splice(id-1, 1)});
+     
+        
+      console.log(id);
+      console.log(this.state.data);
     }
   constructor(props) {
       super(props);
@@ -33,7 +34,7 @@ export default class App extends Component {
     return (
         <div>
             <h1>Hello, world.</h1>
-            <CardList data={this.state.data} onDelete={this.removeItem}/>
+            <CardList data={this.state.data} onDelete={this.removeItem.bind(this)}/>
         </div>
     );
   }

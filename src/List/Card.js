@@ -19,18 +19,19 @@ export default class Card extends Component {
         var cross;
         if (this.state.hover){
             cross = (
-                <div className="crossWraper" >
-                    <img src="./src/cross.svg" className="cross" onClick={this.props.onDelete.bind(null, this.props.card.id)}/>
+                <div    className="crossWraper" 
+                        onClick={this.props.onDelete.bind(null, this.props.card.id)}>
+                    <img    src="./src/cross.svg" 
+                            className="cross"/>
                 </div>
             );
         }
         
         return (
-          <a href = {this.props.card.url}>
+          <a /*href = {this.props.card.url}*/>
               <div  className="card" 
-                    onMouseOver={this.mouseOver.bind(this)} 
-                    onMouseOut={this.mouseOut.bind(this)}
-              >
+                    onMouseEnter={this.mouseOver.bind(this)} 
+                    onMouseLeave={this.mouseOut.bind(this)}>
                   <div className="img">
                     {cross}
                   </div>
