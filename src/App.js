@@ -3,12 +3,11 @@ import CardList from './List/CardList';
 
 export default class App extends Component {
     removeItem(id) {
-      this.setState({data: this.state.data.splice(id-1, 1)});
-     
-        
-      console.log(id);
-      console.log(this.state.data);
+      
+      this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})});
+      console.log(this.state.data);    
     }
+    
   constructor(props) {
       super(props);
     this.state = {data: [ 
@@ -28,7 +27,7 @@ export default class App extends Component {
           {id: 14, url: "http://www.bookdepository.com", name: "Book Depository", description:"Tady bude meta description"},
           {id: 15, url: "https://www.zonky.cz", name: "Zonky", description:"Tady bude meta description"}
     ]};
-    console.log(this.state.data);
+    
   }
   render() {
     return (
