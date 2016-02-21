@@ -24,7 +24,6 @@ export default class CardList extends Component {
         <Card key = {card.id} card={card} onDelete={removeCard}/>
         );
     });
-    console.log(this.props.data);
     var newOverlay;
     if (this.state.showNew){
         newOverlay = (  
