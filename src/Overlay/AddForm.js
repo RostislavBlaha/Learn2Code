@@ -5,15 +5,9 @@ export default class AddForm extends Component {
     super(props);
     this.state = {  
         formState: 'default',
-        value: {}
+        value: '',
         };
-  }
-  formState(){
-      if (this.validURL(this.state.value)){
-        this.setState({formState: 'loading'});
-      } else {
-        this.setState({formState: 'fail'});  
-      }
+    
   }
     
   handleChange(evt) {
@@ -24,10 +18,25 @@ export default class AddForm extends Component {
 
   }
     
-  handleKeyPress(evt){
-      evt.preventDefault();
+  handleSubmit(evt) {
+    evt.preventDefault;
+    if (this.validURL(this.state.value)){ 
+        this.setState({formState: 'loading'});
+        var url = this.state.value.trim();
+        this.props.onAdd({url: url});
+        this.props.onHide();
+      } else {
+        this.setState({formState: 'fail'});  
+      }    
+  }
+    
+
+    
+  handleKeyPress(evt){ 
       if (evt.keyCode == 13) {
-          this.formState(this);
+          evt.preventDefault;
+          this.handleSubmit(this);
+          
       }
   }
     
@@ -51,7 +60,7 @@ export default class AddForm extends Component {
     }
     return (
             <div className="addForm">
-                <form>    
+                <form onSubmit={this.handleSubmit.bind(this)}>    
                     <input 
                         ref="weburl"
                         className={"weburl " + this.state.formState}        
@@ -60,7 +69,9 @@ export default class AddForm extends Component {
                         onChange={this.handleChange.bind(this)}
                         onKeyDown={this.handleKeyPress.bind(this)}
                     />
-                    <button type="button" className="addButton" onClick={this.formState.bind(this)}>
+                    <button type="submit" 
+                            value="Post" 
+                            className="addButton">
                         {loader}
                     </button>
                 </form>

@@ -18,17 +18,19 @@ export default class CardList extends Component {
     }  
   }
   render() { 
-    var removeCard = this.props.onDelete;
+    var removeCard = this.props.onDelete;     
     var listNodes = this.props.data.map(function(card){
         return (
-        <Card key = {card.id} card={card} onDelete={removeCard}/>
+        <Card key = {card.id} card={card} onDelete={removeCard} />
         );
     });
+     
+    var addCard = this.props.onAdd; 
     var newOverlay;
     if (this.state.showNew){
         newOverlay = (  
             <div>
-                <AddForm/>
+                <AddForm onAdd={addCard} onHide={this.showNew.bind(this)}/>
                 <Overlay onClick={this.showNew.bind(this)}/>
             </div>
             );

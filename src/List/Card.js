@@ -25,10 +25,11 @@ export default class Card extends Component {
                             className="cross"/>
                 </div>
             );
+            
         }
         
         return (
-          <a /*href = {this.props.card.url}*/>
+          <a href = {this.props.card.url}>
               <div  className="card" 
                     onMouseOver={this.mouseOver.bind(this)} 
                     onMouseLeave={this.mouseOut.bind(this)}>

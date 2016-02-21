@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import CardList from './List/CardList';
 
 export default class App extends Component {
-    removeItem(id) {
-      
+    removeItem(id) {    
       this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})}); 
+    }
+    
+    addItem(url){
+        var newData = this.state.data;
+        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+        newData.push({id: Date.now(), url: url.url, name: name, description:"Tady bude meta description"})
+        this.setState({data : newData});
+        console.log(url.url);
     }
     
   constructor(props) {
@@ -32,7 +39,7 @@ export default class App extends Component {
     return (
         <div>
             <h1>Hello, world.</h1>
-            <CardList data={this.state.data} onDelete={this.removeItem.bind(this)}/>
+            <CardList data={this.state.data} onDelete={this.removeItem.bind(this)} onAdd={this.addItem.bind(this)}/>
         </div>
     );
   }
