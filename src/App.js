@@ -4,8 +4,7 @@ import CardList from './List/CardList';
 export default class App extends Component {
     removeItem(id) {
       
-      this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})});
-      console.log(this.state.data);    
+      this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})}); 
     }
     
   constructor(props) {
