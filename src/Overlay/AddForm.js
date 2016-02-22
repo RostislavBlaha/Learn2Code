@@ -19,24 +19,24 @@ export default class AddForm extends Component {
   }
     
   handleSubmit(evt) {
-    evt.preventDefault;
+    
     if (this.validURL(this.state.value)){ 
         this.setState({formState: 'loading'});
         var url = this.state.value.trim();
         this.props.onAdd({url: url});
         this.props.onHide();
+        evt.preventDefault();
       } else {
-        this.setState({formState: 'fail'});  
+        this.setState({formState: 'fail'}); 
+        evt.preventDefault();
       }    
   }
     
 
     
   handleKeyPress(evt){ 
-      if (evt.keyCode == 13) {
-          evt.preventDefault;
-          this.handleSubmit(this);
-          
+      if (evt.keyCode == 13) {      
+          this.handleSubmit(this);     
       }
   }
     

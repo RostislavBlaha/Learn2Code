@@ -14,13 +14,18 @@ export default class Card extends Component {
         this.setState({hover: false});
     }
     
+    handleClick(evt){
+        evt.preventDefault();
+        this.props.onDelete(this.props.card.id);
+    }
+    
     render() {
         
         var cross;
         if (this.state.hover){
             cross = (
                 <div    className="crossWraper" 
-                        onClick={this.props.onDelete.bind(null, this.props.card.id)}>
+                        onClick={this.handleClick.bind(this)}>
                     <img    src="./src/cross.svg" 
                             className="cross"/>
                 </div>
