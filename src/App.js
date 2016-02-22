@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
 import CardList from './List/CardList';
+import SearchBar from './Search/SearchBar';
 
 
 export default class App extends Component {
     removeItem(id) {    
       this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})}); 
     }
+
     
     addItem(url){
+        
         var newData = this.state.data;
         var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
-        newData.push({id: Date.now(), url: url.url, name: name, description:"Tady bude meta description"})
+        var fixedURL;
+        var prefix = 'http://';
+        if (!/^https?:\/\//i.test(url.url)){
+            fixedURL = prefix + url.url;
+        }else{
+            fixedURL = url.url;        
+        }
+        newData.push({id: Date.now(), url: fixedURL, name: name, description:"Tady bude meta description"})
         this.setState({data : newData});
         console.log(url.url);
+    }
+    
+    filterList(evt){
+        var updatedList;
+        updatedList = this.state.data.filter(function(item){
+            return item.name.toLowerCase().search(
+            evt.value.toLowerCase()) !== -1;
+            });
+        this.setState({data: updatedList});  
     }
     
   constructor(props) {
@@ -32,14 +51,14 @@ export default class App extends Component {
           {id: 12, url: "https://www.zonky.cz", name: "Zonky", description:"Tady bude meta description"},
           {id: 13, url: "http://www.twitter.com", name: "Twitter", description:"Tady bude meta description"},
           {id: 14, url: "http://www.bookdepository.com", name: "Book Depository", description:"Tady bude meta description"},
-          {id: 15, url: "https://www.zonky.cz", name: "Zonky", description:"Tady bude meta description"}
-    ]};
+          {id: 15, url: "https://www.zonky.cz", name: "Zonky", description:"Tady bude meta description"}],
+    };
     
   }
   render() {
     return (
         <div>
-            <h1>Hello, world.</h1>
+            <SearchBar onChange={this.filterList.bind(this)}/>
             <CardList data={this.state.data} onDelete={this.removeItem.bind(this)} onAdd={this.addItem.bind(this)}/>
         </div>
     );

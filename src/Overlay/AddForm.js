@@ -6,8 +6,7 @@ export default class AddForm extends Component {
     this.state = {  
         formState: 'default',
         value: '',
-        };
-    
+        };  
   }
     
   handleChange(evt) {
@@ -19,16 +18,16 @@ export default class AddForm extends Component {
   }
     
   handleSubmit(evt) {
-    
+  evt.preventDefault();  
     if (this.validURL(this.state.value)){ 
         this.setState({formState: 'loading'});
         var url = this.state.value.trim();
         this.props.onAdd({url: url});
         this.props.onHide();
-        evt.preventDefault();
+        
       } else {
         this.setState({formState: 'fail'}); 
-        evt.preventDefault();
+        
       }    
   }
     
@@ -36,7 +35,7 @@ export default class AddForm extends Component {
     
   handleKeyPress(evt){ 
       if (evt.keyCode == 13) {      
-          this.handleSubmit(this);     
+          this.handleSubmit(evt);     
       }
   }
     
