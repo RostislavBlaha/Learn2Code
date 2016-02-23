@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class SearchBar extends Component {
     handleChange(evt){
         var value = evt.target.value;
-        this.props.onChange({value: value});
+        this.props.onFilter({value: value});
     }
     
     render() {    

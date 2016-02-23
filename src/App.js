@@ -9,8 +9,7 @@ export default class App extends Component {
     }
 
     
-    addItem(url){
-        
+    addItem(url){   
         var newData = this.state.data;
         var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
         var fixedURL;
@@ -21,22 +20,34 @@ export default class App extends Component {
             fixedURL = url.url;        
         }
         newData.push({id: Date.now(), url: fixedURL, name: name, description:"Tady bude meta description"})
-        this.setState({data : newData});
-        console.log(url.url);
+        this.setState({initialData : newData, data: newData});
+    }
+    
+    showAdd(updatedList){
+        if (updatedList.length == this.state.initialData.length){
+            this.state.filterList = true;
+        } else {
+            this.state.filterList = false;
+        }
+    }
+    
+    componentDidMount(){
+      this.setState({data: this.state.initialData});
     }
     
     filterList(evt){
         var updatedList;
-        updatedList = this.state.data.filter(function(item){
+        updatedList = this.state.initialData.filter(function(item){
             return item.name.toLowerCase().search(
             evt.value.toLowerCase()) !== -1;
             });
-        this.setState({data: updatedList});  
+        this.setState({data: updatedList});
+        this.showAdd(updatedList);
     }
     
   constructor(props) {
-      super(props);
-    this.state = {data: [ 
+    super(props);
+    this.state = {initialData: [ 
           {id: 1, url: "https://www.seznam.cz", name: "Seznam.cz", description:"Tady bude meta description"},
           {id: 2, url: "https://www.google.cz", name: "Google", description:"Tady bude meta description"},
           {id: 3, url: "http://www.youtube.com", name: "YouTube", description:"Tady bude meta description"},
@@ -52,14 +63,19 @@ export default class App extends Component {
           {id: 13, url: "http://www.twitter.com", name: "Twitter", description:"Tady bude meta description"},
           {id: 14, url: "http://www.bookdepository.com", name: "Book Depository", description:"Tady bude meta description"},
           {id: 15, url: "https://www.zonky.cz", name: "Zonky", description:"Tady bude meta description"}],
+          data: [],
+          filterList: true
     };
     
   }
   render() {
     return (
         <div>
-            <SearchBar onChange={this.filterList.bind(this)}/>
-            <CardList data={this.state.data} onDelete={this.removeItem.bind(this)} onAdd={this.addItem.bind(this)}/>
+            <SearchBar onFilter={this.filterList.bind(this)}/>
+            <CardList data = {this.state.data} 
+                      onDelete = {this.removeItem.bind(this)} 
+                      showAdd = {this.state.filterList}
+                      onAdd = {this.addItem.bind(this)}/>
         </div>
     );
   }

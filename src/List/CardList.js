@@ -17,6 +17,7 @@ export default class CardList extends Component {
         this.setState({showNew: true});
     }  
   }
+   
   render() { 
     var removeCard = this.props.onDelete;     
     var listNodes = this.props.data.map(function(card){
@@ -34,12 +35,19 @@ export default class CardList extends Component {
                 <Overlay onClick={this.showNew.bind(this)}/>
             </div>
             );
-    }                 
+    }
+    
+    var add;
+    if (this.props.showAdd){
+        add = (<Add onClick={this.showNew.bind(this)}/>)
+        console.log(this.props.showAdd);
+    }
+
     return (
       <div>
           <div className="cardList">
             {listNodes}
-            <Add onClick={this.showNew.bind(this)}/>
+            {add}
           </div>
             {newOverlay}
       </div>
