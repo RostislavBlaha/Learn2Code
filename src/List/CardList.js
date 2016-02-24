@@ -22,7 +22,9 @@ export default class CardList extends Component {
     var removeCard = this.props.onDelete;     
     var listNodes = this.props.data.map(function(card){
         return (
-        <Card key = {card.id} card={card} onDelete={removeCard} />
+        <Card   key = {card.id} 
+                card={card} 
+                onDelete={removeCard} />
         );
     });
      

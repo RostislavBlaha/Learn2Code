@@ -3,15 +3,21 @@ import React, { Component } from 'react';
 export default class Card extends Component {
     constructor(props) {
         super(props);
-        this.state = {hover: false};
+        this.state = {cardState : 'default'};
     }
     
     mouseOver(){
-        this.setState({hover: true});
+        this.setState({cardState : 'hover'});
     }
     
     mouseOut(){
-        this.setState({hover: false});
+        this.setState({cardState : 'default'});
+    }
+    
+    dragOver(evt){
+        evt.preventDefault();
+        this.setState({cardState : 'moved'});
+        console.log(this.props.card.id + this.state.cardState);
     }
     
     handleClick(evt){
@@ -22,7 +28,7 @@ export default class Card extends Component {
     render() {
         
         var cross;
-        if (this.state.hover){
+        if (this.state.cardState == 'hover'){
             cross = (
                 <div    className="crossWraper" 
                         onClick={this.handleClick.bind(this)}>
@@ -33,11 +39,16 @@ export default class Card extends Component {
             
         }
         
+        var cardClass;
+        
         return (
           <a href = {this.props.card.url}>
-              <div  className="card" 
+              <div  className={(this.state.cardState == "moved" ? "card moved" : "card")} 
                     onMouseOver={this.mouseOver.bind(this)} 
-                    onMouseLeave={this.mouseOut.bind(this)}>
+                    onMouseLeave={this.mouseOut.bind(this)}
+                    draggable="true"
+                    onDragOver={this.dragOver.bind(this)}
+                    onDragLeave={this.mouseOut.bind(this)}>
                   <div className="img">
                     {cross}
                   </div>
