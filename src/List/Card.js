@@ -17,14 +17,14 @@ export default class Card extends Component {
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: true});
-        console.log(this.state.dragged);
+        console.log("Táhnu s kartičkou číslo: " + this.props.card.id + ", " + this.state.dragged);
     }
     dragDrop(evt){
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: false});
         this.forceUpdate();
-        console.log(this.state.dragged);
+        console.log("Upustil jsem kartičku číslo: " + this.props.card.id + ", " + this.state.dragged);
     }
     
     /*Kartička přes kterou táhnu*/
@@ -68,7 +68,7 @@ export default class Card extends Component {
                     onDragOver={this.dragOver.bind(this)}
                     onDragExit={this.dragOut.bind(this)}
                     onDrag={this.dragStart.bind(this)}
-                    onDrop={this.dragDrop.bind(this)}>
+                    onDragEnd={this.dragDrop.bind(this)}>
                     
                   <div className="img">
                     {cross}
