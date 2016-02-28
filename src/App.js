@@ -4,8 +4,20 @@ import SearchBar from './Search/SearchBar';
 
 
 export default class App extends Component {
-    removeItem(id) {    
-      this.setState({data : this.state.data.filter(function(obj){return (obj.id != id)})}); 
+    removeItem(id) {       
+        var newData = this.state.data.filter(function(obj){return (obj.id != id)});
+        for (var i = 0; i < newData.length; i++) {
+            if (newData[i].id > id){
+                newData[i].id--;
+            }
+        }        
+        this.setState({data: newData});   
+        console.log(newData);
+    }
+    
+    onDrag(evt){
+        evt.preventDefault();  
+        evt.stopPropagation();
     }
 
     
@@ -19,8 +31,12 @@ export default class App extends Component {
         }else{
             fixedURL = url.url;        
         }
-        newData.push({id: Date.now(), url: fixedURL, name: name, description:"Tady bude meta description"})
+        newData.push({id: this.state.data.length + 1, url: fixedURL, name: name, description:"Tady bude meta description"})
         this.setState({initialData : newData, data: newData});
+    }
+    
+    cardDragOver(test){
+        console.log(test + " " + this);
     }
     
     showAdd(updatedList){
@@ -32,7 +48,7 @@ export default class App extends Component {
     }
     
     componentDidMount(){
-      this.setState({data: this.state.initialData});
+      this.setState({data: this.state.initialData.sort((a, b) => a.id - b.id)});
     }
     
     filterList(evt){
@@ -49,8 +65,8 @@ export default class App extends Component {
     super(props);
     this.state = {initialData: [ 
           {id: 1, url: "https://www.seznam.cz", name: "Seznam.cz", description:"Tady bude meta description"},
-          {id: 2, url: "https://www.google.cz", name: "Google", description:"Tady bude meta description"},
-          {id: 3, url: "http://www.youtube.com", name: "YouTube", description:"Tady bude meta description"},
+          {id: 3, url: "https://www.google.cz", name: "Google", description:"Tady bude meta description"},
+          {id: 2, url: "http://www.youtube.com", name: "YouTube", description:"Tady bude meta description"},
           {id: 4, url: "http://www.bookdepository.com", name: "Book Depository", description:"Tady bude meta description"},
           {id: 5, url: "http://www.boingboing.com", name: "Boing Boing", description:"Tady bude meta description"},
           {id: 6, url: "http://www.techcrunch.com", name: "TechCrunch", description:"Tady bude meta description"},
@@ -70,12 +86,14 @@ export default class App extends Component {
   }
   render() {
     return (
-        <div>
+        <div    className = "wrapper"
+                onDragOver = {this.dragOver}>
             <SearchBar onFilter={this.filterList.bind(this)}/>
             <CardList data = {this.state.data} 
                       onDelete = {this.removeItem.bind(this)} 
                       showAdd = {this.state.filterList}
-                      onAdd = {this.addItem.bind(this)}/>
+                      onAdd = {this.addItem.bind(this)}
+                      cardDragOver = {this.cardDragOver.bind(this)}/>
         </div>
     );
   }

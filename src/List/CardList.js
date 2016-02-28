@@ -19,12 +19,14 @@ export default class CardList extends Component {
   }
    
   render() { 
-    var removeCard = this.props.onDelete;     
+    var removeCard = this.props.onDelete; 
+    var cardDragOver = this.props.cardDragOver;
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
                 card={card} 
-                onDelete={removeCard} />
+                onDelete={removeCard}
+                cardDragOver={cardDragOver}/>
         );
     });
      
@@ -42,7 +44,6 @@ export default class CardList extends Component {
     var add;
     if (this.props.showAdd){
         add = (<Add onClick={this.showNew.bind(this)}/>)
-        console.log(this.props.showAdd);
     }
 
     return (

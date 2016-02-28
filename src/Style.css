@@ -13,6 +13,12 @@ body {
     background-color: #efefef;
 }
 
+.wrapper {
+    width: 100%;
+    height:100%;
+}
+
+
 .card {
     background-color: white;
     width: 300px;
@@ -25,7 +31,7 @@ body {
 }
 
 .card.moved {
-    margin-left: 320px;
+    visibility:hidden;
 }
 
 .card:hover {
@@ -88,9 +94,8 @@ body {
 }
 
 .searchForm {
-    margin: 80px auto;
-    max-width: 1290px;
-    width: 100%;
+    margin: 80px auto; 
+    width: 1290px;
 }
 
 .searchBar {
@@ -214,16 +219,25 @@ body {
     .cardList {
         width: 990px;
     }
+    .searchForm {
+        width: 960px;
+    }
 }
 
 @media (max-width: 1000px) {
     .cardList {
         width: 660px;
     }
+    .searchForm {
+        width: 630px;
+    }
 }
 
 @media (max-width: 670px) {
     .cardList {
         width: 330px;
+    }
+    .searchForm {
+        width: 300px;
     }
 }
