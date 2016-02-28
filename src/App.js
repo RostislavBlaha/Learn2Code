@@ -86,8 +86,7 @@ export default class App extends Component {
   }
   render() {
     return (
-        <div    className = "wrapper"
-                onDragOver = {this.dragOver}>
+        <div>
             <SearchBar onFilter={this.filterList.bind(this)}/>
             <CardList data = {this.state.data} 
                       onDelete = {this.removeItem.bind(this)} 

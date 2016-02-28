@@ -13,12 +13,6 @@ body {
     background-color: #efefef;
 }
 
-.wrapper {
-    width: 100%;
-    height:100%;
-}
-
-
 .card {
     background-color: white;
     width: 300px;
