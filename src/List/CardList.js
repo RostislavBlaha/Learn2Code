@@ -21,12 +21,16 @@ export default class CardList extends Component {
   render() { 
     var removeCard = this.props.onDelete; 
     var cardDragOver = this.props.cardDragOver;
+    var dropCard = this.props.onDrop;
+    var cardDragStart = this.props.cardDragStart;
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
                 card={card} 
                 onDelete={removeCard}
-                cardDragOver={cardDragOver}/>
+                cardDragOver={cardDragOver}
+                onDrop={dropCard}
+                cardDragStart={cardDragStart}/>
         );
     });
      
@@ -35,8 +39,9 @@ export default class CardList extends Component {
     if (this.state.showNew){
         newOverlay = (  
             <div>
-                <AddForm onAdd={addCard} onHide={this.showNew.bind(this)}/>
-                <Overlay onClick={this.showNew.bind(this)}/>
+                <AddForm    onAdd={addCard} 
+                            onHide={this.showNew.bind(this)}/>
+                <Overlay    onClick={this.showNew.bind(this)}/>
             </div>
             );
     }

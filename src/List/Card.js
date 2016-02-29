@@ -18,6 +18,7 @@ export default class Card extends Component {
         evt.stopPropagation();
         this.setState({dragged: true});
         console.log("Táhnu s kartičkou číslo: " + this.props.card.id + ", " + this.state.dragged);
+        this.props.onDragStart;
     }
     dragEnd(evt){
         evt.preventDefault();  
@@ -32,6 +33,7 @@ export default class Card extends Component {
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragOver: true});
+        this.props.cardDragOver(this.props.card.id);
     }
     dragOut(evt){
         evt.preventDefault();  
@@ -42,6 +44,7 @@ export default class Card extends Component {
     dragDrop(evt){
         evt.preventDefault();  
         evt.stopPropagation();
+        this.props.onDrop();
     }
     
     handleClick(evt){
