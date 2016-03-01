@@ -13,10 +13,12 @@ export default class Card extends Component {
     mouseOut(){this.setState({hover: false})}
     
     /*Kartička s kterou táhnu*/
-    dragStart(evt){
+    dragLikeABoss(evt){
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: true});
+    }
+    dragStart(evt){
         this.props.cardDragStart(this.props.card.id);
     }
     dragEnd(evt){
@@ -73,7 +75,8 @@ export default class Card extends Component {
                     draggable="true"
                     onDragOver={this.dragOver.bind(this)}
                     onDragExit={this.dragOut.bind(this)}
-                    onDrag={this.dragStart.bind(this)}
+                    onDragStart={this.dragStart.bind(this)}
+                    onDrag={this.dragLikeABoss.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}
                     onDrop={this.dragDrop.bind(this)}>
                     

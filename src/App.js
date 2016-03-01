@@ -37,24 +37,36 @@ export default class App extends Component {
     
     cardDragOver(id){
         var newData = this.state.data;
-        var startCard = newData[this.state.cardDragStart - 1];
-        if (startCard.id < id){       
+        var startCard = "";
+        console.log("Táhnu s kartičkou číslo " + this.state.cardDragStart + " přes kartičku číslo " + id);
+        
+        for (var i = 0; i < newData.length; i++) {
+            if (newData[i].id == this.state.cardDragStart){
+                startCard = newData[i];
+                console.log("Start card nalezena na pozici " + i);
+            }
+        }
+       
+        if (startCard.id < id){
+            console.log("vpravo");
                 for (var i = 0; i < newData.length; i++) {
                     if (newData[i].id > startCard.id && newData[i].id <= id){
-                        newData[i].id--;
-                        startCard.id = id;
-                        startCard = newData[i];       
+                        console.log(newData[i].id);
+                        newData[i].id = newData[i].id - 1;
+                        console.log("Presunuta karta " + newData[i].name + " má ted id " + newData[i].id);
                     }
                 }  
-            } else if (startCard.id > id){               
+        } else if (startCard.id > id){   
+            console.log("vlevo");
                 for (var i = 0; i < newData.length; i++) {
                     if (newData[i].id < startCard.id && newData[i].id >= id){
-                        newData[i].id++;  
-                        startCard.id = id;
-                        startCard = newData[i];
+                        console.log(newData[i].id);
+                        newData[i].id++; 
                     }
                 }  
-            }
+            } 
+        startCard.id = id;
+        this.setState({cardDragStart: id});
         this.setState({data: newData});
         console.log(newData);
     }
@@ -65,7 +77,7 @@ export default class App extends Component {
     
     dropCard(){
        //this.setState({initialData : this.state.data});
-        localStorage["data"] = JSON.stringify(this.state.data);
+        //localStorage["data"] = JSON.stringify(this.state.data);
     }
     
     showAdd(updatedList){
