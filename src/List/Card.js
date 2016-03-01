@@ -17,15 +17,13 @@ export default class Card extends Component {
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: true});
-        console.log("Táhnu s kartičkou číslo: " + this.props.card.id + ", " + this.state.dragged);
-        this.props.onDragStart;
+        this.props.cardDragStart(this.props.card.id);
     }
     dragEnd(evt){
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: false});
         this.forceUpdate();
-        console.log("Upustil jsem kartičku číslo: " + this.props.card.id + ", " + this.state.dragged);
     }
     
     /*Kartička přes kterou táhnu*/

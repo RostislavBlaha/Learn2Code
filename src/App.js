@@ -38,8 +38,11 @@ export default class App extends Component {
     cardDragOver(id){
         var newData = this.state.data;
         
-        console.log(id + " " + this);
-        console.log("Táhnu s kartičkou číslo " + this.props.cardDragStart)
+        console.log("Táhnu s kartičkou číslo " + this.state.cardDragStart + " přes kartičku číslo " + id);
+    }
+    
+    cardDragStart(id){
+        this.setState({cardDragStart: id});
     }
     
     showAdd(updatedList){
@@ -72,14 +75,16 @@ export default class App extends Component {
     } catch(err) {
         data = [];
     }
-    this.state = {initialData: data,
-          data: [],
-          filterList: true
+    this.state = {  initialData: data,
+                    data: [],
+                    filterList: true,
+                    cardDragStart: ''
     };
     
   }
   render() {
     return (
+        
         <div>
             <SearchBar  onFilter={this.filterList.bind(this)}/>
             <CardList   data = {this.state.data} 
@@ -87,7 +92,7 @@ export default class App extends Component {
                         showAdd = {this.state.filterList}
                         onAdd = {this.addItem.bind(this)}
                         cardDragOver = {this.cardDragOver.bind(this)}
-                        cardDragStart
+                        cardDragStart = {this.cardDragStart.bind(this)}
                 />
         </div>
     );
