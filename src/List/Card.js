@@ -42,7 +42,7 @@ export default class Card extends Component {
     dragDrop(evt){
         evt.preventDefault();  
         evt.stopPropagation();
-        this.props.onDrop();
+        this.props.dropCard();
     }
     
     handleClick(evt){

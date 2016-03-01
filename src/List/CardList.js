@@ -21,7 +21,7 @@ export default class CardList extends Component {
   render() { 
     var removeCard = this.props.onDelete; 
     var cardDragOver = this.props.cardDragOver;
-    var dropCard = this.props.onDrop;
+    var dropCard = this.props.dropCard;
     var cardDragStart = this.props.cardDragStart;
     var listNodes = this.props.data.map(function(card){
         return (
@@ -29,7 +29,7 @@ export default class CardList extends Component {
                 card={card} 
                 onDelete={removeCard}
                 cardDragOver={cardDragOver}
-                onDrop={dropCard}
+                dropCard={dropCard}
                 cardDragStart={cardDragStart}/>
         );
     });

@@ -37,12 +37,35 @@ export default class App extends Component {
     
     cardDragOver(id){
         var newData = this.state.data;
-        
-        console.log("Táhnu s kartičkou číslo " + this.state.cardDragStart + " přes kartičku číslo " + id);
+        var startCard = newData[this.state.cardDragStart - 1];
+        if (startCard.id < id){       
+                for (var i = 0; i < newData.length; i++) {
+                    if (newData[i].id > startCard.id && newData[i].id <= id){
+                        newData[i].id--;
+                        startCard.id = id;
+                        startCard = newData[i];       
+                    }
+                }  
+            } else if (startCard.id > id){               
+                for (var i = 0; i < newData.length; i++) {
+                    if (newData[i].id < startCard.id && newData[i].id >= id){
+                        newData[i].id++;  
+                        startCard.id = id;
+                        startCard = newData[i];
+                    }
+                }  
+            }
+        this.setState({data: newData});
+        console.log(newData);
     }
     
     cardDragStart(id){
         this.setState({cardDragStart: id});
+    }
+    
+    dropCard(){
+       //this.setState({initialData : this.state.data});
+        localStorage["data"] = JSON.stringify(this.state.data);
     }
     
     showAdd(updatedList){
@@ -93,6 +116,7 @@ export default class App extends Component {
                         onAdd = {this.addItem.bind(this)}
                         cardDragOver = {this.cardDragOver.bind(this)}
                         cardDragStart = {this.cardDragStart.bind(this)}
+                        dropCard = {this.dropCard.bind(this)}
                 />
         </div>
     );
