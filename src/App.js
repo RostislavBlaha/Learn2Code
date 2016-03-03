@@ -38,22 +38,19 @@ export default class App extends Component {
     cardDragOver(id){
         var newData = this.state.data;
         var startCard = "";
-        console.log("Táhnu s kartičkou číslo " + this.state.cardDragStart + " přes kartičku číslo " + id);
         
         for (var i = 0; i < newData.length; i++) {
             if (newData[i].id == this.state.cardDragStart){
                 startCard = newData[i];
-                console.log("Start card nalezena na pozici " + i);
+                console.log("Táhnu s kartou " + newData[i].name);
             }
         }
        
         if (startCard.id < id){
-            console.log("vpravo");
                 for (var i = 0; i < newData.length; i++) {
                     if (newData[i].id > startCard.id && newData[i].id <= id){
-                        console.log(newData[i].id);
                         newData[i].id = newData[i].id - 1;
-                        console.log("Presunuta karta " + newData[i].name + " má ted id " + newData[i].id);
+                        console.log("Přesouvám kartu" + newData[i].name + " z pozice " + newData[i].id + " na pozici " + id);
                     }
                 }  
         } else if (startCard.id > id){   
@@ -67,8 +64,9 @@ export default class App extends Component {
             } 
         startCard.id = id;
         this.setState({cardDragStart: id});
-        this.setState({data: newData});
+        this.setState({data: newData.sort((a, b) => a.id - b.id)});
         console.log(newData);
+        console.log(this.state.data);
     }
     
     cardDragStart(id){

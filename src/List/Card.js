@@ -4,7 +4,6 @@ export default class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {  hover : false,
-                        dragOver: false,
                         dragged: false};
     }
     
@@ -16,9 +15,10 @@ export default class Card extends Component {
     dragLikeABoss(evt){
         evt.preventDefault();  
         evt.stopPropagation();
-        this.setState({dragged: true});
+        
     }
     dragStart(evt){
+        evt.stopPropagation();
         this.props.cardDragStart(this.props.card.id);
     }
     dragEnd(evt){
@@ -32,14 +32,21 @@ export default class Card extends Component {
     dragOver(evt){
         evt.preventDefault();  
         evt.stopPropagation();
-        this.setState({dragOver: true});
         this.props.cardDragOver(this.props.card.id);
+        this.setState({dragged: true});
     }
     dragOut(evt){
         evt.preventDefault();  
         evt.stopPropagation();
-        this.setState({dragOver: false});
+        //this.setState({dragged: false});
     }
+    
+    dragLeave(evt){
+        evt.preventDefault();  
+        evt.stopPropagation();
+        this.setState({dragged: false});
+    }
+    
     
     dragDrop(evt){
         evt.preventDefault();  
@@ -78,6 +85,7 @@ export default class Card extends Component {
                     onDragStart={this.dragStart.bind(this)}
                     onDrag={this.dragLikeABoss.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}
+                    onDragLeave={this.dragLeave.bind(this)}
                     onDrop={this.dragDrop.bind(this)}>
                     
                   <div className="img">
