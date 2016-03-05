@@ -4,7 +4,7 @@ export default class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {  hover : false,
-                        dragged: false};
+                        invisible: false};
     }
     
     /*Hover*/
@@ -28,20 +28,20 @@ export default class Card extends Component {
     evt.preventDefault();  
     evt.stopPropagation();
         this.props.cardDragOver(this.props.card.id);
-        //this.setState({dragged: true});
+        this.setState({invisible: true});
         console.log("Jsem na kartičce");
     }
 
     dragLeave(evt){  
         evt.stopPropagation();
-        //this.setState({dragged: false});
+        this.setState({invisible: false});
         console.log("Opustil jsem kartičku " + this.props.card.name);
     }
     
     dragDrop(evt){ 
         evt.stopPropagation();
         this.props.dropCard();
-        this.setState({dragged: false});
+        this.setState({invisible: false});
     }
     
     handleClick(evt){
@@ -66,7 +66,7 @@ export default class Card extends Component {
         
         return (
           <a href = {this.props.card.url}>
-              <div  className={(this.state.dragged ? "card moved" : "card")} 
+              <div  className={(this.state.invisible ? "card invisible" : "card")} 
               
                     draggable="true"
                     

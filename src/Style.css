@@ -24,8 +24,8 @@ body {
     cursor: pointer;
 }
 
-.moved {
-    visibility: hidden;
+.invisible {
+   opacity: 0;
 }
 
 .card:hover {
