@@ -42,7 +42,6 @@ export default class App extends Component {
         for (var i = 0; i < newData.length; i++) {
             if (newData[i].id == this.state.cardDragStart){
                 startCard = newData[i];
-                console.log("Táhnu s kartou " + newData[i].name);
             }
         }
        
@@ -50,23 +49,19 @@ export default class App extends Component {
                 for (var i = 0; i < newData.length; i++) {
                     if (newData[i].id > startCard.id && newData[i].id <= id){
                         newData[i].id = newData[i].id - 1;
-                        console.log("Přesouvám kartu" + newData[i].name + " z pozice " + newData[i].id + " na pozici " + id);
                     }
                 }  
         } else if (startCard.id > id){   
-            console.log("vlevo");
                 for (var i = 0; i < newData.length; i++) {
                     if (newData[i].id < startCard.id && newData[i].id >= id){
-                        console.log(newData[i].id);
                         newData[i].id++; 
                     }
                 }  
             } 
         startCard.id = id;
+        newData.sort((a, b) => a.id - b.id);
         this.setState({cardDragStart: id});
-        this.setState({data: newData.sort((a, b) => a.id - b.id)});
-        console.log(newData);
-        console.log(this.state.data);
+        this.setState({initialData: newData , data: newData});
     }
     
     cardDragStart(id){
@@ -74,8 +69,7 @@ export default class App extends Component {
     }
     
     dropCard(){
-       //this.setState({initialData : this.state.data});
-        //localStorage["data"] = JSON.stringify(this.state.data);
+        localStorage["data"] = JSON.stringify(this.state.data);
     }
     
     showAdd(updatedList){

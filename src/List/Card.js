@@ -14,9 +14,9 @@ export default class Card extends Component {
     /*Kartička s kterou táhnu*/
     dragLikeABoss(evt){
         evt.preventDefault();  
-        evt.stopPropagation();
-        
+        evt.stopPropagation();  
     }
+    
     dragStart(evt){
         evt.stopPropagation();
         this.props.cardDragStart(this.props.card.id);
@@ -24,34 +24,31 @@ export default class Card extends Component {
     dragEnd(evt){
         evt.preventDefault();  
         evt.stopPropagation();
-        this.setState({dragged: false});
         this.forceUpdate();
+        this.props.dropCard();
     }
     
     /*Kartička přes kterou táhnu*/
     dragOver(evt){
-        evt.preventDefault();  
-        evt.stopPropagation();
+    evt.preventDefault();  
+    evt.stopPropagation();
         this.props.cardDragOver(this.props.card.id);
         this.setState({dragged: true});
+        console.log("Jsem na kartičce");
     }
-    dragOut(evt){
-        evt.preventDefault();  
-        evt.stopPropagation();
-        //this.setState({dragged: false});
-    }
-    
+
     dragLeave(evt){
         evt.preventDefault();  
         evt.stopPropagation();
         this.setState({dragged: false});
+        console.log("Opustil jsem kartičku " + this.props.card.name);
     }
-    
     
     dragDrop(evt){
         evt.preventDefault();  
         evt.stopPropagation();
         this.props.dropCard();
+        this.setState({dragged: false});
     }
     
     handleClick(evt){
@@ -77,14 +74,17 @@ export default class Card extends Component {
         return (
           <a href = {this.props.card.url}>
               <div  className={(this.state.dragged ? "card moved" : "card")} 
+              
+                    draggable="true"
+                    
                     onMouseOver={this.mouseOver.bind(this)} 
                     onMouseLeave={this.mouseOut.bind(this)}
-                    draggable="true"
-                    onDragOver={this.dragOver.bind(this)}
-                    onDragExit={this.dragOut.bind(this)}
-                    onDragStart={this.dragStart.bind(this)}
+              
                     onDrag={this.dragLikeABoss.bind(this)}
+                    onDragStart={this.dragStart.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}
+                    
+                    onDragOver={this.dragOver.bind(this)}
                     onDragLeave={this.dragLeave.bind(this)}
                     onDrop={this.dragDrop.bind(this)}>
                     
