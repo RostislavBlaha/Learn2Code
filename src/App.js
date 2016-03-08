@@ -81,7 +81,8 @@ export default class App extends Component {
     }
     
     componentDidMount(){
-      this.setState({data: this.state.initialData.sort((a, b) => a.id - b.id)});
+      this.setState({data: this.state.initialData});
+      
     }
     
     filterList(evt){
@@ -107,6 +108,7 @@ export default class App extends Component {
                     filterList: true,
                     cardDragStart: ''
     };
+     
     
   }
   render() {

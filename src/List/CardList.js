@@ -10,6 +10,10 @@ export default class CardList extends Component {
     super(props);
     this.state = {showNew: false};
   }
+    
+
+    
+    
   showNew (){
     if (this.state.showNew){  
         this.setState({showNew: false});
