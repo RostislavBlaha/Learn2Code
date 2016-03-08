@@ -29,13 +29,11 @@ export default class Card extends Component {
     evt.stopPropagation();
         this.props.cardDragOver(this.props.card.id);
         this.setState({invisible: true});
-        console.log("Jsem na kartičce");
     }
 
     dragLeave(evt){  
         evt.stopPropagation();
         this.setState({invisible: false});
-        console.log("Opustil jsem kartičku " + this.props.card.name);
     }
     
     dragDrop(evt){ 
@@ -47,6 +45,19 @@ export default class Card extends Component {
     handleClick(evt){
         evt.preventDefault();
         this.props.onDelete(this.props.card.id);
+    }
+    
+    handleMouseUp(evt){
+        if (evt.button==2) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            console.log("bif");
+        }
+    }
+    
+    contextMenu(evt){
+        evt.preventDefault();
+        console.log("baf");
     }
     
     render() {
@@ -72,6 +83,8 @@ export default class Card extends Component {
                     
                     onMouseOver={this.mouseOver.bind(this)} 
                     onMouseLeave={this.mouseOut.bind(this)}
+                    onContextMenu={this.contextMenu.bind(this)}
+                    onMouseDown={this.handleMouseUp.bind(this)}
               
                     onDragStart={this.dragStart.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}

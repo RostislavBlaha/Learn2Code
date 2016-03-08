@@ -84,7 +84,7 @@ export default class App extends Component {
       this.setState({data: this.state.initialData});
       
     }
-    
+
     filterList(evt){
         var updatedList;
         updatedList = this.state.initialData.filter(function(item){
@@ -123,7 +123,7 @@ export default class App extends Component {
                         cardDragOver = {this.cardDragOver.bind(this)}
                         cardDragStart = {this.cardDragStart.bind(this)}
                         dropCard = {this.dropCard.bind(this)}
-                />
+                        />
         </div>
     );
   }

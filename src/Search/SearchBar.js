@@ -30,7 +30,7 @@ export default class SearchBar extends Component {
                     <input  ref="searchBar"
                             type="text"
                             className="searchBar"
-                            placeholder="Hledat"
+                            placeholder="Hledat v záložkách"
                             onChange={this.handleChange.bind(this)}/>
                     <button type="submit" 
                             value="Post" 

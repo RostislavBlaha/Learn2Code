@@ -13,6 +13,14 @@ body {
     background-color: #efefef;
 }
 
+h2 {
+    color: white;
+    font-weight: bold;
+    font-size: 42px;
+    text-align: center;
+    margin: 0 0 50px;
+}
+
 .card {
     background-color: white;
     width: 300px;
@@ -79,12 +87,12 @@ body {
 }
 
 .addForm {
-    margin: 5% auto;
-    width: 600px;
+    margin: 0px auto;
+    width: 800px;
     position: fixed;
     z-index: 5;
     left: 50%;
-    margin-left: -300px;
+    margin-left: -400px;
 }
 
 .searchForm {

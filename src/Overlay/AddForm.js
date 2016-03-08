@@ -40,7 +40,7 @@ export default class AddForm extends Component {
   }
     
   validURL(url){
-      return /^(.*[a-zA-Z0-9]+((\.|\:)[a-zA-Z0-9]+)+.*)$/.test(url);  //bacha, to jsem si zbastlil sám, radši ještě zkontroluj, jestli tím projde to, co má!!
+      return /^(.*[a-zA-Z0-9]+((\.|\:)[a-zA-Z0-9]+)+.*)$/.test(url);
   }
     
   componentDidMount(){
@@ -59,6 +59,7 @@ export default class AddForm extends Component {
     }
     return (
             <div className="addForm">
+                <h2>Přidat záložku</h2>
                 <form onSubmit={this.handleSubmit.bind(this)}>    
                     <input 
                         ref="weburl"
