@@ -1,7 +1,7 @@
 Reactive Speed Dial
 ===================
 
-Simple Speed Dial page inspired by the one you can see in the Opera browser. I have no special plans with this one. It is just for fun and practice.
+Simple Speed Dial page inspired by the one you can see in the Opera browser. I have no special plans with this one. I am doing it just for fun and practice.
 
 WIP
 
