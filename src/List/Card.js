@@ -4,11 +4,17 @@ export default class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {  hover : false,
-                        invisible: false};
+                        invisible: false,
+                        contextMenu: false,
+                     };
     }
     
     /*Hover*/
-    mouseOver(){this.setState({hover : true})}
+    mouseOver(){
+        this.setState({hover : true});
+        console.log(this.state.contextMenu);
+    
+    }
     mouseOut(){this.setState({hover: false})}
     
     /*Kartička s kterou táhnu*/
@@ -57,7 +63,8 @@ export default class Card extends Component {
     
     contextMenu(evt){
         evt.preventDefault();
-        console.log("baf");
+        console.log(evt.clientX + "," + evt.clientY);
+        this.setState({contextMenu : true});
     }
     
     render() {
@@ -71,6 +78,19 @@ export default class Card extends Component {
                             className="cross"/>
                 </div>
             );    
+        }
+    
+        var contextMenu;
+    
+        if (this.state.contextMenu){
+            contextMenu = (            
+                <div className="contextMenu">
+                    <ul>
+                        <li className="menuItem">Upravit</li>
+                        <li className="menuItem">Přesunout do koše</li>
+                    </ul>
+                </div>
+            );
         }
         
         var cardClass;
@@ -100,6 +120,7 @@ export default class Card extends Component {
                   <div className="name">  
                     {this.props.card.name}     
                   </div>
+                    {contextMenu}
                   
               </div>
           </a>
