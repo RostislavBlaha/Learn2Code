@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
+
 export default class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {  hover : false,
                         invisible: false,
-                        contextMenu: false,
                      };
     }
     
@@ -24,6 +24,7 @@ export default class Card extends Component {
         this.props.cardDragStart(this.props.card.id);
         this.setState({hover : false});
     }
+    
     dragEnd(evt){
         evt.stopPropagation();
         this.props.dropCard();
@@ -31,8 +32,8 @@ export default class Card extends Component {
     
     /*Kartička přes kterou táhnu*/
     dragOver(evt){
-    evt.preventDefault();  
-    evt.stopPropagation();
+        evt.preventDefault();  
+        evt.stopPropagation();
         this.props.cardDragOver(this.props.card.id);
         this.setState({invisible: true});
     }
@@ -53,18 +54,9 @@ export default class Card extends Component {
         this.props.onDelete(this.props.card.id);
     }
     
-    handleMouseUp(evt){
-        if (evt.button==2) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            console.log("bif");
-        }
-    }
-    
     contextMenu(evt){
         evt.preventDefault();
-        console.log(evt.clientX + "," + evt.clientY);
-        this.setState({contextMenu : true});
+        this.props.cardRightClick(evt);
     }
     
     render() {
@@ -79,19 +71,6 @@ export default class Card extends Component {
                 </div>
             );    
         }
-    
-        var contextMenu;
-    
-        if (this.state.contextMenu){
-            contextMenu = (            
-                <div className="contextMenu">
-                    <ul>
-                        <li className="menuItem">Upravit</li>
-                        <li className="menuItem">Přesunout do koše</li>
-                    </ul>
-                </div>
-            );
-        }
         
         var cardClass;
         
@@ -104,7 +83,6 @@ export default class Card extends Component {
                     onMouseOver={this.mouseOver.bind(this)} 
                     onMouseLeave={this.mouseOut.bind(this)}
                     onContextMenu={this.contextMenu.bind(this)}
-                    onMouseDown={this.handleMouseUp.bind(this)}
               
                     onDragStart={this.dragStart.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}
@@ -120,7 +98,6 @@ export default class Card extends Component {
                   <div className="name">  
                     {this.props.card.name}     
                   </div>
-                    {contextMenu}
                   
               </div>
           </a>

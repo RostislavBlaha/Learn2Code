@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import CardList from './List/CardList';
 import SearchBar from './Search/SearchBar';
-
+import ContextMenu from './List/contextmenu';
 
 export default class App extends Component {
+    
     removeItem(id) {       
         var newData = this.state.data.filter(function(obj){return (obj.id != id)});
         for (var i = 0; i < newData.length; i++) {
@@ -82,9 +83,20 @@ export default class App extends Component {
     
     componentDidMount(){
       this.setState({data: this.state.initialData});
-      
+      window.addEventListener('mousedown', this.pageClick); 
     }
-
+    
+    pageClick(){
+        this.setState({contextMenu: false});
+    }
+    
+    cardRightClick(evt){
+        this.setState({contextMenu: true, 
+                       contextTop: evt.clientY,
+                       contextLeft: evt.clientX});
+        console.log(this.state.contextMenu + ", " + this.state.contextTop + ", " + this.state.contextLeft);
+    }
+    
     filterList(evt){
         var updatedList;
         updatedList = this.state.initialData.filter(function(item){
@@ -106,12 +118,22 @@ export default class App extends Component {
     this.state = {  initialData: data,
                     data: [],
                     filterList: true,
-                    cardDragStart: ''
+                    cardDragStart: '',
+                    contextMenu: false,
     };
      
     
   }
   render() {
+        var contextMenu;
+        var contextStyle = {top: this.state.contextTop, 
+                            left: this.state.contextLeft};
+    
+        if (this.state.contextMenu){
+            contextMenu = (            
+                <ContextMenu style={contextStyle}/>
+            );
+        }
     return (
         
         <div>
@@ -122,8 +144,10 @@ export default class App extends Component {
                         onAdd = {this.addItem.bind(this)}
                         cardDragOver = {this.cardDragOver.bind(this)}
                         cardDragStart = {this.cardDragStart.bind(this)}
+                        cardRightClick = {this.cardRightClick.bind(this)}
                         dropCard = {this.dropCard.bind(this)}
                         />
+            {contextMenu}
         </div>
     );
   }
