@@ -83,11 +83,12 @@ export default class App extends Component {
     
     componentDidMount(){
       this.setState({data: this.state.initialData});
-      window.addEventListener('mousedown', this.pageClick); 
+      window.addEventListener('mousedown', this.pageClick.bind(this)); 
     }
     
     pageClick(){
-        this.setState({contextMenu: false});
+        console.log('klik!');
+        this.setState({contextMenu: false,});
     }
     
     cardRightClick(evt){
