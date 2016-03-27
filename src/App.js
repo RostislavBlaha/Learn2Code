@@ -15,6 +15,12 @@ export default class App extends Component {
         this.setState({data: newData});
         localStorage["data"] = JSON.stringify(newData);     
     }
+    
+    handleContextDelete(){
+        console.log(this.state.contextID);
+        this.removeItem(this.state.contextID); 
+        
+    }
       
     onDrag(evt){
         evt.preventDefault();  
@@ -87,15 +93,15 @@ export default class App extends Component {
     }
     
     pageClick(){
-        console.log('klik!');
-        this.setState({contextMenu: false,});
+        this.setState({contextMenu: false});
     }
     
-    cardRightClick(evt){
+    cardRightClick(evt, id){
         this.setState({contextMenu: true, 
                        contextTop: evt.clientY,
-                       contextLeft: evt.clientX});
-        console.log(this.state.contextMenu + ", " + this.state.contextTop + ", " + this.state.contextLeft);
+                       contextLeft: evt.clientX,
+                       contextID: id});
+        console.log(this.state.contextMenu + ", " + this.state.contextTop + ", " + this.state.contextLeft + ", " + this.state.contextID);
     }
     
     filterList(evt){
@@ -121,6 +127,9 @@ export default class App extends Component {
                     filterList: true,
                     cardDragStart: '',
                     contextMenu: false,
+                    contextTop: '',
+                    contextLeft: '',
+                    contextID: ''
     };
      
     
@@ -132,7 +141,8 @@ export default class App extends Component {
     
         if (this.state.contextMenu){
             contextMenu = (            
-                <ContextMenu style={contextStyle}/>
+                <ContextMenu    style={contextStyle}
+                                onDelete = {this.handleContextDelete.bind(this)}/>
             );
         }
     return (

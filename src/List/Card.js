@@ -12,8 +12,6 @@ export default class Card extends Component {
     /*Hover*/
     mouseOver(){
         this.setState({hover : true});
-        console.log(this.state.contextMenu);
-    
     }
     mouseOut(){this.setState({hover: false})}
     
@@ -56,7 +54,7 @@ export default class Card extends Component {
     
     contextMenu(evt){
         evt.preventDefault();
-        this.props.cardRightClick(evt);
+        this.props.cardRightClick(evt, this.props.card.id);
     }
     
     render() {
