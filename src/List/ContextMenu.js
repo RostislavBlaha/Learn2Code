@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 
-export default class Card extends Component {
+export default class ContextMenu extends Component {
     handleClick(evt){
-        evt.preventDefault();
-        evt.stopPropagation();
-        this.props.onDelete(this.props.card.id);
+        evt.preventDefault()
+        this.props.onDelete()
     }
     render() {
         return (
