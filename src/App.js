@@ -3,6 +3,8 @@ import CardList from './List/CardList'
 import SearchBar from './Search/SearchBar'
 import ContextMenu from './List/contextmenu'
 import TransparentOverlay from './transparentOverlay'
+import EditForm from './Overlay/EditForm'
+import Overlay from './Overlay/Overlay'
 
 export default class App extends Component {
     constructor(props) {
@@ -19,7 +21,8 @@ export default class App extends Component {
                         contextMenu: false,
                         contextTop: '',
                         contextLeft: '',
-                        contextID: ''
+                        contextID: '',
+                        showEdit: false
         }  
     }
         
@@ -29,6 +32,10 @@ export default class App extends Component {
     
     pageClick(){
         this.setState({contextMenu: false})
+    }
+    
+    hideOverlay(){
+        this.setState({showEdit: false})
     }
     
     removeItem(id) {       
@@ -42,8 +49,34 @@ export default class App extends Component {
         localStorage["data"] = JSON.stringify(newData)  
     }
     
+    editItem(url) {       
+        var newData = this.state.data
+        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
+        var fixedURL
+        var id = this.state.contextID - 1;
+        var prefix = 'http://'
+        if (!/^https?:\/\//i.test(url.url)){
+            fixedURL = prefix + url.url
+        }else{
+            fixedURL = url.url        
+        }
+        
+        newData[id].url = fixedURL 
+        newData[id].name = name 
+        newData[id].description = "Tady bude meta description"
+        this.setState({ initialData : newData, 
+                        data: newData
+                        })
+        localStorage["data"] = JSON.stringify(newData)
+    }
+    
     handleContextDelete(){
         this.removeItem(this.state.contextID) 
+        this.setState({contextMenu: false})
+    }
+    
+    handleContextEdit(){
+        this.setState({showEdit: true})
         this.setState({contextMenu: false})
     }
       
@@ -144,11 +177,25 @@ export default class App extends Component {
             contextMenu = (  
                 <div>
                     <ContextMenu    style = {contextStyle}
-                                    onDelete = {this.handleContextDelete.bind(this)}/>
+                                    onDelete = {this.handleContextDelete.bind(this)}
+                                    onEdit = {this.handleContextEdit.bind(this)}/>
                     <TransparentOverlay onClick={this.pageClick.bind(this)}/>
                 </div>
             )
         }
+        
+        var editOverlay
+        
+        if (this.state.showEdit){
+            editOverlay = (  
+                <div>
+                    <EditForm    onSubmit={this.editItem.bind(this)} 
+                                onHide={this.hideOverlay.bind(this)}/>
+                    <Overlay    onClick={this.hideOverlay.bind(this)}/>
+                </div>
+                )
+        }
+        
         return ( 
             <div>
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
@@ -162,6 +209,7 @@ export default class App extends Component {
                             dropCard = {this.dropCard.bind(this)}
                             />
                 {contextMenu}
+                {editOverlay}
             </div>
         )
     }
