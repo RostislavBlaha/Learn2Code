@@ -119,7 +119,7 @@ export default class App extends Component {
     
     cardRightClick(evt, id){
         this.setState({contextMenu: true, 
-                       contextTop: evt.clientY,
+                       contextTop: evt.clientY + window.scrollY ,
                        contextLeft: evt.clientX,
                        contextID: id})
     }
