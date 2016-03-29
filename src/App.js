@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CardList from './List/CardList'
 import SearchBar from './Search/SearchBar'
 import ContextMenu from './List/contextmenu'
+import TransparentOverlay from './transparentOverlay'
 
 export default class App extends Component {
     constructor(props) {
@@ -24,11 +25,10 @@ export default class App extends Component {
         
     componentDidMount(){
         this.setState({data: this.state.initialData})
-        document.addEventListener('mousedown', this.pageClick.bind(this)) 
     }
     
     pageClick(){
-        //this.setState({contextMenu: false})
+        this.setState({contextMenu: false})
     }
     
     removeItem(id) {       
@@ -43,7 +43,8 @@ export default class App extends Component {
     }
     
     handleContextDelete(){
-        this.removeItem(this.state.contextID)      
+        this.removeItem(this.state.contextID) 
+        this.setState({contextMenu: false})
     }
       
     onDrag(evt){
@@ -140,9 +141,12 @@ export default class App extends Component {
                             left: this.state.contextLeft}
     
         if (this.state.contextMenu){
-            contextMenu = (            
-                <ContextMenu    style = {contextStyle}
-                                onDelete = {this.handleContextDelete.bind(this)}/>
+            contextMenu = (  
+                <div>
+                    <ContextMenu    style = {contextStyle}
+                                    onDelete = {this.handleContextDelete.bind(this)}/>
+                    <TransparentOverlay onClick={this.pageClick.bind(this)}/>
+                </div>
             )
         }
         return ( 
