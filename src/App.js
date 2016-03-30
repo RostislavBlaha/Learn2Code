@@ -23,8 +23,7 @@ export default class App extends Component {
                         contextLeft: '',
                         contextID: '',
                         contextURL: 'test.test',
-                        showEdit: false
-        }  
+                        showEdit: false }  
     }
         
     componentDidMount(){
@@ -52,7 +51,7 @@ export default class App extends Component {
     
     editItem(url) {       
         var newData = this.state.data
-        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
+        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[?#]/)[0]
         var fixedURL
         var id = this.state.contextID - 1
         var prefix = 'http://'
@@ -66,8 +65,7 @@ export default class App extends Component {
         newData[id].name = name 
         newData[id].description = "Tady bude meta description"
         this.setState({ initialData : newData, 
-                        data: newData
-                        })
+                        data: newData })
         localStorage["data"] = JSON.stringify(newData)
     }
     
@@ -99,11 +97,9 @@ export default class App extends Component {
         newData.push({  id: this.state.data.length + 1, 
                         url: fixedURL, 
                         name: name, 
-                        description:"Tady bude meta description"
-                        })
+                        description:"Tady bude meta description" })
         this.setState({ initialData : newData, 
-                        data: newData
-                        })
+                        data: newData })
         localStorage["data"] = JSON.stringify(newData)
     }
     
@@ -157,7 +153,7 @@ export default class App extends Component {
                        contextTop: evt.clientY + window.scrollY ,
                        contextLeft: evt.clientX,
                        contextID: id,
-                       contextURL: url})
+                       contextURL: url })
     }
     
     filterList(evt){
@@ -165,7 +161,7 @@ export default class App extends Component {
         updatedList = this.state.initialData.filter(function(item){
             return item.name.toLowerCase().search(
             evt.value.toLowerCase()) !== -1
-            })
+        })
         this.setState({data: updatedList})
         this.showAdd(updatedList)
     }

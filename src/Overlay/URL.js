@@ -5,7 +5,7 @@ export default class URL extends Component {
     super(props)
     this.state = {  
         formState: 'default',
-        value: '',
+        value: this.props.url,
         }  
   }
     
@@ -67,7 +67,7 @@ export default class URL extends Component {
                         placeholder="např. www.seznam.cz"
                         onChange={this.handleChange.bind(this)}
                         onKeyDown={this.handleKeyPress.bind(this)}
-                        value={this.props.url}
+                        value={this.state.value}
                     />
                     <button type="submit" 
                             value="Post" 
