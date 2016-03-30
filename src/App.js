@@ -22,6 +22,7 @@ export default class App extends Component {
                         contextTop: '',
                         contextLeft: '',
                         contextID: '',
+                        contextURL: 'test.test',
                         showEdit: false
         }  
     }
@@ -53,7 +54,7 @@ export default class App extends Component {
         var newData = this.state.data
         var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
         var fixedURL
-        var id = this.state.contextID - 1;
+        var id = this.state.contextID - 1
         var prefix = 'http://'
         if (!/^https?:\/\//i.test(url.url)){
             fixedURL = prefix + url.url
@@ -151,11 +152,12 @@ export default class App extends Component {
         }
     }
     
-    cardRightClick(evt, id){
+    cardRightClick(evt, id, url){
         this.setState({contextMenu: true, 
                        contextTop: evt.clientY + window.scrollY ,
                        contextLeft: evt.clientX,
-                       contextID: id})
+                       contextID: id,
+                       contextURL: url})
     }
     
     filterList(evt){
@@ -172,7 +174,6 @@ export default class App extends Component {
         var contextMenu
         var contextStyle = {top: this.state.contextTop, 
                             left: this.state.contextLeft}
-    
         if (this.state.contextMenu){
             contextMenu = (  
                 <div>
@@ -185,12 +186,13 @@ export default class App extends Component {
         }
         
         var editOverlay
-        
+        var id = this.state.contextID - 1
         if (this.state.showEdit){
             editOverlay = (  
                 <div>
                     <EditForm    onSubmit={this.editItem.bind(this)} 
-                                onHide={this.hideOverlay.bind(this)}/>
+                                 onHide={this.hideOverlay.bind(this)}
+                                 url={this.state.contextURL}/>
                     <Overlay    onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )

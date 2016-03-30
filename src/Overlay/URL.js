@@ -67,6 +67,7 @@ export default class URL extends Component {
                         placeholder="např. www.seznam.cz"
                         onChange={this.handleChange.bind(this)}
                         onKeyDown={this.handleKeyPress.bind(this)}
+                        value={this.props.url}
                     />
                     <button type="submit" 
                             value="Post" 
