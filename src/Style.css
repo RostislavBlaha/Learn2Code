@@ -212,6 +212,20 @@ h2 {
     outline-style: none;
 }
 
+.searchButton {
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin: 7px;
+    margin-top: -37px;
+    background: transparent;
+}
+
+.searchButton:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+
 .rotator {
     width: 15px;
     height: 15px;
@@ -221,6 +235,12 @@ h2 {
 .arrow {
     width: 15px;
     height: 15px;
+    cursor: pointer;
+}
+
+.g {
+    width: 23px;
+    height: 23px;
     cursor: pointer;
 }
 

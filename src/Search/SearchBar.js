@@ -26,7 +26,8 @@ export default class SearchBar extends Component {
     render() {    
         return (
             <div className="searchForm">
-                <form onKeyDown={this.handleKeyPress.bind(this)}>    
+                <form   onKeyDown={this.handleKeyPress.bind(this)}
+                        onSubmit={this.handleSubmit.bind(this)}>    
                     <input  ref="searchBar"
                             type="text"
                             className="searchBar"
@@ -35,6 +36,7 @@ export default class SearchBar extends Component {
                     <button type="submit" 
                             value="Post" 
                             className="searchButton">
+                        <img src = "./src/g.svg" className ="g"/>
                     </button>
                 </form>
                     
