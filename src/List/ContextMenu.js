@@ -24,7 +24,7 @@ export default class ContextMenu extends Component {
                     </li>
                 </ul>
             </div>
-        );
+        )
     
     }
 }

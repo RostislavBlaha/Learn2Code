@@ -10,6 +10,6 @@ export default class Add extends Component {
                 Přidat záložku   
             </div>
         </div>
-    );
+    )
   }
 }

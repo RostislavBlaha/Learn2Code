@@ -11,6 +11,6 @@ export default class AddForm extends Component {
                 <URL onSubmit= {onAdd}
                      onHide= {onHide}/>     
             </div>
-    );
+    )
   }
 }

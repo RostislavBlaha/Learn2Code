@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export default class Overlay extends Component {
   render() {
@@ -6,6 +6,6 @@ export default class Overlay extends Component {
         <div className="overlay" onClick={this.props.onClick}>
         </div>
 
-    );
+    )
   }
 }

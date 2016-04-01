@@ -31,8 +31,6 @@ export default class URL extends Component {
       }    
   }
     
-
-    
   handleKeyPress(evt){ 
       if (evt.keyCode == 13) {      
           this.handleSubmit(evt)     
@@ -60,15 +58,13 @@ export default class URL extends Component {
     return (
             <div>
                 <form onSubmit={this.handleSubmit.bind(this)}>    
-                    <input 
-                        ref="weburl"
-                        className={"weburl " + this.state.formState}        
-                        type="text"
-                        placeholder="např. www.seznam.cz"
-                        onChange={this.handleChange.bind(this)}
-                        onKeyDown={this.handleKeyPress.bind(this)}
-                        value={this.state.value}
-                    />
+                    <input  ref="weburl"
+                            className={"weburl " + this.state.formState}        
+                            type="text"
+                            placeholder="např. www.seznam.cz"
+                            onChange={this.handleChange.bind(this)}
+                            onKeyDown={this.handleKeyPress.bind(this)}
+                            value={this.state.value}/>
                     <button type="submit" 
                             value="Post" 
                             className="addButton">

@@ -1,65 +1,63 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 
 export default class Card extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {  hover : false,
                         invisible: false,
-                     };
+                     }
     }
     
     /*Hover*/
-    mouseOver(){
-        this.setState({hover : true});
-    }
+    mouseOver(){this.setState({hover : true})}
     mouseOut(){this.setState({hover: false})}
     
     /*Kartička s kterou táhnu*/
     
     dragStart(evt){
-        evt.stopPropagation();
-        this.props.cardDragStart(this.props.card.id);
-        this.setState({hover : false});
+        evt.stopPropagation()
+        this.props.cardDragStart(this.props.card.id)
+        this.setState({hover : false})
     }
     
     dragEnd(evt){
-        evt.stopPropagation();
-        this.props.dropCard();
+        evt.stopPropagation()
+        this.props.dropCard()
     }
     
     /*Kartička přes kterou táhnu*/
     dragOver(evt){
-        evt.preventDefault();  
-        evt.stopPropagation();
-        this.props.cardDragOver(this.props.card.id);
-        this.setState({invisible: true});
+        evt.preventDefault() 
+        evt.stopPropagation()
+        this.props.cardDragOver(this.props.card.id)
+        this.setState({invisible: true})
     }
 
     dragLeave(evt){  
-        evt.stopPropagation();
-        this.setState({invisible: false});
+        evt.stopPropagation()
+        this.setState({invisible: false})
     }
     
     dragDrop(evt){ 
-        evt.stopPropagation();
-        this.props.dropCard();
-        this.setState({invisible: false});
+        evt.stopPropagation()
+        this.props.dropCard()
+        this.setState({invisible: false})
     }
     
     handleClick(evt){
-        evt.preventDefault();
-        this.props.onDelete(this.props.card.id);
+        evt.preventDefault()
+        this.props.onDelete(this.props.card.id)
     }
     
     contextMenu(evt){
-        evt.preventDefault();
-        this.props.cardRightClick(evt, this.props.card.id, this.props.card.url);
+        evt.preventDefault()
+        this.props.cardRightClick(evt, this.props.card.id, this.props.card.url)
     }
     
     render() {
         
-        var cross;
+        var cross
         if (this.state.hover){
             cross = (
                 <div    className="crossWraper" 
@@ -67,10 +65,10 @@ export default class Card extends Component {
                     <img    src="./src/cross.svg" 
                             className="cross"/>
                 </div>
-            );    
+            )   
         }
         
-        var cardClass;
+        var cardClass
         
         return (
           <a href = {this.props.card.url}>
@@ -99,7 +97,7 @@ export default class Card extends Component {
                   
               </div>
           </a>
-        );
+        )
     
     }
 }

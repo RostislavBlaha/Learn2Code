@@ -51,7 +51,7 @@ export default class App extends Component {
     
     editItem(url) {       
         var newData = this.state.data
-        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[?#]/)[0]
+        var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
         var fixedURL
         var id = this.state.contextID - 1
         var prefix = 'http://'

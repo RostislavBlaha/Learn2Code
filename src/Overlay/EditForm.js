@@ -13,6 +13,6 @@ export default class EditForm extends Component {
                      onHide = {onHide}
                      url = {editURL}/>     
             </div>
-    );
+    )
   }
 }

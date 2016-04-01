@@ -1,25 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export default class SearchBar extends Component {
     handleChange(evt){
-        var value = evt.target.value;
-        this.props.onFilter({value: value});
-    }
-    
-    componentDidMount(){
-      //this.refs.searchBar.focus(); 
+        var value = evt.target.value
+        this.props.onFilter({value: value})
     }
     
     handleSubmit(evt) {
-      evt.preventDefault();  
-      var value = evt.target.value;
+      evt.preventDefault()  
+      var value = evt.target.value
       window.open("http://www.google.com/search?q=" + value, "_self")    
     }
     
-    
     handleKeyPress(evt){ 
       if (evt.keyCode == 13) {      
-          this.handleSubmit(evt);     
+          this.handleSubmit(evt)    
       }
     }
     
@@ -41,6 +36,6 @@ export default class SearchBar extends Component {
                 </form>
                     
             </div>
-    );
+    )
   }
 }
