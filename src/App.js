@@ -78,6 +78,11 @@ export default class App extends Component {
         this.setState({showEdit: true})
         this.setState({contextMenu: false})
     }
+    
+    handleContextOpen(){
+        window.open(this.state.contextURL)
+        this.setState({contextMenu: false})
+    }
       
     onDrag(evt){
         evt.preventDefault()
@@ -175,7 +180,8 @@ export default class App extends Component {
                 <div>
                     <ContextMenu    style = {contextStyle}
                                     onDelete = {this.handleContextDelete.bind(this)}
-                                    onEdit = {this.handleContextEdit.bind(this)}/>
+                                    onEdit = {this.handleContextEdit.bind(this)}
+                                    onOpen = {this.handleContextOpen.bind(this)}/>
                     <TransparentOverlay onClick={this.pageClick.bind(this)}/>
                 </div>
             )

@@ -10,6 +10,10 @@ export default class ContextMenu extends Component {
         evt.preventDefault()
         this.props.onEdit()
     }
+    handleOpen(evt){
+        evt.preventDefault()
+        this.props.onOpen()
+    }
     render() {
         return (
             <div className="contextMenu" style={this.props.style}>
@@ -21,6 +25,10 @@ export default class ContextMenu extends Component {
                     <li className="menuItem"
                         onClick={this.handleDelete.bind(this)}>
                         Přesunout do koše
+                    </li>
+                    <li className="menuItem"
+                        onClick={this.handleOpen.bind(this)}>
+                        Otevřít na nové záložce
                     </li>
                 </ul>
             </div>
