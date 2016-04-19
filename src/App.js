@@ -56,13 +56,20 @@ export default class App extends Component {
     }
       
     addItem(url){   
-        var newData = ninja.add(this.state.data, url)
+        var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
+                        url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
+                        description:"Tady bude meta description"}          
+        var newData = ninja.add(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)  
     } 
     editItem(url) { 
-        var newData = ninja.edit(this.state.data, this.state.contextID, url)
+        var item = {    id: this.state.contextID,
+                        name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
+                        url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
+                        description:"Tady bude meta description"}
+        var newData = ninja.edit(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)
@@ -131,7 +138,7 @@ export default class App extends Component {
                     <EditForm    onSubmit={this.editItem.bind(this)} 
                                  onHide={this.hideOverlay.bind(this)}
                                  url={this.state.contextURL}/>
-                    <Overlay    onClick={this.hideOverlay.bind(this)}/>
+                    <Overlay     onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
         }

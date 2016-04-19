@@ -1,3 +1,20 @@
+export function add(array, item){   
+    var newData = array
+    item.id = array.length
+    newData.push(item)
+    return(
+        newData
+    )
+}
+    
+export function edit(array, item) {       
+    var newData = array
+    newData[item.id] = item
+    return(
+        newData
+    )
+}
+
 export function remove(array, id){
     var newData = array.filter(function(obj){return (obj.id != id)})
     for (var i = 0; i < newData.length; i++) {
@@ -5,46 +22,6 @@ export function remove(array, id){
             newData[i].id--
         }
     }
-    return(
-        newData
-    )
-
-}
-    
-export function add(array, url){   
-    var newData = array;
-    var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
-    var fixedURL
-    var prefix = 'http://'
-    if (!/^https?:\/\//i.test(url.url)){
-        fixedURL = prefix + url.url
-    }else{
-        fixedURL = url.url        
-    }
-    newData.push({  id: array.length, 
-                    url: fixedURL, 
-                    name: name, 
-                    description:"Tady bude meta description" })
-    return(
-        newData
-    )
-}
-    
-export function edit(array, itemId, url) {       
-    var newData = array
-    var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
-    var fixedURL
-    var id = itemId
-    var prefix = 'http://'
-    if (!/^https?:\/\//i.test(url.url)){
-        fixedURL = prefix + url.url
-    }else{
-        fixedURL = url.url        
-    }
-        
-    newData[id].url = fixedURL 
-    newData[id].name = name 
-    newData[id].description = "Tady bude meta description"
     return(
         newData
     )
