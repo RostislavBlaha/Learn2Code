@@ -29,7 +29,12 @@ export default class App extends Component {
     componentDidMount(){
         this.setState({data: this.state.initialData})
     }
-    
+    expandURL(url){
+        var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
+                        url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
+                        description:"Tady bude meta description"} 
+        return item             
+    }
     
     pageClick(){
         this.setState({contextMenu: false})
@@ -56,19 +61,15 @@ export default class App extends Component {
     }
       
     addItem(url){   
-        var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
-                        url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
-                        description:"Tady bude meta description"}          
+        var item = this.expandURL(url)      
         var newData = ninja.add(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)  
     } 
     editItem(url) { 
-        var item = {    id: this.state.contextID,
-                        name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
-                        url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
-                        description:"Tady bude meta description"}
+        var item = this.expandURL(url)   
+        item.id = this.state.contextID
         var newData = ninja.edit(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })

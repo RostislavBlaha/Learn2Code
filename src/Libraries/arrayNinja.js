@@ -2,17 +2,13 @@ export function add(array, item){
     var newData = array
     item.id = array.length
     newData.push(item)
-    return(
-        newData
-    )
+    return newData
 }
     
 export function edit(array, item) {       
     var newData = array
     newData[item.id] = item
-    return(
-        newData
-    )
+    return newData
 }
 
 export function remove(array, id){
@@ -22,9 +18,7 @@ export function remove(array, id){
             newData[i].id--
         }
     }
-    return(
-        newData
-    )
+    return newData
 }
     
 export function move(array, oldID, newID){
@@ -52,9 +46,7 @@ export function move(array, oldID, newID){
         } 
     startCard.id = newID
     newData.sort((a, b) => a.id - b.id)
-    return(
-        newData
-    )
+    return newData
 }
     
 export function moveToArray(oldArray, newArray, itemId){
