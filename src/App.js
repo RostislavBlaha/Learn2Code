@@ -56,24 +56,24 @@ export default class App extends Component {
     }
       
     addItem(url){   
-        var newData = ninja.addItemToArray(this.state.data, url)
+        var newData = ninja.add(this.state.data, url)
         this.setState({ initialData : newData, 
                         data: newData })
-        localStorage["data"] = JSON.stringify(newData)
+        localStorage["data"] = JSON.stringify(newData)  
     } 
     editItem(url) { 
-        var newData = ninja.editItemInArray(this.state.data, this.state.contextID, url)
+        var newData = ninja.edit(this.state.data, this.state.contextID, url)
         this.setState({ initialData : newData, 
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)
     }
     removeItem(id) {
-        var newData = ninja.removeItemFromArray(this.state.data, id)
+        var newData = ninja.remove(this.state.data, id)
         this.setState({data: newData})
-        localStorage["data"] = JSON.stringify(newData)  
+        localStorage["data"] = JSON.stringify(newData)
     }  
     cardDragOver(id){
-        var newData = ninja.moveItemInArray(this.state.data, this.state.cardDragStart, id)
+        var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
         this.setState({cardDragStart: id})
         this.setState({initialData: newData , data: newData})
     }

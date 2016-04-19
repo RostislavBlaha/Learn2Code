@@ -8,43 +8,20 @@ export function remove(array, id){
     return(
         newData
     )
-
 }
     
-export function add(array, url){   
-    var newData = array;
-    var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
-    var fixedURL
-    var prefix = 'http://'
-    if (!/^https?:\/\//i.test(url.url)){
-        fixedURL = prefix + url.url
-    }else{
-        fixedURL = url.url        
-    }
-    newData.push({  id: array.length, 
-                    url: fixedURL, 
-                    name: name, 
-                    description:"Tady bude meta description" })
+export function add(array, data){   
+    var newData = array
+    newData.push(object)
+    newData.push({id: array.length})
     return(
         newData
     )
 }
     
-export function edit(array, itemId, url) {       
+export function edit(array, itemId, data) {       
     var newData = array
-    var name = url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
-    var fixedURL
-    var id = itemId
-    var prefix = 'http://'
-    if (!/^https?:\/\//i.test(url.url)){
-        fixedURL = prefix + url.url
-    }else{
-        fixedURL = url.url        
-    }
-        
-    newData[id].url = fixedURL 
-    newData[id].name = name 
-    newData[id].description = "Tady bude meta description"
+    newData[itemId] = data
     return(
         newData
     )
@@ -63,7 +40,7 @@ export function move(array, oldID, newID){
     if (startCard.id < newID){
             for (var i = 0; i < newData.length; i++) {
                 if (newData[i].id > startCard.id && newData[i].id <= newID){
-                    newData[i].id--
+                    newData[i].id = newData[i].id - 1
                 }
             }  
     } else if (startCard.id > newID){   
@@ -81,11 +58,11 @@ export function move(array, oldID, newID){
 }
     
 export function moveToArray(oldArray, newArray, itemId){
-    var id = itemId
+    var id = itemId - 1
     var item = oldArray[id]
     var newArrayNewData = newArray
     var oldArrayNewData = oldArray
-    item.id = newArrayNewData.length
+    item.id = newArrayNewData.length + 1
     newArrayNewData.push(item)
     oldArrayNewData.filter(function(obj){return (obj.id != id)})
     for (var i = 0; i < oldArrayNewData.length; i++) {
