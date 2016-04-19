@@ -15,8 +15,14 @@ export default class App extends Component {
         } catch(err) {
             data = []
         }
+        try {
+            var trash = JSON.parse(localStorage["trash"])
+        } catch(err) {
+            trash = []
+        }
         this.state = {  initialData: data,
                         data: [],
+                        trash: [],
                         filterList: true,
                         cardDragStart: '',
                         contextMenu: false,
@@ -76,9 +82,11 @@ export default class App extends Component {
         localStorage["data"] = JSON.stringify(newData)
     }
     removeItem(id) {
-        var newData = ninja.remove(this.state.data, id)
-        this.setState({data: newData})
-        localStorage["data"] = JSON.stringify(newData)
+        var newData = ninja.moveToArray(this.state.data, this.state.trash, id)
+        this.setState({ data: newData.source,
+                        trash: newData.target})
+        localStorage["data"] = JSON.stringify(newData.source)
+        localStorage["trash"] = JSON.stringify(newData.target)  
     }  
     cardDragOver(id){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
@@ -93,7 +101,7 @@ export default class App extends Component {
     }
     
     handleContextDelete(){
-        this.removeItem(this.state.contextID) 
+        this.removeItem(this.state.data[this.state.contextID]) 
         this.setState({contextMenu: false})
     }
     handleContextEdit(){
