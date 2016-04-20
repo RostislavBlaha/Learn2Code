@@ -5,6 +5,7 @@ import ContextMenu from './List/contextmenu'
 import TransparentOverlay from './transparentOverlay'
 import EditForm from './Overlay/EditForm'
 import Overlay from './Overlay/Overlay'
+import LeftMenu from './Menu/LeftMenu'
 import * as ninja from './Libraries/arrayNinja'
 
 export default class App extends Component {
@@ -31,9 +32,11 @@ export default class App extends Component {
                         contextID: '',
                         contextURL: 'test.test',
                         showEdit: false }  
+        document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
     }     
     componentDidMount(){
         this.setState({data: this.state.initialData})
+        
     }
     expandURL(url){
         var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
@@ -42,8 +45,63 @@ export default class App extends Component {
         return item             
     }
     
+    handleKeyPress(evt){
+        evt.preventDefault() 
+        var newData = [ {name:"lupa.cz",
+                         url:"http://www.lupa.cz/",
+                         description:"Tady bude meta description",
+                         id:0},           
+                        {name:"boingboing.net",
+                         url:"http://boingboing.net/",
+                         description:"Tady bude meta description",
+                         id:1},
+                        {name:"czechcrunch.cz",
+                         url:"http://www.czechcrunch.cz/",
+                         description:"Tady bude meta description",
+                         id:2},
+                        {name:"techcrunch.com",
+                         url:"http://techcrunch.com/",
+                         description:"Tady bude meta description",
+                         id:3},
+                        {name:"schickelgruber.blog.cz",
+                         url:"http://schickelgruber.blog.cz/",
+                         description:"Tady bude meta description",
+                         id:4},
+                        {name:"uxmovement.com",
+                         url:"http://uxmovement.com/",
+                         description:"Tady bude meta description",
+                         id:5},
+                        {name:"jxnblk.com",
+                         url:"http://jxnblk.com/writing/",
+                         description:"Tady bude meta description",
+                         id:6},
+                        {name:"dokosiku.blogspot.cz",
+                         url:"http://dokosiku.blogspot.cz/",
+                         description:"Tady bude meta description",
+                         id:7},
+                        {name:"mos05.novartis.net:8441",
+                         url:"https://mos05.novartis.net:8441/dashboard.action",
+                         description:"Tady bude meta description",
+                         id:8},
+                        {name:"mos07.novartis.net:8443",
+                         url:"https://mos07.novartis.net:8443/jira/secure/Dashboard.jspa",
+                         description:"Tady bude meta description",
+                         id:9},
+                        {name:"myhcl.com",
+                         url:"http://myhcl.com/",
+                         description:"Tady bude meta description",
+                         id:10}
+                      ]
+        if (evt.keyCode == 33) {      
+            this.setState({ initialData : newData, 
+                            data: newData })
+            localStorage["data"] = JSON.stringify(newData)     
+        }
+    }
+    
     pageClick(){
         this.setState({contextMenu: false})
+        console.log(this)
     }
     
     cardRightClick(evt, id, url){
@@ -155,7 +213,8 @@ export default class App extends Component {
         return ( 
             <div>
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
-                <CardList   data = {this.state.data} 
+                <CardList   onKeyDown={this.handleKeyPress.bind(this)}
+                            data = {this.state.data} 
                             onDelete = {this.removeItem.bind(this)} 
                             showAdd = {this.state.filterList}
                             onAdd = {this.addItem.bind(this)}
@@ -164,6 +223,7 @@ export default class App extends Component {
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             />
+                <LeftMenu />
                 {contextMenu}
                 {editOverlay}
             </div>

@@ -25,6 +25,28 @@ h2 {
     margin: 0 0 50px;
 }
 
+.leftMenu {
+    position: fixed;
+
+    width: 40px;
+    display:block;
+    top: 0;
+    left: 0;
+}
+
+.leftMenuItem {
+    height: 40px;
+    cursor: pointer;
+}
+
+.trash{
+    margin: 8px 10px;
+}
+
+.trash:hover{
+    transform: scale(1.15) 
+}
+
 .contextMenu {
     background-color: white;
     position: absolute;
