@@ -274,7 +274,7 @@ h2 {
 .crossWraper {
     width: 26px;
     height: 26px;
-    margin: 10px;
+    margin: 10px 10px 0 0;
     cursor: pointer;
     border-radius: 15px;
     background-color: rgba(50, 50, 50, 0.9);
@@ -287,6 +287,13 @@ h2 {
     margin: 7px;
     width: 12px;
     height: 12px;
+    cursor: pointer;
+}
+
+.undelete {
+    margin: 6px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
 }
 

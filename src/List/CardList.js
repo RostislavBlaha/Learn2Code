@@ -8,11 +8,8 @@ import AddForm from '../Overlay/AddForm'
 export default class CardList extends Component {
   constructor(props) {
     super(props)
-    this.state = {showNew: false}
+    this.state = {  showNew: false}
   }
-    
-
-    
     
   showNew (){
     if (this.state.showNew){  
@@ -24,15 +21,19 @@ export default class CardList extends Component {
    
   render() { 
     var removeCard = this.props.onDelete 
+    var undeleteCard = this.props.onUndelete
     var cardDragOver = this.props.cardDragOver
     var dropCard = this.props.dropCard
     var cardDragStart = this.props.cardDragStart
     var cardRightClick = this.props.cardRightClick
+    var canDelete = this.props.canDelete
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
                 card={card} 
                 onDelete={removeCard}
+                onUndelete={undeleteCard}
+                canDelete ={canDelete}
                 cardDragOver={cardDragOver}
                 dropCard={dropCard}
                 cardDragStart={cardDragStart}

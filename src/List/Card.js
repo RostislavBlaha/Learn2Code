@@ -6,6 +6,7 @@ export default class Card extends Component {
         super(props)
         this.state = {  hover : false,
                         invisible: false,
+                        canDelete: this.props.canDelete
                      }
     }
     
@@ -50,6 +51,11 @@ export default class Card extends Component {
         this.props.onDelete(this.props.card.id)
     }
     
+    handleUndelete(evt){
+        evt.preventDefault()
+        this.props.onUndelete(this.props.card.id)
+    }
+    
     contextMenu(evt){
         evt.preventDefault()
         this.props.cardRightClick(evt, this.props.card.id, this.props.card.url)
@@ -58,14 +64,31 @@ export default class Card extends Component {
     render() {
         
         var cross
-        if (this.state.hover){
+        if (this.props.canDelete){
             cross = (
-                <div    className="crossWraper" 
-                        onClick={this.handleClick.bind(this)}>
-                    <img    src="./src/cross.svg" 
-                            className="cross"/>
-                </div>
-            )   
+                    <div>
+                        <div    className="crossWraper" 
+                                onClick={this.handleClick.bind(this)}>
+                            <img    src="./src/cross.svg" 
+                                    className="cross"/>
+                        </div>
+                        <div    className="crossWraper" 
+                                onClick={this.handleUndelete.bind(this)}>
+                            <img    src="./src/undelete.svg" 
+                                    className="undelete"/>
+                        </div>
+                    </div>
+                )          
+        } else {
+            if (this.state.hover){
+                cross = (
+                    <div    className="crossWraper" 
+                            onClick={this.handleClick.bind(this)}>
+                        <img    src="./src/cross.svg" 
+                                className="cross"/>
+                    </div>
+                )   
+            }
         }
         
         var cardClass

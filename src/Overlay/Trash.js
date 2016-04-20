@@ -8,18 +8,19 @@ export default class Trash extends Component {
     var onDelete = this.props.onDelete
     var cardDragOver = this.props.cardDragOver
     var cardDragStart = this.props.cardDragStart
-    var cardRightClick = this.props.cardRightClick
     var dropCard = this.props.dropCard
+    var undeleteCard = this.props.onUndelete
     return (
             <div className = "trash">
                 <h2>Koš</h2>
-                <CardList   onKeyDown={onKeyDown}
+                <CardList   canDelete= "true"
+                            onKeyDown={onKeyDown}
                             data = {data} 
                             onDelete = {onDelete}
                             cardDragOver = {cardDragOver}
                             cardDragStart = {cardDragStart}
-                            cardRightClick = {cardRightClick}
-                            dropCard = {dropCard}/>
+                            dropCard = {dropCard}
+                            onUndelete = {undeleteCard}/>
             </div>
     )
   }

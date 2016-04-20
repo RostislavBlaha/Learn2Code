@@ -141,12 +141,24 @@ export default class App extends Component {
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)
     }
-    removeItem(id) {
+    moveToTrash(id) {
         var newData = ninja.moveToArray(this.state.data, this.state.trash, id)
         this.setState({ data: newData.source,
                         trash: newData.target})
         localStorage["data"] = JSON.stringify(newData.source)
         localStorage["trash"] = JSON.stringify(newData.target)  
+    }  
+    moveFromTrash(id) {
+        var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
+        this.setState({ trash: newData.source,
+                        data: newData.target})
+        localStorage["trash"] = JSON.stringify(newData.source)
+        localStorage["data"] = JSON.stringify(newData.target)  
+    }  
+    removeItem(id) {
+        var newData = ninja.remove(this.state.trash, id)
+        this.setState({ trash: newData})
+        localStorage["trash"] = JSON.stringify(newData)  
     }  
     cardDragOver(id){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
@@ -223,11 +235,11 @@ export default class App extends Component {
                     <Trash  onHide={this.hideOverlay.bind(this)}
                             onKeyDown={this.handleKeyPress.bind(this)}
                             data = {this.state.trash} 
-                            onDelete
+                            onDelete = {this.removeItem.bind(this)}
                             cardDragOver = {this.cardDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
-                            cardRightClick = {this.cardRightClick.bind(this)}
-                            dropCard = {this.dropCard.bind(this)}/>
+                            dropCard = {this.dropCard.bind(this)}
+                            onUndelete = {this.moveFromTrash.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -238,14 +250,13 @@ export default class App extends Component {
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
                 <CardList   onKeyDown={this.handleKeyPress.bind(this)}
                             data = {this.state.data} 
-                            onDelete = {this.removeItem.bind(this)} 
+                            onDelete = {this.moveToTrash.bind(this)} 
                             showAdd = {this.state.filterList}
                             onAdd = {this.addItem.bind(this)}
                             cardDragOver = {this.cardDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
-                            dropCard = {this.dropCard.bind(this)}
-                            />
+                            dropCard = {this.dropCard.bind(this)}/>
                 <LeftMenu showTrash = {this.handleTrash.bind(this)}/>
                 {contextMenu}
                 {editOverlay}
