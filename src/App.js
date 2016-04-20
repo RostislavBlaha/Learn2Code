@@ -5,6 +5,7 @@ import ContextMenu from './List/contextmenu'
 import TransparentOverlay from './transparentOverlay'
 import EditForm from './Overlay/EditForm'
 import Overlay from './Overlay/Overlay'
+import Trash from './Overlay/Trash'
 import LeftMenu from './Menu/LeftMenu'
 import * as ninja from './Libraries/arrayNinja'
 
@@ -23,7 +24,7 @@ export default class App extends Component {
         }
         this.state = {  initialData: data,
                         data: [],
-                        trash: [],
+                        trash: trash,
                         filterList: true,
                         cardDragStart: '',
                         contextMenu: false,
@@ -31,7 +32,8 @@ export default class App extends Component {
                         contextLeft: '',
                         contextID: '',
                         contextURL: 'test.test',
-                        showEdit: false }  
+                        showEdit: false,
+                        showTrash: false}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
     }     
     componentDidMount(){
@@ -112,7 +114,8 @@ export default class App extends Component {
     }
     
     hideOverlay(){
-        this.setState({showEdit: false})
+        this.setState({ showEdit: false,
+                        showTrash: false})
     }
     
     showAdd(updatedList){
@@ -169,6 +172,10 @@ export default class App extends Component {
         window.open(this.state.contextURL)
         this.setState({contextMenu: false})
     }
+    handleTrash(){
+        this.setState({showTrash: true})
+        this.setState({contextMenu: false})
+    }
         
     filterList(evt){
         var updatedList
@@ -209,6 +216,23 @@ export default class App extends Component {
                 )
         }
         
+        var trashOverlay
+        if (this.state.showTrash){
+            trashOverlay = (  
+                <div>
+                    <Trash  onHide={this.hideOverlay.bind(this)}
+                            onKeyDown={this.handleKeyPress.bind(this)}
+                            data = {this.state.trash} 
+                            onDelete
+                            cardDragOver = {this.cardDragOver.bind(this)}
+                            cardDragStart = {this.cardDragStart.bind(this)}
+                            cardRightClick = {this.cardRightClick.bind(this)}
+                            dropCard = {this.dropCard.bind(this)}/>
+                    <Overlay  onClick={this.hideOverlay.bind(this)}/>
+                </div>
+                )
+        }
+        
         return ( 
             <div>
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
@@ -222,9 +246,10 @@ export default class App extends Component {
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             />
-                <LeftMenu />
+                <LeftMenu showTrash = {this.handleTrash.bind(this)}/>
                 {contextMenu}
                 {editOverlay}
+                {trashOverlay}
             </div>
         )
     }

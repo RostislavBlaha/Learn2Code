@@ -13,10 +13,6 @@ body {
     background-color: #efefef;
 }
 
-li{
-    
-}
-
 h2 {
     color: white;
     font-weight: bold;
@@ -39,12 +35,21 @@ h2 {
     cursor: pointer;
 }
 
-.trash{
+.trashIcon{
     margin: 13px 15px;
 }
 
-.trash:hover{
+.trashIcon:hover{
     transform: scale(1.15) 
+}
+
+.trash {
+    margin: 0px auto;
+    width: 1320px;
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    margin-left: -660px;
 }
 
 .contextMenu {
