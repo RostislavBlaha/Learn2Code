@@ -46,7 +46,6 @@ export default class App extends Component {
     }
     
     handleKeyPress(evt){
-        evt.preventDefault() 
         var newData = [ {name:"lupa.cz",
                          url:"http://www.lupa.cz/",
                          description:"Tady bude meta description",

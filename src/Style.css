@@ -28,7 +28,7 @@ h2 {
 .leftMenu {
     position: fixed;
 
-    width: 40px;
+    width: 50px;
     display:block;
     top: 0;
     left: 0;
@@ -40,7 +40,7 @@ h2 {
 }
 
 .trash{
-    margin: 8px 10px;
+    margin: 13px 15px;
 }
 
 .trash:hover{
