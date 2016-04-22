@@ -6,6 +6,11 @@ export default class LeftMenu extends Component {
         this.props.showTrash()
     }
     
+    handleAddFolder(evt){
+        evt.preventDefault()
+        this.props.addFolder()
+    }
+    
     render() {    
         return (
             <div className="leftMenu">
@@ -13,6 +18,10 @@ export default class LeftMenu extends Component {
                     <li className="leftMenuItem"
                         onClick={this.handleTrash.bind(this)}>
                         <img src="./src/trash.svg" className="trashIcon" alt="Koš" title="Koš" />
+                    </li>
+                    <li className="leftMenuItem"
+                        onClick={this.handleAddFolder.bind(this)}>
+                        <img src="./src/addfolder.svg" className="addfolderIcon" alt="Koš" title="Koš" />
                     </li>
                 </ul>    
             </div>

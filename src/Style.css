@@ -23,7 +23,6 @@ h2 {
 
 .leftMenu {
     position: fixed;
-
     width: 50px;
     display:block;
     top: 0;
@@ -40,6 +39,14 @@ h2 {
 }
 
 .trashIcon:hover{
+    transform: scale(1.15) 
+}
+
+.addfolderIcon{
+    margin: 15px 13px;
+}
+
+.addfolderIcon:hover{
     transform: scale(1.15) 
 }
 

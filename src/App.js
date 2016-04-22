@@ -171,6 +171,15 @@ export default class App extends Component {
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)  
     } 
+    addFolder(){   
+        var item = {type: "folder",
+                    name:"Moje složka",
+                    data: []}     
+        var newData = ninja.add(this.state.data, item)
+        this.setState({ initialData : newData, 
+                        data: newData })
+        localStorage["data"] = JSON.stringify(newData)  
+    } 
     editItem(url) { 
         var item = this.expandURL(url)   
         item.id = this.state.contextID
@@ -324,7 +333,8 @@ export default class App extends Component {
                             cardDragStart = {this.cardDragStart.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}/>
-                <LeftMenu showTrash = {this.handleTrash.bind(this)}/>
+                <LeftMenu   showTrash = {this.handleTrash.bind(this)}
+                            addFolder = {this.addFolder.bind(this)}/>
                 {contextMenu}
                 {editOverlay}
                 {trashOverlay}
