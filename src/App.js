@@ -33,7 +33,9 @@ export default class App extends Component {
                         contextID: '',
                         contextURL: '',
                         showEdit: false,
-                        showTrash: false}  
+                        showTrash: false,
+                        showFolder: false,
+                        folderName: "Testovací složka"}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
     }     
     componentDidMount(){
@@ -48,50 +50,86 @@ export default class App extends Component {
     }
     
     handleKeyPress(evt){
-        var newData = [ {name:"lupa.cz",
+        var newData = [ {type: "link",
+                         name:"lupa.cz",
                          url:"http://www.lupa.cz/",
                          description:"Tady bude meta description",
                          id:0},           
-                        {name:"boingboing.net",
+                        {type: "link",
+                         name:"boingboing.net",
                          url:"http://boingboing.net/",
                          description:"Tady bude meta description",
                          id:1},
-                        {name:"czechcrunch.cz",
+                        {type: "link",
+                         name:"czechcrunch.cz",
                          url:"http://www.czechcrunch.cz/",
                          description:"Tady bude meta description",
                          id:2},
-                        {name:"techcrunch.com",
+                        {type: "link",
+                         name:"techcrunch.com",
                          url:"http://techcrunch.com/",
                          description:"Tady bude meta description",
                          id:3},
-                        {name:"schickelgruber.blog.cz",
+                        {type: "link",
+                         name:"schickelgruber.blog.cz",
                          url:"http://schickelgruber.blog.cz/",
                          description:"Tady bude meta description",
                          id:4},
-                        {name:"uxmovement.com",
+                        {type: "link",
+                         name:"uxmovement.com",
                          url:"http://uxmovement.com/",
                          description:"Tady bude meta description",
                          id:5},
-                        {name:"jxnblk.com",
+                        {type: "link",
+                         name:"jxnblk.com",
                          url:"http://jxnblk.com/writing/",
                          description:"Tady bude meta description",
                          id:6},
-                        {name:"dokosiku.blogspot.cz",
+                        {type: "link",
+                         name:"dokosiku.blogspot.cz",
                          url:"http://dokosiku.blogspot.cz/",
                          description:"Tady bude meta description",
                          id:7},
-                        {name:"mos05.novartis.net:8441",
+                        {type: "link",
+                         name:"mos05.novartis.net:8441",
                          url:"https://mos05.novartis.net:8441/dashboard.action",
                          description:"Tady bude meta description",
                          id:8},
-                        {name:"mos07.novartis.net:8443",
+                        {type: "link",
+                         name:"mos07.novartis.net:8443",
                          url:"https://mos07.novartis.net:8443/jira/secure/Dashboard.jspa",
                          description:"Tady bude meta description",
                          id:9},
-                        {name:"myhcl.com",
+                        {type: "link",
+                         name:"myhcl.com",
                          url:"http://myhcl.com/",
                          description:"Tady bude meta description",
-                         id:10}
+                         id:10},
+                        {type: "folder",
+                         name:"Moje složka",
+                         data: [    
+                                    {type: "link",
+                                     name:"lupa.cz",
+                                     url:"http://www.lupa.cz/",
+                                     description:"Tady bude meta description",
+                                     id:0},           
+                                    {type: "link",
+                                     name:"boingboing.net",
+                                     url:"http://boingboing.net/",
+                                     description:"Tady bude meta description",
+                                     id:1},
+                                    {type: "link",
+                                     name:"czechcrunch.cz",
+                                     url:"http://www.czechcrunch.cz/",
+                                     description:"Tady bude meta description",
+                                     id:2},
+                                    {type: "link",
+                                     name:"techcrunch.com",
+                                     url:"http://techcrunch.com/",
+                                     description:"Tady bude meta description",
+                                     id:3}
+                         ],
+                         id:11}
                       ]
         if (evt.keyCode == 33) {      
             this.setState({ initialData : newData, 
@@ -255,6 +293,25 @@ export default class App extends Component {
                 )
         }
         
+        var folderOverlay
+        if (this.state.showFolder){
+            folderOverlay = (  
+                <div>
+                    <Folder name = {this.state.folderName}
+                            onHide={this.hideOverlay.bind(this)}
+                            onKeyDown={this.handleKeyPress.bind(this)}
+                            data = {this.state.trash} 
+                            onDelete = {this.removeItem.bind(this)}
+                            cardDragOver = {this.trashDragOver.bind(this)}
+                            cardDragStart = {this.cardDragStart.bind(this)}
+                            dropCard = {this.dropCard.bind(this)}
+                            onUndelete = {this.moveFromTrash.bind(this)}
+                            cardRightClick = ""/>
+                    <Overlay  onClick={this.hideOverlay.bind(this)}/>
+                </div>
+                )
+        }
+        
         return ( 
             <div>
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
@@ -271,6 +328,7 @@ export default class App extends Component {
                 {contextMenu}
                 {editOverlay}
                 {trashOverlay}
+                {folderOverlay}
             </div>
         )
     }

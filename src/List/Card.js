@@ -51,6 +51,11 @@ export default class Card extends Component {
         this.props.onDelete(this.props.card.id)
     }
     
+    folderClick(evt){
+        evt.preventDefault()
+        console.log("kliknuto")
+    }
+    
     handleUndelete(evt){
         evt.preventDefault()
         this.props.onUndelete(this.props.card.id)
@@ -94,7 +99,8 @@ export default class Card extends Component {
         var cardClass
         
         return (
-          <a href = {this.props.card.url}>
+          <a href = {this.props.card.url}
+             onClick={(this.props.card.type=="folder" ? this.folderClick : "")}>
               <div  className={(this.state.invisible ? "card invisible" : "card")} 
               
                     draggable="true"
