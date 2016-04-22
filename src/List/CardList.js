@@ -27,6 +27,7 @@ export default class CardList extends Component {
     var cardDragStart = this.props.cardDragStart
     var cardRightClick = this.props.cardRightClick
     var canDelete = this.props.canDelete
+    var openFolder = this.props.openFolder
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
@@ -37,7 +38,8 @@ export default class CardList extends Component {
                 cardDragOver={cardDragOver}
                 dropCard={dropCard}
                 cardDragStart={cardDragStart}
-                cardRightClick={cardRightClick}/>
+                cardRightClick={cardRightClick}
+                openFolder={openFolder}/>
         );
     });
      

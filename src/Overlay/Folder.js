@@ -12,11 +12,12 @@ export default class Folder extends Component {
     var undeleteCard = this.props.onUndelete
     var cardRightClick = this.props.cardRightClick
     var name = this.props.name
+    var canDelete = this.props.canDelete
     
     return (
             <div className = "folder">
                 <h2>{name}</h2>
-                <CardList   canDelete= "true"
+                <CardList   canDelete= {canDelete}
                             onKeyDown={onKeyDown}
                             data = {data} 
                             onDelete = {onDelete}

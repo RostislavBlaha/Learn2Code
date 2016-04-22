@@ -51,9 +51,9 @@ export default class Card extends Component {
         this.props.onDelete(this.props.card.id)
     }
     
-    folderClick(evt){
+    openFolder(evt){
         evt.preventDefault()
-        console.log("kliknuto")
+        this.props.openFolder(this.props.card.id)
     }
     
     handleUndelete(evt){
@@ -64,12 +64,13 @@ export default class Card extends Component {
     contextMenu(evt){
         evt.preventDefault()
         this.props.cardRightClick(evt, this.props.card.id, this.props.card.url)
+        console.log(this)
     }
     
     render() {
         
         var cross
-        if (this.props.canDelete){
+        if (this.props.canDelete == "true"){
             cross = (
                     <div>
                         <div    className="crossWraper" 
@@ -100,7 +101,7 @@ export default class Card extends Component {
         
         return (
           <a href = {this.props.card.url}
-             onClick={(this.props.card.type=="folder" ? this.folderClick : "")}>
+             onClick={(this.props.card.type=="folder" ? this.openFolder.bind(this) : "")}>
               <div  className={(this.state.invisible ? "card invisible" : "card")} 
               
                     draggable="true"
