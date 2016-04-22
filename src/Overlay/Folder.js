@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CardList from '../List/CardList'
 
-export default class Trash extends Component {   
+export default class Folder extends Component {   
   render() {
     var data = this.props.data
     var onKeyDown = this.props.onKeyDown
@@ -10,18 +10,23 @@ export default class Trash extends Component {
     var cardDragStart = this.props.cardDragStart
     var dropCard = this.props.dropCard
     var undeleteCard = this.props.onUndelete
+    var cardRightClick = this.props.cardRightClick
+    var name = this.props.name
+    
     return (
-            <div className = "trash">
-                <h2>Koš</h2>
+            <div className = "folder">
+                <h2>{name}</h2>
                 <CardList   canDelete= "true"
                             onKeyDown={onKeyDown}
                             data = {data} 
                             onDelete = {onDelete}
                             cardDragOver = {cardDragOver}
                             cardDragStart = {cardDragStart}
+                            cardRightClick = {cardRightClick}
                             dropCard = {dropCard}
                             onUndelete = {undeleteCard}/>
-            </div>
+
+        </div>
     )
   }
 }

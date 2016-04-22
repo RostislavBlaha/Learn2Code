@@ -5,7 +5,7 @@ import ContextMenu from './List/contextmenu'
 import TransparentOverlay from './transparentOverlay'
 import EditForm from './Overlay/EditForm'
 import Overlay from './Overlay/Overlay'
-import Trash from './Overlay/Trash'
+import Folder from './Overlay/Folder'
 import LeftMenu from './Menu/LeftMenu'
 import * as ninja from './Libraries/arrayNinja'
 
@@ -31,7 +31,7 @@ export default class App extends Component {
                         contextTop: '',
                         contextLeft: '',
                         contextID: '',
-                        contextURL: 'test.test',
+                        contextURL: '',
                         showEdit: false,
                         showTrash: false}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
@@ -162,13 +162,14 @@ export default class App extends Component {
     }  
     cardDragOver(id, folder){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
-        this.setState({cardDragStart: id})
-        this.setState({initialData: newData , data: newData})
+        this.setState({cardDragStart: id,
+                       initialData: newData, 
+                       data: newData})
     }
-     trashDragOver(id, folder){
+    trashDragOver(id, folder){
         var newTrash= ninja.move(this.state.trash, this.state.cardDragStart, id)
-        this.setState({cardDragStart: id})
-        this.setState({trash: newTrash})
+        this.setState({cardDragStart: id,
+                       trash: newTrash})
     }
     
     cardDragStart(id){
@@ -184,16 +185,16 @@ export default class App extends Component {
         this.setState({contextMenu: false})
     }
     handleContextEdit(){
-        this.setState({showEdit: true})
-        this.setState({contextMenu: false})
+        this.setState({showEdit: true,
+                       contextMenu: false})
     }
     handleContextOpen(){
         window.open(this.state.contextURL)
         this.setState({contextMenu: false})
     }
     handleTrash(){
-        this.setState({showTrash: true})
-        this.setState({contextMenu: false})
+        this.setState({ showTrash: true,
+                        contextMenu: false})
     }
         
     filterList(evt){
@@ -239,14 +240,16 @@ export default class App extends Component {
         if (this.state.showTrash){
             trashOverlay = (  
                 <div>
-                    <Trash  onHide={this.hideOverlay.bind(this)}
+                    <Folder name = "Koš"
+                            onHide={this.hideOverlay.bind(this)}
                             onKeyDown={this.handleKeyPress.bind(this)}
                             data = {this.state.trash} 
                             onDelete = {this.removeItem.bind(this)}
                             cardDragOver = {this.trashDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
-                            onUndelete = {this.moveFromTrash.bind(this)}/>
+                            onUndelete = {this.moveFromTrash.bind(this)}
+                            cardRightClick = {function(){}}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
