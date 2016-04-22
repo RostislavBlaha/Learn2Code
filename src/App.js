@@ -160,16 +160,23 @@ export default class App extends Component {
         this.setState({ trash: newData})
         localStorage["trash"] = JSON.stringify(newData)  
     }  
-    cardDragOver(id){
+    cardDragOver(id, folder){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
         this.setState({cardDragStart: id})
         this.setState({initialData: newData , data: newData})
     }
+     trashDragOver(id, folder){
+        var newTrash= ninja.move(this.state.trash, this.state.cardDragStart, id)
+        this.setState({cardDragStart: id})
+        this.setState({trash: newTrash})
+    }
+    
     cardDragStart(id){
         this.setState({cardDragStart: id})
     }
     dropCard(){
         localStorage["data"] = JSON.stringify(this.state.data)
+        localStorage["trash"] = JSON.stringify(this.state.trash)
     }
     
     handleContextDelete(){
@@ -236,7 +243,7 @@ export default class App extends Component {
                             onKeyDown={this.handleKeyPress.bind(this)}
                             data = {this.state.trash} 
                             onDelete = {this.removeItem.bind(this)}
-                            cardDragOver = {this.cardDragOver.bind(this)}
+                            cardDragOver = {this.trashDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             onUndelete = {this.moveFromTrash.bind(this)}/>
