@@ -182,10 +182,18 @@ export default class App extends Component {
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)  
     } 
-    openFolder(id){
-        this.setState({ activeFolder: this.state.data[id].data,
-                        showFolder: true,
-                        contextMenu: false})
+    openFolder(topFolder, id){
+        if (topFolder == "trash"){
+            this.setState({ activeFolder: this.state.trash[id].data,
+                            showFolder: true,
+                            contextMenu: false,
+                            showTrash: false})
+        }else{
+            this.setState({ activeFolder: this.state.data[id].data,
+                            showFolder: true,
+                            contextMenu: false})
+        }
+        window.scrollTo(0,0)
     }
     editItem(url) { 
         var item = this.expandURL(url)   
@@ -304,7 +312,8 @@ export default class App extends Component {
                             dropCard = {this.dropCard.bind(this)}
                             onUndelete = {this.moveFromTrash.bind(this)}
                             cardRightClick = {function(){}}
-                            canDelete = "true"/>
+                            canDelete = "true"
+                            openFolder = {this.openFolder.bind(this, "trash")}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -323,7 +332,8 @@ export default class App extends Component {
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
-                            canDelete = "false"/>
+                            canDelete = "false"
+                            openFolder = {this.openFolder.bind(this, "folder")}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -341,7 +351,7 @@ export default class App extends Component {
                             cardDragStart = {this.cardDragStart.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
-                            openFolder = {this.openFolder.bind(this)}
+                            openFolder = {this.openFolder.bind(this, "topFolder")}
                             canDelete = "false"/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}/>

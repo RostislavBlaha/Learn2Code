@@ -48,6 +48,7 @@ export default class Card extends Component {
     
     handleClick(evt){
         evt.preventDefault()
+        evt.stopPropagation()
         this.props.onDelete(this.props.card.id)
     }
     
