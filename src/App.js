@@ -184,12 +184,12 @@ export default class App extends Component {
     } 
     openFolder(topFolder, id){
         if (topFolder == "trash"){
-            this.setState({ activeFolder: this.state.trash[id].data,
+            this.setState({ activeFolder: this.state.trash[id],
                             showFolder: true,
                             contextMenu: false,
                             showTrash: false})
         }else{
-            this.setState({ activeFolder: this.state.data[id].data,
+            this.setState({ activeFolder: this.state.data[id],
                             showFolder: true,
                             contextMenu: false})
         }
@@ -232,6 +232,11 @@ export default class App extends Component {
         var newTrash= ninja.move(this.state.trash, this.state.cardDragStart, id)
         this.setState({cardDragStart: id,
                        trash: newTrash})
+    }
+    folderDragOver(id, folder){
+        var newData= ninja.move(this.state.data[this.state.activeFolder.id].data, this.state.cardDragStart, id)
+        this.setState({cardDragStart: id,
+                       trash: newData})
     }
     
     cardDragStart(id){
@@ -326,9 +331,9 @@ export default class App extends Component {
                     <Folder name = {this.state.folderName}
                             onHide={this.hideOverlay.bind(this)}
                             onKeyDown={this.handleKeyPress.bind(this)}
-                            data = {this.state.activeFolder} 
+                            data = {this.state.activeFolder.data} 
                             onDelete = {this.moveToTrash.bind(this)} 
-                            cardDragOver = {this.trashDragOver.bind(this)}
+                            cardDragOver = {this.folderDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
