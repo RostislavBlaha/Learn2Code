@@ -36,7 +36,8 @@ export default class App extends Component {
                         showTrash: false,
                         showFolder: false,
                         folderName: "Testovací složka",
-                        activeFolder: []}  
+                        activeFolder: [],
+                        topFolder: ''}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
     }     
     componentDidMount(){
@@ -194,6 +195,8 @@ export default class App extends Component {
                             contextMenu: false})
         }
         window.scrollTo(0,0)
+        this.state.topFolder = topFolder
+        console.log(topFolder)
     }
     editItem(url) { 
         var item = this.expandURL(url)   
@@ -222,21 +225,30 @@ export default class App extends Component {
         this.setState({ trash: newData})
         localStorage["trash"] = JSON.stringify(newData)  
     }  
-    cardDragOver(id, folder){
+    cardDragOver(id){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
         this.setState({cardDragStart: id,
                        initialData: newData, 
                        data: newData})
     }
-    trashDragOver(id, folder){
+    trashDragOver(id){
         var newTrash= ninja.move(this.state.trash, this.state.cardDragStart, id)
         this.setState({cardDragStart: id,
                        trash: newTrash})
     }
-    folderDragOver(id, folder){
-        var newData= ninja.move(this.state.data[this.state.activeFolder.id].data, this.state.cardDragStart, id)
-        this.setState({cardDragStart: id,
-                       trash: newData})
+    folderDragOver(id){
+        console.log(this.state.data[this.state.activeFolder.id].data)
+        if (this.state.topFolder == "trash"){
+            var newTrash = this.state.trash 
+            newTrash[this.state.activeFolder.id].data = ninja.move(this.state.trash[this.state.activeFolder.id].data, this.state.cardDragStart, id)
+            this.setState({ cardDragStart: id,
+                            trash: newTrash})
+        }else{
+            var newData = this.state.data
+            newData[this.state.activeFolder.id].data = ninja.move(this.state.data[this.state.activeFolder.id].data, this.state.cardDragStart, id)
+            this.setState({ cardDragStart: id,
+                            data: newData})
+        }
     }
     
     cardDragStart(id){
