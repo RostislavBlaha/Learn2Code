@@ -312,7 +312,7 @@ export default class App extends Component {
                             dropCard = {this.dropCard.bind(this)}
                             onUndelete = {this.moveFromTrash.bind(this)}
                             cardRightClick = {function(){}}
-                            canDelete = "true"
+                            canDelete = {true}
                             openFolder = {this.openFolder.bind(this, "trash")}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
@@ -352,7 +352,7 @@ export default class App extends Component {
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             openFolder = {this.openFolder.bind(this, "topFolder")}
-                            canDelete = "false"/>
+                            canDelete = {false}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}/>
                 {contextMenu}
