@@ -71,7 +71,7 @@ export default class Card extends Component {
     render() {
         
         var cross
-        if (this.props.canDelete == "true"){
+        if (this.props.canDelete){
             cross = (
                     <div>
                         <div    className="crossWraper" 

@@ -332,7 +332,7 @@ export default class App extends Component {
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
-                            canDelete = "false"
+                            canDelete = {false}
                             openFolder = {this.openFolder.bind(this, "folder")}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
