@@ -237,7 +237,6 @@ export default class App extends Component {
                        trash: newTrash})
     }
     folderDragOver(id){
-        console.log(this.state.data[this.state.activeFolder.id].data)
         if (this.state.topFolder == "trash"){
             var newTrash = this.state.trash 
             newTrash[this.state.activeFolder.id].data = ninja.move(this.state.trash[this.state.activeFolder.id].data, this.state.cardDragStart, id)
