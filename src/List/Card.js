@@ -59,6 +59,7 @@ export default class Card extends Component {
     
     handleUndelete(evt){
         evt.preventDefault()
+        evt.stopPropagation()
         this.props.onUndelete(this.props.card.id)
     }
     

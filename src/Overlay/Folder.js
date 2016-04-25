@@ -9,7 +9,7 @@ export default class Folder extends Component {
     var cardDragOver = this.props.cardDragOver
     var cardDragStart = this.props.cardDragStart
     var dropCard = this.props.dropCard
-    var undeleteCard = this.props.onUndelete
+    var onUndelete = this.props.onUndelete
     var cardRightClick = this.props.cardRightClick
     var name = this.props.name
     var canDelete = this.props.canDelete
@@ -26,7 +26,7 @@ export default class Folder extends Component {
                             cardDragStart = {cardDragStart}
                             cardRightClick = {cardRightClick}
                             dropCard = {dropCard}
-                            onUndelete = {undeleteCard}
+                            onUndelete = {onUndelete}
                             openFolder = {openFolder}/>
 
         </div>

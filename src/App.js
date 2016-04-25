@@ -142,7 +142,6 @@ export default class App extends Component {
     
     pageClick(){
         this.setState({contextMenu: false})
-        console.log(this)
     }
     
     cardRightClick(evt, id, url){
@@ -196,7 +195,6 @@ export default class App extends Component {
         }
         window.scrollTo(0,0)
         this.state.topFolder = topFolder
-        console.log(topFolder)
     }
     editItem(url) { 
         var item = this.expandURL(url)   
@@ -214,11 +212,21 @@ export default class App extends Component {
         localStorage["trash"] = JSON.stringify(newData.target)  
     }  
     moveFromTrash(id) {
-        var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
-        this.setState({ trash: newData.source,
-                        data: newData.target})
-        localStorage["trash"] = JSON.stringify(newData.source)
-        localStorage["data"] = JSON.stringify(newData.target)  
+        if (this.state.showFolder){
+            var newData = ninja.moveToArray(this.state.trash[this.state.activeFolder.id].data, this.state.data, id)
+            var newTrash = this.state.trash
+            newTrash[this.state.activeFolder.id].data = newData.source
+            this.setState({ trash: newTrash,
+                            data: newData.target})
+            localStorage["trash"] = JSON.stringify(newData.source)
+            localStorage["data"] = JSON.stringify(newData.target) 
+        }else{
+            var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
+            this.setState({ trash: newData.source,
+                            data: newData.target})
+            localStorage["trash"] = JSON.stringify(newData.source)
+            localStorage["data"] = JSON.stringify(newData.target)     
+        }
     }  
     removeItem(id) {
         var newData = ninja.remove(this.state.trash, id)
@@ -347,8 +355,9 @@ export default class App extends Component {
                             cardDragOver = {this.folderDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
+                            onUndelete = {this.moveFromTrash.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
-                            canDelete = {false}
+                            canDelete = {(this.state.topFolder == "trash" ? true : false)}
                             openFolder = {this.openFolder.bind(this, "folder")}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>

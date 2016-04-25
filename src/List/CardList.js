@@ -21,19 +21,19 @@ export default class CardList extends Component {
    
   render() { 
     var removeCard = this.props.onDelete 
-    var undeleteCard = this.props.onUndelete
     var cardDragOver = this.props.cardDragOver
     var dropCard = this.props.dropCard
     var cardDragStart = this.props.cardDragStart
     var cardRightClick = this.props.cardRightClick
     var canDelete = this.props.canDelete
     var openFolder = this.props.openFolder
+    var onUndelete = this.props.onUndelete
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
                 card={card} 
                 onDelete={removeCard}
-                onUndelete={undeleteCard}
+                onUndelete={onUndelete}
                 canDelete ={canDelete}
                 cardDragOver={cardDragOver}
                 dropCard={dropCard}
