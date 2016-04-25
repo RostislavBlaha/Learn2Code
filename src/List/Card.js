@@ -6,7 +6,8 @@ export default class Card extends Component {
         super(props)
         this.state = {  hover : false,
                         invisible: false,
-                        canDelete: this.props.canDelete
+                        canDelete: this.props.canDelete,
+                        active:false
                      }
     }
     
@@ -28,22 +29,30 @@ export default class Card extends Component {
     }
     
     /*Kartička přes kterou táhnu*/
-    dragOver(evt){
+    cardDragOver(evt){
         evt.preventDefault() 
         evt.stopPropagation()
         this.props.cardDragOver(this.props.card.id)
         this.setState({invisible: true})
     }
+    cardDragOn(evt){
+        evt.preventDefault() 
+        evt.stopPropagation()
+        //this.props.cardDragOn(this.props.card.id)
+        this.setState({active: true})
+    }
 
     dragLeave(evt){  
         evt.stopPropagation()
-        this.setState({invisible: false})
+        this.setState({ invisible: false,
+                        active: false})
     }
     
     dragDrop(evt){ 
         evt.stopPropagation()
         this.props.dropCard()
-        this.setState({invisible: false})
+        this.setState({invisible: false,
+                        active: false})
     }
     
     handleClick(evt){
@@ -108,19 +117,22 @@ export default class Card extends Component {
               
                     draggable="true"
                     
-                    onMouseOver={this.mouseOver.bind(this)} 
+                    onMouseOver={this.mouseOver.bind(this)}
                     onMouseLeave={this.mouseOut.bind(this)}
                     onContextMenu={this.contextMenu.bind(this)}
               
                     onDragStart={this.dragStart.bind(this)}
                     onDragEnd={this.dragEnd.bind(this)}
                     
-                    onDragOver={this.dragOver.bind(this)}
+                    onDragOver={this.cardDragOn.bind(this)}
                     onDragLeave={this.dragLeave.bind(this)}
                     onDrop={this.dragDrop.bind(this)}>
                     
-                  <div className="img">
+                  <div className={(this.state.active ? "img active" : "img")}>
                     {cross}
+                    <div className="dangerZone"
+                         onDragOver={this.cardDragOver.bind(this)}>
+                    </div>
                   </div>
                   
                   <div className="name">  

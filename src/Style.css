@@ -1,3 +1,4 @@
+/* App */
 * {
     text-decoration: none;
     margin: 0px auto;
@@ -8,11 +9,9 @@
     line-height: 22px;
     color: black;
 }
-
 body {
     background-color: #efefef;
 }
-
 h2 {
     color: white;
     font-weight: bold;
@@ -21,44 +20,96 @@ h2 {
     margin: 0 0 50px;
 }
 
-.leftMenu {
-    position: fixed;
-    width: 50px;
-    display:block;
-    top: 0;
-    left: 0;
-}
 
-.leftMenuItem {
-    height: 40px;
+/*Add*/
+.plus {
+    background: rgba(0, 0, 0, 0.8) url(plus.svg) no-repeat center;
+    background-size: 20%;
+    width: 100%;
+    height: 160px;
+    display: inline-block;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+}
+.pridat {
+    padding: 9px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    border-radius: 0 0 4px 4px;
     cursor: pointer;
 }
 
-.trashIcon{
-    margin: 13px 15px;
+
+/*Card*/
+.card {
+    animation: pop 0.25s ease-in-out;
+    background-color: white;
+    width: 300px;
+    height: 200px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    float: left;
+    margin: 15px;
+    cursor: pointer;
+}
+.invisible {
+   opacity: 0;
+}
+.card:hover {
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.7);
+}
+.img {
+    border-radius: 4px 4px 0 0;
+    background-color: #666;
+    width: 100%;
+    height: 160px;
+    display: inline-block;
+}
+.active {
+    background-color: black;
+}
+.name {
+    padding: 9px;
+}
+.crossWraper {
+    width: 26px;
+    height: 26px;
+    margin: 10px 10px 0 0;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: rgba(50, 50, 50, 0.9);
+    border: 1px solid black;
+    box-shadow: 0px 3px 5px 0px rgba(150, 150, 150, 0.2);
+    float: right;
+}
+.cross {
+    margin: 7px;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+.undelete {
+    margin: 6px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+.DangerZone{
+    width:200px;
+    height:100px;
+    margin-top:45px;
 }
 
-.trashIcon:hover{
-    transform: scale(1.15) 
-}
 
-.addfolderIcon{
-    margin: 15px 13px;
-}
-
-.addfolderIcon:hover{
-    transform: scale(1.15) 
-}
-
-.folder {
-    margin: 0px auto;
+/*CardList*/
+.cardList {
+    margin: 80px auto;
     width: 1320px;
-    position: absolute;
-    z-index: 5;
-    left: 50%;
-    margin-left: -660px;
 }
 
+
+/*Context Menu*/
 .contextMenu {
     background-color: white;
     position: absolute;
@@ -69,73 +120,75 @@ h2 {
     cursor: pointer;
     z-index: 4;
 }
-
 .menuItem{
     width: 210px;
     padding:5px;
     display:block;
 }
-
 .menuItem:hover{
     background-color: #3b6ed7;
     color: white;
 }
 
-.card {
-    background-color: white;
-    width: 300px;
-    height: 200px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
-    float: left;
-    margin: 15px;
-    cursor: pointer;
-}
 
-.invisible {
-   opacity: 0;
-}
-
-.card:hover {
-    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.7);
-}
-
-.plus {
-    background: rgba(0, 0, 0, 0.8) url(plus.svg) no-repeat center;
-    background-size: 20%;
+/*TransparentOverlay*/
+.transparentOverlay {
     width: 100%;
-    height: 160px;
-    display: inline-block;
-    border-radius: 4px 4px 0 0;
+    height: 100%;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+}
+
+/* LeftMenu */
+.leftMenu {
+    position: fixed;
+    width: 50px;
+    display:block;
+    top: 0;
+    left: 0;
+}
+.leftMenuItem {
+    height: 40px;
     cursor: pointer;
 }
-
-.img {
-    border-radius: 4px 4px 0 0;
-    background-color: #666;
-    width: 100%;
-    height: 160px;
-    display: inline-block;
+.trashIcon{
+    margin: 13px 15px;
+}
+.trashIcon:hover{
+    transform: scale(1.15) 
+}
+.addfolderIcon{
+    margin: 15px 13px;
+}
+.addfolderIcon:hover{
+    transform: scale(1.15) 
 }
 
-.name {
-    padding: 9px;
+
+/*AddForm*//*EditForm*/
+.addForm {
+    margin: 0px auto;
+    width: 800px;
+    position: fixed;
+    z-index: 5;
+    left: 50%;
+    margin-left: -400px;
 }
 
-.pridat {
-    padding: 9px;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    text-align: center;
-    border-radius: 0 0 4px 4px;
-    cursor: pointer;
-}
 
-.cardList {
-    margin: 80px auto;
+/*Folder*/
+.folder {
+    margin: 0px auto;
     width: 1320px;
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    margin-left: -660px;
 }
 
+
+/*Overlay*/
 .overlay {
     width: 100%;
     height: 100%;
@@ -146,39 +199,8 @@ h2 {
     animation: zoom 0.2s ease-in-out;
 }
 
-.transparentOverlay {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 3;
-    top: 0;
-}
 
-
-.addForm {
-    margin: 0px auto;
-    width: 800px;
-    position: fixed;
-    z-index: 5;
-    left: 50%;
-    margin-left: -400px;
-}
-
-.searchForm {
-    padding-top: 80px; 
-    width: 1290px;
-}
-
-.searchBar {
-    float: left;
-    width: 100%;
-    border-radius: 4px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
-    background-color: white;
-    height: 45px;
-    padding-left: 17px;
-}
-
+/*URL*/
 .weburl {
     float: left;
     width: 100%;
@@ -190,12 +212,71 @@ h2 {
     height: 30px;
     padding-left: 10px;
 }
-
 .weburl.fail {
     border: 1px solid #d40000 !important;
     background-color: #ffefef;
     animation: pulse 0.25s ease-in-out;
 }
+.addButton {
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin: 4px;
+    z-index: 7;
+    margin-top: -30px;
+    background: transparent;
+}
+.addButton:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+.rotator {
+    width: 15px;
+    height: 15px;
+    animation: rotate 1s infinite linear;
+}
+.arrow {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+
+/*SearchBar*/
+.searchForm {
+    padding-top: 80px; 
+    width: 1290px;
+}
+.searchBar {
+    float: left;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    height: 45px;
+    padding-left: 17px;
+}
+.searchButton {
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin: 7px;
+    margin-top: -37px;
+    background: transparent;
+}
+.searchButton:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+.g {
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+}
+
+
+/*Animations------------------------*/
+
 
 @keyframes pulse {
     0% {
@@ -208,11 +289,6 @@ h2 {
         transform: scale(1);
     }
 }
-
-.card {
-    animation: pop 0.25s ease-in-out;
-}
-
 @keyframes zoom {
     0% {
         transform: scale(0.9);
@@ -221,7 +297,6 @@ h2 {
         transform: scale(1);
     }
 }
-
 @keyframes pop {
     0% {
         transform: scale(1.1);
@@ -230,80 +305,6 @@ h2 {
         transform: scale(1);
     }
 }
-
-.addButton {
-    float: right;
-    width: 30px;
-    height: 30px;
-    margin: 4px;
-    z-index: 7;
-    margin-top: -30px;
-    background: transparent;
-}
-
-.addButton:focus {
-    outline-color: transparent;
-    outline-style: none;
-}
-
-.searchButton {
-    float: right;
-    width: 30px;
-    height: 30px;
-    margin: 7px;
-    margin-top: -37px;
-    background: transparent;
-}
-
-.searchButton:focus {
-    outline-color: transparent;
-    outline-style: none;
-}
-
-.rotator {
-    width: 15px;
-    height: 15px;
-    animation: rotate 1s infinite linear;
-}
-
-.arrow {
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-}
-
-.g {
-    width: 23px;
-    height: 23px;
-    cursor: pointer;
-}
-
-.crossWraper {
-    width: 26px;
-    height: 26px;
-    margin: 10px 10px 0 0;
-    cursor: pointer;
-    border-radius: 15px;
-    background-color: rgba(50, 50, 50, 0.9);
-    border: 1px solid black;
-    box-shadow: 0px 3px 5px 0px rgba(150, 150, 150, 0.2);
-    float: right;
-}
-
-.cross {
-    margin: 7px;
-    width: 12px;
-    height: 12px;
-    cursor: pointer;
-}
-
-.undelete {
-    margin: 6px;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-}
-
 @keyframes rotate {
     0% {
         transform: rotate(0deg);
@@ -312,6 +313,10 @@ h2 {
         transform: rotate(360deg);
     }
 }
+
+
+/*Media Queries------------------------*/
+
 
 @media (max-width: 1330px) {
     .cardList {
