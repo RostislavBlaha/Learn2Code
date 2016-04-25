@@ -28,6 +28,7 @@ export default class CardList extends Component {
     var canDelete = this.props.canDelete
     var openFolder = this.props.openFolder
     var onUndelete = this.props.onUndelete
+    var moveToFolder = this.props.moveToFolder
     var listNodes = this.props.data.map(function(card){
         return (
         <Card   key = {card.id} 
@@ -39,7 +40,9 @@ export default class CardList extends Component {
                 dropCard={dropCard}
                 cardDragStart={cardDragStart}
                 cardRightClick={cardRightClick}
-                openFolder={openFolder}/>
+                openFolder={openFolder}
+                moveToFolder={moveToFolder}
+            />
         );
     });
      

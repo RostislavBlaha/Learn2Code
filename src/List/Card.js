@@ -55,6 +55,14 @@ export default class Card extends Component {
                         active: false})
     }
     
+    moveToFolder(evt){
+        evt.preventDefault()
+        evt.stopPropagation()
+        this.props.moveToFolder(this.props.card)
+        this.setState({invisible: false,
+                        active: false})
+    }
+    
     handleClick(evt){
         evt.preventDefault()
         evt.stopPropagation()
@@ -126,12 +134,13 @@ export default class Card extends Component {
                     
                     onDragOver={this.cardDragOn.bind(this)}
                     onDragLeave={this.dragLeave.bind(this)}
-                    onDrop={this.dragDrop.bind(this)}>
+                    onDrop={this.moveToFolder.bind(this)}>
                     
                   <div className={(this.state.active ? "img active" : "img")}>
                     {cross}
                     <div className="dangerZone"
-                         onDragOver={this.cardDragOver.bind(this)}>
+                         onDragOver={this.cardDragOver.bind(this)}
+                         onDrop={this.dragDrop.bind(this)}>
                     </div>
                   </div>
                   

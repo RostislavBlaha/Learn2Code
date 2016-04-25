@@ -282,6 +282,27 @@ export default class App extends Component {
         this.setState({ showTrash: true,
                         contextMenu: false})
     }
+    moveToFolder(card){
+        var id = card.id
+        if (this.state.topFolder == "trash"){
+            console.log("koš")
+        }else{
+            if (card.type == "folder"){
+                var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
+                this.setState({data: newData.source})  
+                localStorage["data"] = JSON.stringify(newData.source)
+            }else{
+                this.addFolder()
+                var newWorld = ninja.moveToArray(this.state.data, this.state.data[this.state.data.length-1].data, this.state.cardDragStart)
+                var newData = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
+                newData.source = ninja.move(newData.source, newData.source.length-1, id)
+                this.setState({data: newData.source})  
+                localStorage["data"] = JSON.stringify(newData.source)
+            }
+            
+        }
+        
+    }
         
     filterList(evt){
         var updatedList
@@ -337,7 +358,8 @@ export default class App extends Component {
                             onUndelete = {this.moveFromTrash.bind(this)}
                             cardRightClick = {function(){}}
                             canDelete = {true}
-                            openFolder = {this.openFolder.bind(this, "trash")}/>
+                            openFolder = {this.openFolder.bind(this, "trash")}
+                            moveToFolder ={this.moveToFolder}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -348,6 +370,8 @@ export default class App extends Component {
             folderOverlay = (  
                 <div>
                     <Folder name = {this.state.folderName}
+                            showAdd = {true}
+                            onAdd = {this.addItem.bind(this)}
                             onHide={this.hideOverlay.bind(this)}
                             onKeyDown={this.handleKeyPress.bind(this)}
                             data = {this.state.activeFolder.data} 
@@ -358,7 +382,8 @@ export default class App extends Component {
                             onUndelete = {this.moveFromTrash.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}
                             canDelete = {(this.state.topFolder == "trash" ? true : false)}
-                            openFolder = {this.openFolder.bind(this, "folder")}/>
+                            openFolder = {this.openFolder.bind(this, "folder")}
+                            moveToFolder ={function(){}}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -377,7 +402,8 @@ export default class App extends Component {
                             cardRightClick = {this.cardRightClick.bind(this)}
                             dropCard = {this.dropCard.bind(this)}
                             openFolder = {this.openFolder.bind(this, "topFolder")}
-                            canDelete = {false}/>
+                            canDelete = {false}
+                            moveToFolder ={this.moveToFolder.bind(this)}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}/>
                 {contextMenu}

@@ -18,7 +18,8 @@ export default class Folder extends Component {
     return (
             <div className = "folder">
                 <h2>{name}</h2>
-                <CardList   canDelete= {canDelete}
+                <CardList   showAdd ={this.props.showAdd}
+                            canDelete= {canDelete}
                             onKeyDown={onKeyDown}
                             data = {data} 
                             onDelete = {onDelete}
@@ -27,7 +28,8 @@ export default class Folder extends Component {
                             cardRightClick = {cardRightClick}
                             dropCard = {dropCard}
                             onUndelete = {onUndelete}
-                            openFolder = {openFolder}/>
+                            openFolder = {openFolder}
+                            moveToFolder = {this.props.moveToFolder}/>
 
         </div>
     )
