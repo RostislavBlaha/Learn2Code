@@ -35,7 +35,6 @@ export default class App extends Component {
                         showEdit: false,
                         showTrash: false,
                         showFolder: false,
-                        folderName: "Testovací složka",
                         activeFolder: [],
                         topFolder: ''}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
@@ -212,6 +211,14 @@ export default class App extends Component {
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)
     }
+    changeName(name){
+        var item = this.state.activeFolder
+        item.name = name
+        var newData = ninja.edit(this.state.data, item)
+        this.setState({ initialData : newData, 
+                        data: newData })
+        localStorage["data"] = JSON.stringify(newData)
+    }
     moveToTrash(id) {
         var newData = ninja.moveToArray(this.state.data, this.state.trash, id)
         this.setState({ data: newData.source,
@@ -381,7 +388,8 @@ export default class App extends Component {
                             cardRightClick = {function(){}}
                             canDelete = {true}
                             openFolder = {this.openFolder.bind(this, "trash")}
-                            moveToFolder ={this.moveToFolder.bind(this)}/>
+                            moveToFolder ={this.moveToFolder.bind(this)}
+                            changeName ={function(){}}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -391,12 +399,12 @@ export default class App extends Component {
         if (this.state.showFolder){
             folderOverlay = (  
                 <div>
-                    <Folder name = {this.state.folderName}
-                            showAdd = {true}
+                    <Folder name = {this.state.activeFolder.name}
+                            showAdd = {(this.state.topFolder == "trash" ? false : true)}
                             onAdd = {this.addItem.bind(this)}
                             onHide={this.hideOverlay.bind(this)}
                             onKeyDown={this.handleKeyPress.bind(this)}
-                            data = {this.state.activeFolder.data} 
+                            data = {this.state.activeFolder} 
                             onDelete = {this.moveToTrash.bind(this)} 
                             cardDragOver = {this.folderDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
@@ -405,7 +413,8 @@ export default class App extends Component {
                             cardRightClick = {this.cardRightClick.bind(this)}
                             canDelete = {(this.state.topFolder == "trash" ? true : false)}
                             openFolder = {this.openFolder.bind(this, "folder")}
-                            moveToFolder ={function(){}}/>
+                            moveToFolder ={function(){}}
+                            changeName ={this.changeName.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
