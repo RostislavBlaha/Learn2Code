@@ -19,10 +19,6 @@ export default class LeftMenu extends Component {
                         onClick={this.handleTrash.bind(this)}>
                         <img src="./src/trash.svg" className="trashIcon" alt="Koš" title="Koš" />
                     </li>
-                    <li className="leftMenuItem"
-                        onClick={this.handleAddFolder.bind(this)}>
-                        <img src="./src/addfolder.svg" className="addfolderIcon" alt="Koš" title="Koš" />
-                    </li>
                 </ul>    
             </div>
         )

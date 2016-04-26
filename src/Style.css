@@ -158,12 +158,6 @@ h2 {
 .trashIcon:hover{
     transform: scale(1.15) 
 }
-.addfolderIcon{
-    margin: 15px 13px;
-}
-.addfolderIcon:hover{
-    transform: scale(1.15) 
-}
 
 
 /*AddForm*//*EditForm*/
