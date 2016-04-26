@@ -293,36 +293,37 @@ export default class App extends Component {
                       })
     }
     moveToFolder(card){
-        var id = card.id
-        if (this.state.topFolder == "trash"){
-            if (card.type == "folder"){
-                var newTrash = ninja.moveToArray(this.state.trash, this.state.trash[id].data, this.state.cardDragStart)
-                this.setState({trash: newTrash.source})  
-                localStorage["trash"] = JSON.stringify(newTrash.source)
+        if (card.type=="link"){
+            var id = card.id
+            if (this.state.topFolder == "trash"){
+                if (card.type == "folder"){
+                    var newTrash = ninja.moveToArray(this.state.trash, this.state.trash[id].data, this.state.cardDragStart)
+                    this.setState({trash: newTrash.source})  
+                    localStorage["trash"] = JSON.stringify(newTrash.source)
+                }else{
+                    this.addTrashFolder() 
+                    var newWorld = ninja.moveToArray(this.state.trash, this.state.trash[this.state.trash.length-1].data, this.state.cardDragStart)
+                    var newTrash = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
+                    newTrash.source = ninja.move(newTrash.source, newTrash.source.length-1, id)
+                    this.setState({trash: newTrash.source})  
+                    localStorage["trash"] = JSON.stringify(newTrash.source)
+                }
             }else{
-                this.addTrashFolder() 
-                var newWorld = ninja.moveToArray(this.state.trash, this.state.trash[this.state.trash.length-1].data, this.state.cardDragStart)
-                var newTrash = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
-                newTrash.source = ninja.move(newTrash.source, newTrash.source.length-1, id)
-                this.setState({trash: newTrash.source})  
-                localStorage["trash"] = JSON.stringify(newTrash.source)
+                if (card.type == "folder"){
+                    var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
+                    this.setState({data: newData.source})  
+                    localStorage["data"] = JSON.stringify(newData.source)
+                }else{
+                    this.addFolder()
+                    var newWorld = ninja.moveToArray(this.state.data, this.state.data[this.state.data.length-1].data, this.state.cardDragStart)
+                    var newData = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
+                    newData.source = ninja.move(newData.source, newData.source.length-1, id)
+                    this.setState({data: newData.source})  
+                    localStorage["data"] = JSON.stringify(newData.source)
+                }
+
             }
-        }else{
-            if (card.type == "folder"){
-                var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
-                this.setState({data: newData.source})  
-                localStorage["data"] = JSON.stringify(newData.source)
-            }else{
-                this.addFolder()
-                var newWorld = ninja.moveToArray(this.state.data, this.state.data[this.state.data.length-1].data, this.state.cardDragStart)
-                var newData = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
-                newData.source = ninja.move(newData.source, newData.source.length-1, id)
-                this.setState({data: newData.source})  
-                localStorage["data"] = JSON.stringify(newData.source)
-            }
-            
         }
-        
     }
         
     filterList(evt){
