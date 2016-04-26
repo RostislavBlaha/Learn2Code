@@ -332,6 +332,9 @@ export default class App extends Component {
             }
         }
     }
+    topDrop(){
+        console.log(TopDrop)
+    }
         
     filterList(evt){
         var updatedList
@@ -389,7 +392,9 @@ export default class App extends Component {
                             canDelete = {true}
                             openFolder = {this.openFolder.bind(this, "trash")}
                             moveToFolder ={this.moveToFolder.bind(this)}
-                            changeName ={function(){}}/>
+                            changeName ={function(){}}
+                            topDrop = {this.topDrop.bind(this)}
+                            closeOverlay = {this.hideOverlay.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -414,7 +419,9 @@ export default class App extends Component {
                             canDelete = {(this.state.topFolder == "trash" ? true : false)}
                             openFolder = {this.openFolder.bind(this, "folder")}
                             moveToFolder ={function(){}}
-                            changeName ={this.changeName.bind(this)}/>
+                            changeName ={this.changeName.bind(this)}
+                            topDrop = {this.topDrop.bind(this)}
+                            closeOverlay = {this.hideOverlay.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )

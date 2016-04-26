@@ -27,6 +27,7 @@ export default class Folder extends Component {
     
     
     return (
+        <div>
             <div className = "folder">
                 {name}
                 <CardList   showAdd ={this.props.showAdd}
@@ -41,7 +42,12 @@ export default class Folder extends Component {
                             onUndelete = {this.props.onUndelete}
                             openFolder = {this.props.openFolder}
                             moveToFolder = {this.props.moveToFolder}/>
-
+            
+            </div>
+            <div    className = "oZone"
+                    onDrop = {this.props.topDrop}
+                    onClick = {this.props.closeOverlay}>
+            </div>
         </div>
     )
   }

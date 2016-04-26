@@ -5,12 +5,7 @@ export default class LeftMenu extends Component {
         evt.preventDefault()
         this.props.showTrash()
     }
-    
-    handleAddFolder(evt){
-        evt.preventDefault()
-        this.props.addFolder()
-    }
-    
+
     render() {    
         return (
             <div className="leftMenu">
