@@ -181,6 +181,14 @@ export default class App extends Component {
         this.setState({ initialData : newData, 
                         data: newData })
         localStorage["data"] = JSON.stringify(newData)  
+    }  
+    addTrashFolder(){   
+        var item = {type: "folder",
+                    name:"Moje složka",
+                    data: []}     
+        var newTrash = ninja.add(this.state.trash, item)
+        this.setState({ trash : newTrash})
+        localStorage["trash"] = JSON.stringify(newTrash)  
     } 
     openFolder(topFolder, id){
         if (topFolder == "trash"){
@@ -280,12 +288,25 @@ export default class App extends Component {
     }
     handleTrash(){
         this.setState({ showTrash: true,
-                        contextMenu: false})
+                        contextMenu: false,
+                        topFolder: "trash"
+                      })
     }
     moveToFolder(card){
         var id = card.id
         if (this.state.topFolder == "trash"){
-            console.log("koš")
+            if (card.type == "folder"){
+                var newTrash = ninja.moveToArray(this.state.trash, this.state.trash[id].data, this.state.cardDragStart)
+                this.setState({trash: newTrash.source})  
+                localStorage["trash"] = JSON.stringify(newTrash.source)
+            }else{
+                this.addTrashFolder() 
+                var newWorld = ninja.moveToArray(this.state.trash, this.state.trash[this.state.trash.length-1].data, this.state.cardDragStart)
+                var newTrash = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
+                newTrash.source = ninja.move(newTrash.source, newTrash.source.length-1, id)
+                this.setState({trash: newTrash.source})  
+                localStorage["trash"] = JSON.stringify(newTrash.source)
+            }
         }else{
             if (card.type == "folder"){
                 var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
@@ -359,7 +380,7 @@ export default class App extends Component {
                             cardRightClick = {function(){}}
                             canDelete = {true}
                             openFolder = {this.openFolder.bind(this, "trash")}
-                            moveToFolder ={this.moveToFolder}/>
+                            moveToFolder ={this.moveToFolder.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
