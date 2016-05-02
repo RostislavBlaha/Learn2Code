@@ -220,11 +220,21 @@ export default class App extends Component {
         localStorage["data"] = JSON.stringify(newData)
     }
     moveToTrash(id) {
-        var newData = ninja.moveToArray(this.state.data, this.state.trash, id)
-        this.setState({ data: newData.source,
+        if (this.state.showFolder){
+            var newTrash = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.trash, id)
+            var newData = this.state.data
+            newData[this.state.activeFolder.id].data = newTrash.source
+            this.setState({ data: newData,
+                            trash: newTrash.target})
+            localStorage["data"] = JSON.stringify(newData)
+            localStorage["trash"] = JSON.stringify(newTrash.target)     
+        }else{
+             var newData = ninja.moveToArray(this.state.data, this.state.trash, id)    
+             this.setState({ data: newData.source,
                         trash: newData.target})
-        localStorage["data"] = JSON.stringify(newData.source)
-        localStorage["trash"] = JSON.stringify(newData.target)  
+            localStorage["data"] = JSON.stringify(newData.source)
+            localStorage["trash"] = JSON.stringify(newData.target)  
+        }  
     }  
     moveFromTrash(id) {
         if (this.state.showFolder){
@@ -233,7 +243,7 @@ export default class App extends Component {
             newTrash[this.state.activeFolder.id].data = newData.source
             this.setState({ trash: newTrash,
                             data: newData.target})
-            localStorage["trash"] = JSON.stringify(newData.source)
+            localStorage["trash"] = JSON.stringify(newTrash)
             localStorage["data"] = JSON.stringify(newData.target) 
         }else{
             var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
@@ -300,8 +310,8 @@ export default class App extends Component {
                       })
     }
     moveToFolder(card){
-        if (card.type=="link"){
-            var id = card.id
+        console.log(card)
+            var id = card.id 
             if (this.state.topFolder == "trash"){
                 if (card.type == "folder"){
                     var newTrash = ninja.moveToArray(this.state.trash, this.state.trash[id].data, this.state.cardDragStart)
@@ -328,10 +338,10 @@ export default class App extends Component {
                     this.setState({data: newData.source})  
                     localStorage["data"] = JSON.stringify(newData.source)
                 }
-
             }
-        }
+        
     }
+    
     topDrop(){
         console.log(TopDrop)
     }
