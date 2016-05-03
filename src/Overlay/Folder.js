@@ -10,6 +10,16 @@ export default class Folder extends Component {
       evt.preventDefault()
       this.props.changeName(evt.target.innerHTML)
   }
+  moveFromFolder(evt){
+      evt.preventDefault()
+      evt.stopPropagation()
+      this.props.moveFromFolder()
+      console.log("test")
+  }
+  onDragOver(evt){
+        evt.preventDefault() 
+        evt.stopPropagation()
+  }
   render() {
     var name 
     var data
@@ -45,8 +55,9 @@ export default class Folder extends Component {
             
             </div>
             <div    className = "oZone"
-                    onDrop = {this.props.topDrop}
-                    onClick = {this.props.closeOverlay}>
+                    onDrop = {this.moveFromFolder.bind(this)}
+                    onClick = {this.props.closeOverlay}
+                    onDragOver={this.onDragOver.bind(this)}>
             </div>
         </div>
     )

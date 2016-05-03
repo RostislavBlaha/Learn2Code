@@ -339,11 +339,17 @@ export default class App extends Component {
                     localStorage["data"] = JSON.stringify(newData.source)
                 }
             }
-        
     }
     
-    topDrop(){
-        console.log(TopDrop)
+    moveFromFolder(){
+        if (this.state.topFolder == "trash"){
+        }else{
+            var newWorld = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.data, this.state.cardDragStart)
+            var newData = newWorld.target
+            newData[this.state.activeFolder.id].data = newWorld.source
+            this.setState({data: newData})  
+            localStorage["data"] = JSON.stringify(newData)
+        }    
     }
         
     filterList(evt){
@@ -403,7 +409,7 @@ export default class App extends Component {
                             openFolder = {this.openFolder.bind(this, "trash")}
                             moveToFolder ={this.moveToFolder.bind(this)}
                             changeName ={function(){}}
-                            topDrop = {this.topDrop.bind(this)}
+                            moveFromFolder = {this.moveFromFolder.bind(this)}
                             closeOverlay = {this.hideOverlay.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
@@ -430,7 +436,7 @@ export default class App extends Component {
                             openFolder = {this.openFolder.bind(this, "folder")}
                             moveToFolder ={function(){}}
                             changeName ={this.changeName.bind(this)}
-                            topDrop = {this.topDrop.bind(this)}
+                            moveFromFolder = {this.moveFromFolder.bind(this)}
                             closeOverlay = {this.hideOverlay.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>

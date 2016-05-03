@@ -38,7 +38,6 @@ export default class Card extends Component {
     cardDragOn(evt){
         evt.preventDefault() 
         evt.stopPropagation()
-        //this.props.cardDragOn(this.props.card.id)
         this.setState({active: true})
     }
 
