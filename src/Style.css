@@ -61,10 +61,12 @@ h2 {
 }
 .img {
     border-radius: 4px 4px 0 0;
-    background-color: #666;
+    background-color: #999;
+    background-repeat: no-repeat;
     width: 100%;
     height: 160px;
     display: inline-block;
+    background-position:center;
 }
 .active {
     background-color: black;

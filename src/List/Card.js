@@ -135,7 +135,8 @@ export default class Card extends Component {
                     onDragLeave={this.dragLeave.bind(this)}
                     onDrop={this.moveToFolder.bind(this)}>
                     
-                  <div className={(this.state.active ? "img active" : "img")}>
+                  <div  className={(this.state.active ? "img active" : "img")}
+                        style = {{backgroundImage: "url(" + this.props.card.img + ")"}}>
                     {cross}
                     <div className="dangerZone"
                          onDragOver={this.cardDragOver.bind(this)}
