@@ -81,7 +81,7 @@ export default class Card extends Component {
     
     contextMenu(evt){
         evt.preventDefault()
-        this.props.cardRightClick(evt, this.props.card.id, this.props.card.url)
+        this.props.cardRightClick(evt, this.props.card)
         console.log(this)
     }
     
@@ -115,7 +115,20 @@ export default class Card extends Component {
             }
         }
         
-        var cardClass
+        var folderContent
+        if (this.props.card.type=="folder"){
+            var sub = this.props.card.data.slice(0,4)
+            var folderContent = sub.map(function(card){
+                return(
+                    <div className="folderItem" 
+                         key ={card.id}
+                         style = {{backgroundImage: "url(" + card.img + ")"}}>
+                    </div>
+                )
+            })
+                
+        }
+        
         
         return (
           <a href = {this.props.card.url}
@@ -137,7 +150,11 @@ export default class Card extends Component {
                     
                   <div  className={(this.state.active ? "img active" : "img")}
                         style = {{backgroundImage: "url(" + this.props.card.img + ")"}}>
-                    {cross}
+                      
+                    <div className="dontBreakMyLayout">
+                        {folderContent}
+                    </div>
+                      {cross}
                     <div className="dangerZone"
                          onDragOver={this.cardDragOver.bind(this)}
                          onDrop={this.dragDrop.bind(this)}>

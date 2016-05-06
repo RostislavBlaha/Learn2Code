@@ -43,8 +43,8 @@ export default class CardList extends Component {
                 openFolder={openFolder}
                 moveToFolder={moveToFolder}
             />
-        );
-    });
+        )
+    })
      
     var addCard = this.props.onAdd
     var newOverlay

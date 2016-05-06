@@ -30,8 +30,7 @@ export default class App extends Component {
                         contextMenu: false,
                         contextTop: '',
                         contextLeft: '',
-                        contextID: '',
-                        contextURL: '',
+                        context: '',
                         showEdit: false,
                         showTrash: false,
                         showFolder: false,
@@ -51,101 +50,7 @@ export default class App extends Component {
     }
     
     handleKeyPress(evt){
-        var newData = [ {type: "link",
-                         name:"lupa.cz",
-                         url:"http://www.lupa.cz/",
-                         img:"http://i.iinfo.cz/l/logo-lupa.png",
-                         description:"Tady bude meta description",
-                         id:0},           
-                        {type: "link",
-                         name:"boingboing.net",
-                         url:"http://boingboing.net/",
-                         img:"http://media.boingboing.net/wp-content/themes/bng/i/logo.png",
-                         description:"Tady bude meta description",
-                         id:1},
-                        {type: "link",
-                         name:"czechcrunch.cz",
-                         url:"http://www.czechcrunch.cz/",
-                         img:"http://www.czechcrunch.cz/wp-content/uploads/2014/04/czechcrunch.png",
-                         description:"Tady bude meta description",
-                         id:2},
-                        {type: "link",
-                         name:"techcrunch.com",
-                         url:"http://techcrunch.com/",
-                         img:"https://s0.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/logo.svg",
-                         description:"Tady bude meta description",
-                         id:3},
-                        {type: "link",
-                         name:"schickelgruber.blog.cz",
-                         url:"http://schickelgruber.blog.cz/",
-                         img:"http://bs.jxs.cz/ublog/themes/36536894.jpg",
-                         description:"Tady bude meta description",
-                         id:4},
-                        {type: "link",
-                         name:"uxmovement.com",
-                         url:"http://uxmovement.com/",
-                         img:"http://uxmovement.com/wp-content/uploads/2015/12/uxmovement-logo.png",
-                         description:"Tady bude meta description",
-                         id:5},
-                        {type: "link",
-                         name:"jxnblk.com",
-                         url:"http://jxnblk.com/writing/",
-                         img:"",
-                         description:"Tady bude meta description",
-                         id:6},
-                        {type: "link",
-                         name:"dokosiku.blogspot.cz",
-                         url:"http://dokosiku.blogspot.cz/",
-                         img:"http://1.bp.blogspot.com/_FERXCc5Modc/S5WB75a-DUI/AAAAAAAABs8/fLfACyZtxlM/S220-s73/marek_73x73.jpg",
-                         description:"Tady bude meta description",
-                         id:7},
-                        {type: "link",
-                         name:"mos05.novartis.net:8441",
-                         url:"https://mos05.novartis.net:8441/dashboard.action", img:"https://mos05.novartis.net:8441/s/en_GB/5994/3a465f7321af83b92e8f7149d515f72cee083e87.1/_/images/logo/confluence-logo.png",
-                         description:"Tady bude meta description",
-                         id:8},
-                        {type: "link",
-                         name:"mos07.novartis.net:8443",
-                         url:"https://mos07.novartis.net:8443/jira/secure/Dashboard.jspa",
-                         img:"https://mos07.novartis.net:8443/jira/s/en_US-x65b74/70107/b6b48b2829824b869586ac216d119363/_/images/icon-jira-logo.png",
-                         description:"Tady bude meta description",
-                         id:9},
-                        {type: "link",
-                         name:"myhcl.com",
-                         url:"http://myhcl.com/",
-                         img:"https://www.myhcl.com/Login/images/welcome.png",
-                         description:"Tady bude meta description",
-                         id:10},
-                        {type: "folder",
-                         name:"Další zajímavé odkazy",
-                         data: [    
-                                    {type: "link",
-                                     name:"lupa.cz",
-                                     url:"http://www.lupa.cz/",
-                                     img:"http://i.iinfo.cz/l/logo-lupa.png",
-                                     description:"Tady bude meta description",
-                                     id:0},           
-                                    {type: "link",
-                                     name:"boingboing.net",
-                                     url:"http://boingboing.net/",
-                                     img:"http://media.boingboing.net/wp-content/themes/bng/i/logo.png",
-                                     description:"Tady bude meta description",
-                                     id:1},
-                                    {type: "link",
-                                     name:"czechcrunch.cz",
-                                     url:"http://www.czechcrunch.cz/",
-                                     img:"http://www.czechcrunch.cz/wp-content/uploads/2014/04/czechcrunch.png",
-                                     description:"Tady bude meta description",
-                                     id:2},
-                                    {type: "link",
-                                     name:"techcrunch.com",
-                                     url:"http://techcrunch.com/",
-                                     img:"https://s0.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/logo.svg",
-                                     description:"Tady bude meta description",
-                                     id:3}
-                         ],
-                         id:11}
-                      ]
+        var newData = [{"name":"seznam.cz","url":"http://seznam.cz", "img":"https://www.seznam.cz/media/img/seznam-icons/favicon-96x96.png", "description":"Tady bude meta description","id":0},{"name":"twitter.com","url":"http://twitter.com","img":"https://abs.twimg.com/a/1461952323/img/t1/favicon.svg", "description":"Tady bude meta description","id":1},{"name":"github.com","url":"http://github.com","img":"https://assets-cdn.github.com/favicon.ico", "description":"Tady bude meta description","id":2},{"type":"link","name":"lupa.cz","url":"http://www.lupa.cz/","img":"http://i.iinfo.cz/l/logo-lupa.png","description":"Tady bude meta description","id":3},{"type":"link","name":"boingboing.net","url":"http://boingboing.net/","img":"http://media.boingboing.net/wp-content/themes/bng/i/logo.png","description":"Tady bude meta description","id":4},{"type":"link","name":"czechcrunch.cz","url":"http://www.czechcrunch.cz/","img":"http://www.czechcrunch.cz/wp-content/uploads/2014/04/czechcrunch.png","description":"Tady bude meta description","id":5},{"type":"link","name":"techcrunch.com","url":"http://techcrunch.com/","img":"https://s0.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/logo.svg","description":"Tady bude meta description","id":6},{"type":"folder","name":"Blogy","data":[{"type":"link","name":"uxmovement.com","url":"http://uxmovement.com/","img":"http://uxmovement.com/wp-content/uploads/2015/12/uxmovement-logo.png","description":"Tady bude meta description","id":0},{"type":"link","name":"dokosiku.blogspot.cz","url":"http://dokosiku.blogspot.cz/","img":"http://1.bp.blogspot.com/_FERXCc5Modc/S5WB75a-DUI/AAAAAAAABs8/fLfACyZtxlM/S220-s73/marek_73x73.jpg","description":"Tady bude meta description","id":1},{"type":"link","name":"jxnblk.com","url":"http://jxnblk.com/writing/","img":"","description":"Tady bude meta description","id":2},{"type":"link","name":"schickelgruber.blog.cz","url":"http://schickelgruber.blog.cz/","img":"http://bs.jxs.cz/ublog/themes/36536894.jpg","description":"Tady bude meta description","id":3}],"id":7},{"type":"folder","name":"Novartis","data":[{"type":"link","name":"mos07.novartis.net:8443","url":"https://mos07.novartis.net:8443/jira/secure/Dashboard.jspa","img":"https://mos07.novartis.net:8443/jira/s/en_US-x65b74/70107/b6b48b2829824b869586ac216d119363/_/images/icon-jira-logo.png","description":"Tady bude meta description","id":0},{"type":"link","name":"mos05.novartis.net:8441","url":"https://mos05.novartis.net:8441/dashboard.action","img":"https://mos05.novartis.net:8441/s/en_GB/5994/3a465f7321af83b92e8f7149d515f72cee083e87.1/_/images/logo/confluence-logo.png","description":"Tady bude meta description","id":1}],"id":8},{"type":"link","name":"myhcl.com","url":"http://myhcl.com/","img":"https://www.myhcl.com/Login/images/welcome.png","description":"Tady bude meta description","id":9},{"type":"folder","name":"Další zajímavé odkazy","data":[{"type":"link","name":"lupa.cz","url":"http://www.lupa.cz/","img":"http://i.iinfo.cz/l/logo-lupa.png","description":"Tady bude meta description","id":0},{"type":"link","name":"boingboing.net","url":"http://boingboing.net/","img":"http://media.boingboing.net/wp-content/themes/bng/i/logo.png","description":"Tady bude meta description","id":1},{"type":"link","name":"czechcrunch.cz","url":"http://www.czechcrunch.cz/","img":"http://www.czechcrunch.cz/wp-content/uploads/2014/04/czechcrunch.png","description":"Tady bude meta description","id":2},{"type":"link","name":"techcrunch.com","url":"http://techcrunch.com/","img":"https://s0.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/logo.svg","description":"Tady bude meta description","id":3}],"id":10}]
         if (evt.keyCode == 33) {      
             this.setState({ initialData : newData, 
                             data: newData })
@@ -157,12 +62,11 @@ export default class App extends Component {
         this.setState({contextMenu: false})
     }
     
-    cardRightClick(evt, id, url){
+    cardRightClick(evt, context){
         this.setState({contextMenu: true, 
                        contextTop: evt.clientY + window.scrollY ,
                        contextLeft: evt.clientX,
-                       contextID: id,
-                       contextURL: url })
+                       context: context })
     }
     
     hideOverlay(){
@@ -219,7 +123,7 @@ export default class App extends Component {
     }
     editItem(url) { 
         var item = this.expandURL(url)   
-        item.id = this.state.contextID
+        item.id = this.state.context.id
         var newData = ninja.edit(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
@@ -234,6 +138,7 @@ export default class App extends Component {
         localStorage["data"] = JSON.stringify(newData)
     }
     moveToTrash(id) {
+        console.log("Smaž" + id)
         if (this.state.showFolder){
             var newTrash = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.trash, id)
             var newData = this.state.data
@@ -306,7 +211,7 @@ export default class App extends Component {
     }
     
     handleContextDelete(){
-        this.removeItem(this.state.data[this.state.contextID]) 
+        this.removeItem(this.state.data[this.state.context.id]) 
         this.setState({contextMenu: false})
     }
     handleContextEdit(){
@@ -314,7 +219,13 @@ export default class App extends Component {
                        contextMenu: false})
     }
     handleContextOpen(){
-        window.open(this.state.contextURL)
+        if (this.state.context.type == "folder"){
+            for (let i = 0; i < this.state.context.data.length; i++) {
+                window.open(this.state.context.data[i].url)
+            }
+        }else{
+            window.open(this.state.context.url)    
+        }
         this.setState({contextMenu: false})
     }
     handleTrash(){
@@ -393,13 +304,13 @@ export default class App extends Component {
         }
         
         var editOverlay
-        var id = this.state.contextID - 1
+        var id = this.state.context.id - 1
         if (this.state.showEdit){
             editOverlay = (  
                 <div>
                     <EditForm    onSubmit={this.editItem.bind(this)} 
                                  onHide={this.hideOverlay.bind(this)}
-                                 url={this.state.contextURL}/>
+                                 url={this.state.context.url}/>
                     <Overlay     onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -473,7 +384,8 @@ export default class App extends Component {
                             canDelete = {false}
                             moveToFolder ={this.moveToFolder.bind(this)}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
-                            addFolder = {this.addFolder.bind(this)}/>
+                            addFolder = {this.addFolder.bind(this)}
+                            onDrop ={this.moveToTrash.bind(this, this.state.cardDragStart)}/>
                 {contextMenu}
                 {editOverlay}
                 {trashOverlay}
