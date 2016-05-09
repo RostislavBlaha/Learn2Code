@@ -37,10 +37,21 @@ export default class App extends Component {
                         activeFolder: [],
                         topFolder: ''}  
         document.addEventListener("keydown", this.handleKeyPress.bind(this), false)
-    }     
+    }    
+    loadCommentsFromServer() {
+      var xhttp = new XMLHttpRequest()
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+         console.log(xhttp.response)
+        }
+      }
+      xhttp.open("GET", this.props.url, true);
+      xhttp.send();
+    }
+      
     componentDidMount(){
         this.setState({data: this.state.initialData})
-        
+        this.loadCommentsFromServer()      
     }
     expandURL(url){
         var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
