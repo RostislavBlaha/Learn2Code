@@ -70,8 +70,7 @@ export default class App extends Component {
     saveData(data, date){
         var newData = { date: date,
                         data: data}
-        localStorage["data"] = JSON.stringify(newData)
-        console.log("Snažím se poslat data na server.")       
+        localStorage["data"] = JSON.stringify(newData)    
         fetch(this.props.url, {
           headers: new Headers({
               'Content-Type': 'application/json'
@@ -91,17 +90,8 @@ export default class App extends Component {
     expandURL(url){
         var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
                         url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
-                        description:"Tady bude meta description"} 
+                        description:"Tady bude meta description", img:""} 
         return item             
-    }
-    
-    handleKeyPress(evt){
-        var newData = this.state.loadedData
-        if (evt.keyCode == 33) {  
-            this.setState({ initialData : newData, 
-                            data: newData })
-            localStorage["data"] = JSON.stringify(newData)     
-        }
     }
     
     pageClick(){
@@ -134,16 +124,17 @@ export default class App extends Component {
         var newData = ninja.add(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
-        localStorage["data"].data = JSON.stringify(newData)  
+        this.saveData(newData, Date.now()) 
     } 
     addFolder(){   
         var item = {type: "folder",
                     name:"Moje složka",
-                    data: []}     
+                    data: []
+                   }     
         var newData = ninja.add(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
-        localStorage["data"].data = JSON.stringify(newData)  
+        this.saveData(newData, Date.now())
     }  
     addTrashFolder(){   
         var item = {type: "folder",
@@ -173,6 +164,7 @@ export default class App extends Component {
         var newData = ninja.edit(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
+        this.saveData(newData, Date.now()) 
     }
     changeName(name){
         var item = this.state.activeFolder
@@ -180,7 +172,7 @@ export default class App extends Component {
         var newData = ninja.edit(this.state.data, item)
         this.setState({ initialData : newData, 
                         data: newData })
-        localStorage["data"].data = JSON.stringify(newData)
+        this.saveData(newData, Date.now()) 
     }
     moveToTrash(id) {
         if (this.state.showFolder){
@@ -189,12 +181,14 @@ export default class App extends Component {
             newData[this.state.activeFolder.id].data = newTrash.source
             this.setState({ data: newData,
                             trash: newTrash.target})
-            localStorage["trash"].data = JSON.stringify(newTrash.target)     
+            localStorage["trash"].data = JSON.stringify(newTrash.target)    
+            this.saveData(newData, Date.now()) 
         }else{
              var newData = ninja.moveToArray(this.state.data, this.state.trash, id)    
              this.setState({ data: newData.source,
                         trash: newData.target})
-            localStorage["trash"] = JSON.stringify(newData.target)  
+            localStorage["trash"] = JSON.stringify(newData.target)
+            this.saveData(newData.source, Date.now()) 
         }  
     }  
     moveFromTrash(id) {
@@ -205,11 +199,13 @@ export default class App extends Component {
             this.setState({ trash: newTrash,
                             data: newData.target})
             localStorage["trash"] = JSON.stringify(newTrash)
+            this.saveData(newData.target, Date.now()) 
         }else{
             var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
             this.setState({ trash: newData.source,
                             data: newData.target})
             localStorage["trash"] = JSON.stringify(newData.source)
+            this.saveData(newData.target, Date.now()) 
         }
     }  
     removeItem(id) {
@@ -247,6 +243,7 @@ export default class App extends Component {
     }
     dropCard(){
         localStorage["trash"] = JSON.stringify(this.state.trash)
+        this.saveData(this.state.initialData, Date.now()) 
     }
     
     handleContextDelete(){
@@ -292,12 +289,14 @@ export default class App extends Component {
                 if (card.type == "folder"){
                     var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
                     this.setState({data: newData.source})  
+                    this.saveData(newData.source, Date.now()) 
                 }else{
                     this.addFolder()
                     var newWorld = ninja.moveToArray(this.state.data, this.state.data[this.state.data.length-1].data, this.state.cardDragStart)
                     var newData = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
                     newData.source = ninja.move(newData.source, newData.source.length-1, id)
-                    this.setState({data: newData.source})  
+                    this.setState({data: newData.source}) 
+                    this.saveData(newData.source, Date.now()) 
                 }
             }
     }
@@ -309,6 +308,7 @@ export default class App extends Component {
             var newData = newWorld.target
             newData[this.state.activeFolder.id].data = newWorld.source
             this.setState({data: newData})  
+            this.saveData(newData, Date.now()) 
         }    
     }
         
