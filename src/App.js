@@ -41,6 +41,12 @@ export default class App extends Component {
                         activeFolder: [],
                         topFolder: ''}  
     }
+          
+    componentDidMount(){
+        this.setState({data: this.state.initialData})
+        this.loadData()  
+        var date = new Date()
+    }
     
     loadData() {
         fetch(this.props.url, {
@@ -76,12 +82,6 @@ export default class App extends Component {
     saveTrash(data){
         this.setState({ trash : data})
         localStorage["trash"] = JSON.stringify(data)     
-    }
-      
-    componentDidMount(){
-        this.setState({data: this.state.initialData})
-        this.loadData()  
-        var date = new Date()
     }
     
     expandURL(url){
