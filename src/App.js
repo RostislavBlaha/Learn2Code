@@ -43,7 +43,6 @@ export default class App extends Component {
     }
     
     loadData() {
-
         fetch(this.props.url, {
             method: 'get'
         }).then(function(res) {
@@ -53,15 +52,15 @@ export default class App extends Component {
                 this.saveData(this.state.initialData, this.state.localDate) 
             } else if (json.date == this.state.localDate){        
             } else {
-                 this.setState({data: json.data,   
-                                initialData: json.data,
-                                localDate: json.date})
+                 this.setState({localDate: json.date})
                  this.saveData(json.data, json.date)     
              }
         }).catch(function(err) {})
     }
     
     saveData(data, date){
+        this.setState({ initialData : data, 
+                        data: data})
         var newData = { date: date,
                         data: data}
         localStorage["data"] = JSON.stringify(newData)    
@@ -72,7 +71,6 @@ export default class App extends Component {
           method: 'post',
           body: JSON.stringify(newData)
         })
-
    }
       
     componentDidMount(){
@@ -116,8 +114,6 @@ export default class App extends Component {
     addItem(url){   
         var item = this.expandURL(url)      
         var newData = ninja.add(this.state.data, item)
-        this.setState({ initialData : newData, 
-                        data: newData })
         this.saveData(newData, Date.now()) 
     } 
     addFolder(){   
@@ -126,8 +122,6 @@ export default class App extends Component {
                     data: []
                    }     
         var newData = ninja.add(this.state.data, item)
-        this.setState({ initialData : newData, 
-                        data: newData })
         this.saveData(newData, Date.now())
     }  
     addTrashFolder(){   
@@ -164,8 +158,6 @@ export default class App extends Component {
         var item = this.state.activeFolder
         item.name = name
         var newData = ninja.edit(this.state.data, item)
-        this.setState({ initialData : newData, 
-                        data: newData })
         this.saveData(newData, Date.now()) 
     }
     moveToTrash(id) {
@@ -173,14 +165,12 @@ export default class App extends Component {
             var newTrash = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.trash, id)
             var newData = this.state.data
             newData[this.state.activeFolder.id].data = newTrash.source
-            this.setState({ data: newData,
-                            trash: newTrash.target})
+            this.setState({ trash: newTrash.target})
             localStorage["trash"].data = JSON.stringify(newTrash.target)    
             this.saveData(newData, Date.now()) 
         }else{
              var newData = ninja.moveToArray(this.state.data, this.state.trash, id)    
-             this.setState({ data: newData.source,
-                        trash: newData.target})
+             this.setState({ trash: newData.target})
             localStorage["trash"] = JSON.stringify(newData.target)
             this.saveData(newData.source, Date.now()) 
         }  
@@ -190,14 +180,12 @@ export default class App extends Component {
             var newData = ninja.moveToArray(this.state.trash[this.state.activeFolder.id].data, this.state.data, id)
             var newTrash = this.state.trash
             newTrash[this.state.activeFolder.id].data = newData.source
-            this.setState({ trash: newTrash,
-                            data: newData.target})
+            this.setState({ trash: newTrash})
             localStorage["trash"] = JSON.stringify(newTrash)
             this.saveData(newData.target, Date.now()) 
         }else{
             var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
-            this.setState({ trash: newData.source,
-                            data: newData.target})
+            this.setState({ trash: newData.source})
             localStorage["trash"] = JSON.stringify(newData.source)
             this.saveData(newData.target, Date.now()) 
         }
