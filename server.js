@@ -16,12 +16,13 @@ var port = isProduction ? process.env.PORT : 3000
 var publicPath = path.resolve(__dirname, '.')
 
 app.use(express.static(publicPath))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 if (!isProduction) {
   var bundle = require('./server/bundle.js')
   bundle()
   app.all('/build/*', function (req, res) {
-      console.log("get")
     proxy.web(req, res, {
         target: 'http://localhost:8080'
     })
@@ -42,17 +43,16 @@ app.listen(port, function () {
         if (err) {
           console.error(err)
           process.exit(1)
-          console.log("wtf")
         }
         res.send(JSON.parse(data))
-        console.log(data)
       })
-      console.log("get")
   })
   
   app.post('/api/data', function (req, res) {
-    res.send('Got a POST request')
-    console.log("post")
+    var data = JSON.stringify(req.body)
+    fs.writeFile(dataFile, data, function (err,data) {
+      if (err) {return console.log(err)}
+    })  
   })
   
   app.put('/user', function (req, res) {

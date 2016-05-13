@@ -42,7 +42,6 @@ export default class Folder extends Component {
                 {name}
                 <CardList   showAdd ={this.props.showAdd}
                             canDelete= {this.props.canDelete}
-                            onKeyDown={this.props.onKeyDown}
                             data = {data} 
                             onDelete = {this.props.onDelete}
                             cardDragOver = {this.props.cardDragOver}

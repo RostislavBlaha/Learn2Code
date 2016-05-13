@@ -82,7 +82,6 @@ export default class Card extends Component {
     contextMenu(evt){
         evt.preventDefault()
         this.props.cardRightClick(evt, this.props.card)
-        console.log(this)
     }
     
     render() {
