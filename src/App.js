@@ -43,28 +43,22 @@ export default class App extends Component {
     }
     
     loadData() {
-      var xhttp = new XMLHttpRequest()
-      var that = this
-      xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-             var json = JSON.parse(xhttp.response) 
-             var serverData = json.data
-             var serverDate = json.date
-             if (serverDate < that.state.localDate ){
-                 that.saveData(that.state.initialData, that.state.localDate) 
-             } else if (serverDate == that.state.localDate){
-                 
-             } else {
-                 that.setState({data: serverData,   
-                                initialData: serverData,
-                                localDate: serverDate})
-                 that.saveData(serverData, serverDate)     
+
+        fetch(this.props.url, {
+            method: 'get'
+        }).then(function(res) {
+            return res.json()
+        }).then(function(json){
+            if (json.date < this.state.localDate ){
+                this.saveData(this.state.initialData, this.state.localDate) 
+            } else if (json.date == this.state.localDate){        
+            } else {
+                 this.setState({data: json.data,   
+                                initialData: json.data,
+                                localDate: json.date})
+                 this.saveData(json.data, json.date)     
              }
-            
-        }
-      }
-      xhttp.open("GET", this.props.url, true)
-      xhttp.send()
+        }).catch(function(err) {})
     }
     
     saveData(data, date){
