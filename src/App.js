@@ -72,6 +72,11 @@ export default class App extends Component {
           body: JSON.stringify(newData)
         })
    }
+    
+    saveTrash(data){
+        this.setState({ trash : data})
+        localStorage["trash"] = JSON.stringify(data)     
+    }
       
     componentDidMount(){
         this.setState({data: this.state.initialData})
@@ -129,8 +134,7 @@ export default class App extends Component {
                     name:"Moje složka",
                     data: []}     
         var newTrash = ninja.add(this.state.trash, item)
-        this.setState({ trash : newTrash})
-        localStorage["trash"] = JSON.stringify(newTrash)  
+        this.saveTrash(newTrash)
     } 
     openFolder(topFolder, id){
         if (topFolder == "trash"){
@@ -165,13 +169,11 @@ export default class App extends Component {
             var newTrash = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.trash, id)
             var newData = this.state.data
             newData[this.state.activeFolder.id].data = newTrash.source
-            this.setState({ trash: newTrash.target})
-            localStorage["trash"].data = JSON.stringify(newTrash.target)    
+            this.saveTrash(newTrash.target)   
             this.saveData(newData, Date.now()) 
         }else{
-             var newData = ninja.moveToArray(this.state.data, this.state.trash, id)    
-             this.setState({ trash: newData.target})
-            localStorage["trash"] = JSON.stringify(newData.target)
+            var newData = ninja.moveToArray(this.state.data, this.state.trash, id) 
+            this.saveTrash(newData.target) 
             this.saveData(newData.source, Date.now()) 
         }  
     }  
@@ -180,20 +182,17 @@ export default class App extends Component {
             var newData = ninja.moveToArray(this.state.trash[this.state.activeFolder.id].data, this.state.data, id)
             var newTrash = this.state.trash
             newTrash[this.state.activeFolder.id].data = newData.source
-            this.setState({ trash: newTrash})
-            localStorage["trash"] = JSON.stringify(newTrash)
+            this.saveTrash(newTrash) 
             this.saveData(newData.target, Date.now()) 
         }else{
             var newData = ninja.moveToArray(this.state.trash, this.state.data, id)
-            this.setState({ trash: newData.source})
-            localStorage["trash"] = JSON.stringify(newData.source)
+            this.saveTrash(newData.source) 
             this.saveData(newData.target, Date.now()) 
         }
     }  
     removeItem(id) {
-        var newData = ninja.remove(this.state.trash, id)
-        this.setState({ trash: newData})
-        localStorage["trash"].data = JSON.stringify(newData)  
+        var newTrash = ninja.remove(this.state.trash, id)
+        this.saveTrash(newTrash)  
     }  
     cardDragOver(id){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
@@ -224,7 +223,7 @@ export default class App extends Component {
         this.setState({cardDragStart: id})
     }
     dropCard(){
-        localStorage["trash"] = JSON.stringify(this.state.trash)
+        this.saveTrash(this.state.trash) 
         this.saveData(this.state.initialData, Date.now()) 
     }
     
@@ -257,27 +256,23 @@ export default class App extends Component {
             if (this.state.topFolder == "trash"){
                 if (card.type == "folder"){
                     var newTrash = ninja.moveToArray(this.state.trash, this.state.trash[id].data, this.state.cardDragStart)
-                    this.setState({trash: newTrash.source})  
-                    localStorage["trash"] = JSON.stringify(newTrash.source)
+                    this.saveTrash(newTrash.source)  
                 }else{
                     this.addTrashFolder() 
                     var newWorld = ninja.moveToArray(this.state.trash, this.state.trash[this.state.trash.length-1].data, this.state.cardDragStart)
                     var newTrash = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
                     newTrash.source = ninja.move(newTrash.source, newTrash.source.length-1, id)
-                    this.setState({trash: newTrash.source})  
-                    localStorage["trash"] = JSON.stringify(newTrash.source)
+                    this.saveTrash(newTrash.source) 
                 }
             }else{
                 if (card.type == "folder"){
-                    var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart)
-                    this.setState({data: newData.source})  
+                    var newData = ninja.moveToArray(this.state.data, this.state.data[id].data, this.state.cardDragStart) 
                     this.saveData(newData.source, Date.now()) 
                 }else{
                     this.addFolder()
                     var newWorld = ninja.moveToArray(this.state.data, this.state.data[this.state.data.length-1].data, this.state.cardDragStart)
                     var newData = ninja.moveToArray(newWorld.source, newWorld.source[newWorld.source.length-1].data, id)
                     newData.source = ninja.move(newData.source, newData.source.length-1, id)
-                    this.setState({data: newData.source}) 
                     this.saveData(newData.source, Date.now()) 
                 }
             }
@@ -288,8 +283,7 @@ export default class App extends Component {
         }else{
             var newWorld = ninja.moveToArray(this.state.data[this.state.activeFolder.id].data, this.state.data, this.state.cardDragStart)
             var newData = newWorld.target
-            newData[this.state.activeFolder.id].data = newWorld.source
-            this.setState({data: newData})  
+            newData[this.state.activeFolder.id].data = newWorld.source 
             this.saveData(newData, Date.now()) 
         }    
     }
