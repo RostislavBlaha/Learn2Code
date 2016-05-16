@@ -6,7 +6,9 @@ var bodyParser = require('body-parser')
 var path = require('path')
 var fs = require('fs')
 var httpProxy = require('http-proxy')
+var Xray = require('x-ray')
 
+var parser = Xray()
 var proxy = httpProxy.createProxyServer()
 var app = express()
 var dataFile = path.join(__dirname, 'data.json')
@@ -35,8 +37,7 @@ proxy.on('error', function(e) {
 })
 
 
-app.listen(port, function () {
-    
+app.listen(port, function () {  
     
    app.get('/api/data', function(req, res) {
       fs.readFile(dataFile, function(err, data) {
@@ -45,6 +46,12 @@ app.listen(port, function () {
           process.exit(1)
         }
         res.send(JSON.parse(data))
+        parser('https://www.google.com/', {  title: 'title',
+                                            links: ['a@href'],
+                                            image: 'img',
+                                        })(function(err, title) {
+          console.log(title)
+        })
       })
   })
   
@@ -57,16 +64,13 @@ app.listen(port, function () {
   
   app.put('/user', function (req, res) {
     res.send('Got a PUT request at /user')
-    console.log("put")
   })
   
   app.delete('/user', function (req, res) {
     res.send('Got a DELETE request at /user')
-    console.log("delete")
   })
 
   console.log('Listening at localhost:3000')
-  console.log(dataFile)
 })
     
 
