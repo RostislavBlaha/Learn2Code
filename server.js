@@ -36,8 +36,26 @@ proxy.on('error', function(e) {
   console.log('Could not connect to proxy, please try again...')
 })
 
+function parseWebsite(url){
+    parser(url, {   title: 'title',
+                    iconsRel: ['link@rel'],
+                    iconsHref: ['link@href'],
+                    images: ['img@src'],
+                    })(function(err, parsedData) {
+        var website = { title: parsedData.title,
+                        favicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')],
+                        iphoneFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')],
+                        androidFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')],
+                        images: parsedData.images,
+                      }    
+        
+        console.log(website)
+    })    
+}
 
-app.listen(port, function () {  
+
+app.listen(port, function () {
+    
     
    app.get('/api/data', function(req, res) {
       fs.readFile(dataFile, function(err, data) {
@@ -46,12 +64,7 @@ app.listen(port, function () {
           process.exit(1)
         }
         res.send(JSON.parse(data))
-        parser('https://www.google.com/', {  title: 'title',
-                                            links: ['a@href'],
-                                            image: 'img',
-                                        })(function(err, title) {
-          console.log(title)
-        })
+        parseWebsite('http://rostislavblaha.cz')
       })
   })
   
