@@ -17,6 +17,7 @@ export default class App extends Component {
             var data = json.data
             var localDate = json.date
         } catch(err) {
+            localDate = 0
             data = err
         }
         
@@ -45,7 +46,6 @@ export default class App extends Component {
     componentDidMount(){
         this.setState({data: this.state.initialData})
         this.loadData()  
-        var date = new Date()
     }
     
     loadData() {
@@ -116,8 +116,18 @@ export default class App extends Component {
         }
     }
       
-    addItem(url){   
-        var item = this.expandURL(url)      
+    addItem(url){  
+        var item = this.expandURL(url) 
+        var apiURL = "/api/images/" + "?url=" + item.url
+        fetch(apiURL, {
+            method: 'get',
+            mode: 'cors'
+        }).then(function(res) {
+            return res.json()
+        }).then(function(wtf){
+            console.log(wtf)
+        }).catch(function(err) {})
+             
         var newData = ninja.add(this.state.data, item)
         this.saveData(newData, Date.now()) 
     } 

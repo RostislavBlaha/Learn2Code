@@ -36,22 +36,38 @@ proxy.on('error', function(e) {
   console.log('Could not connect to proxy, please try again...')
 })
 
-function parseWebsite(url){
+Array.prototype.clean = function(deleteValue) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == deleteValue) {         
+      this.splice(i, 1)
+      i--
+    }
+  }
+  return this
+}
+
+function parseWebsite(callback, url){
     parser(url, {   title: 'title',
                     iconsRel: ['link@rel'],
                     iconsHref: ['link@href'],
-                    images: ['img@src'],
-                    })(function(err, parsedData) {
+                    images: ['img@src']
+                    })
+    (function(err, parsedData) {
+        if (err) {
+          console.error(err)
+          callback(null)
+        } else{
         var website = { title: parsedData.title,
                         favicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')],
                         iphoneFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')],
                         androidFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')],
-                        images: parsedData.images,
-                      }    
-        
-        console.log(website)
+                        images: parsedData.images.clean("")
+                      }
+        callback(website)
+        }
     })    
 }
+
 
 
 app.listen(port, function () {
@@ -64,9 +80,17 @@ app.listen(port, function () {
           process.exit(1)
         }
         res.send(JSON.parse(data))
-        parseWebsite('http://rostislavblaha.cz')
       })
   })
+   
+   
+   app.get('/api/images', function(req, res) {
+       console.log(req.query)
+        parseWebsite(function(site){
+            console.log(site)
+            res.send(site)
+        }, req.query.url)
+  }) 
   
   app.post('/api/data', function (req, res) {
     var data = JSON.stringify(req.body)
