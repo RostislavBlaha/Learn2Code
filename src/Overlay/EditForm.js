@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import URL from './url'
+import URL from './URL'
 
 export default class EditForm extends Component {   
   render() {

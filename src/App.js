@@ -40,7 +40,8 @@ export default class App extends Component {
                         showTrash: false,
                         showFolder: false,
                         activeFolder: [],
-                        topFolder: ''}  
+                        topFolder: '',
+                        website:[]}  
     }
           
     componentDidMount(){
@@ -109,27 +110,25 @@ export default class App extends Component {
     }
     
     showAdd(updatedList){
-        if (updatedList.length == this.state.initialData.length){
-            this.state.filterList = true
-        } else {
-            this.state.filterList = false
-        }
+            this.state.filterList = (updatedList.length == this.state.initialData.length) ? true : false
     }
       
     addItem(url){  
         var item = this.expandURL(url) 
         var apiURL = "/api/images/" + "?url=" + item.url
+        var that = this
         fetch(apiURL, {
-            method: 'get',
-            mode: 'cors'
-        }).then(function(res) {
-            return res.json()
-        }).then(function(wtf){
-            console.log(wtf)
-        }).catch(function(err) {})
-             
-        var newData = ninja.add(this.state.data, item)
-        this.saveData(newData, Date.now()) 
+                method: 'get'
+            }).then(function(res) {
+                return res.json()
+            }).then(function(website){
+                that.setState({website: website})
+            }).catch(function(err) {}) 
+        
+        
+        
+        //var newData = ninja.add(this.state.data, item)
+        //this.saveData(newData, Date.now()) 
     } 
     addFolder(){   
         var item = {type: "folder",
@@ -400,7 +399,8 @@ export default class App extends Component {
                             dropCard = {this.dropCard.bind(this)}
                             openFolder = {this.openFolder.bind(this, "topFolder")}
                             canDelete = {false}
-                            moveToFolder ={this.moveToFolder.bind(this)}/>
+                            moveToFolder ={this.moveToFolder.bind(this)}
+                            website = {this.state.website}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}
                             onDrop ={this.moveToTrash.bind(this, this.state.cardDragStart)}/>

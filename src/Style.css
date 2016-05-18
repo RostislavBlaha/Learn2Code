@@ -181,11 +181,11 @@ h2 {
 /*AddForm*//*EditForm*/
 .addForm {
     margin: 0px auto;
-    width: 800px;
+    width: 1400px;
     position: fixed;
     z-index: 5;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -700px;
 }
 
 
@@ -221,6 +221,14 @@ h2 {
 
 
 /*URL*/
+.urlwrapper {
+    margin: 0px auto;
+    width: 800px;
+    position:relative;
+    left: 50%;
+    margin-left: -400px;
+    padding-bottom: 1px;
+}
 .weburl {
     float: left;
     width: 100%;

@@ -5,6 +5,7 @@ import Overlay from '../Overlay/Overlay'
 import AddForm from '../Overlay/AddForm'
 
 
+
 export default class CardList extends Component {
   constructor(props) {
     super(props)
@@ -12,14 +13,11 @@ export default class CardList extends Component {
   }
     
   showNew (){
-    if (this.state.showNew){  
-        this.setState({showNew: false})
-    } else{
-        this.setState({showNew: true})
-    }  
+        this.setState({showNew: (this.state.showNew) ? false : true})
   }
    
-  render() { 
+  render() {
+    console.log(this.props.website)
     var removeCard = this.props.onDelete 
     var cardDragOver = this.props.cardDragOver
     var dropCard = this.props.dropCard
@@ -51,7 +49,8 @@ export default class CardList extends Component {
         newOverlay = (  
             <div>
                 <AddForm    onAdd={this.props.onAdd} 
-                            onHide={this.showNew.bind(this)}/>
+                            onHide={this.showNew.bind(this)}
+                            website={this.props.website}/>
                 <Overlay    onClick={this.showNew.bind(this)}/>
             </div>
             )

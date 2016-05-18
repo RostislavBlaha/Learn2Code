@@ -23,7 +23,7 @@ export default class URL extends Component {
         this.setState({formState: 'loading'})
         var url = this.state.value.trim()
         this.props.onSubmit({url: url})
-        this.props.onHide()
+        //this.props.onHide()
         
       } else {
         this.setState({formState: 'fail'})
@@ -57,7 +57,8 @@ export default class URL extends Component {
     }
     return (
             <div>
-                <form onSubmit={this.handleSubmit.bind(this)}>    
+                <form   onSubmit={this.handleSubmit.bind(this)} 
+                        className = "urlwrapper">    
                     <input  ref="weburl"
                             className={"weburl " + this.state.formState}        
                             type="text"

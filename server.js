@@ -56,13 +56,37 @@ function parseWebsite(callback, url){
         if (err) {
           console.error(err)
           callback(null)
-        } else{
-        var website = { title: parsedData.title,
-                        favicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')],
-                        iphoneFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')],
-                        androidFavicon: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')],
-                        images: parsedData.images.clean("")
-                      }
+        } else{   
+        var website = []
+        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
+            website.push({ id: website.length,
+                        name:   parsedData.title, 
+                        url: url,
+                        description: parsedData.title, 
+                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')] })
+        }              
+        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]){
+            website.push({ id: website.length,
+                        name:   parsedData.title, 
+                        url: url,
+                        description: parsedData.title, 
+                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]})
+        }              
+        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]){
+            website.push({ id: website.length,
+                        name:   parsedData.title, 
+                        url: url,
+                        description: parsedData.title, 
+                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
+        }
+        for (let i = 0; i < (parsedData.images.clean("").length - 1); i++) { 
+            website.push({ id: website.length,
+                        name:   parsedData.title, 
+                        url: url,
+                        description: parsedData.title, 
+                        img: parsedData.images.clean("")[i+1]})    
+        }  
+        console.log(website)
         callback(website)
         }
     })    
@@ -85,9 +109,7 @@ app.listen(port, function () {
    
    
    app.get('/api/images', function(req, res) {
-       console.log(req.query)
         parseWebsite(function(site){
-            console.log(site)
             res.send(site)
         }, req.query.url)
   }) 
