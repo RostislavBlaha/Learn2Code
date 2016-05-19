@@ -50,7 +50,8 @@ export default class CardList extends Component {
             <div>
                 <AddForm    onAdd={this.props.onAdd} 
                             onHide={this.showNew.bind(this)}
-                            website={this.props.website}/>
+                            website={this.props.website}
+                            onRefuse={this.props.onRefuse}/>
                 <Overlay    onClick={this.showNew.bind(this)}/>
             </div>
             )

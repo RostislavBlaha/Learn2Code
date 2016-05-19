@@ -13,7 +13,7 @@ export default class AddForm extends Component {
                 <CardList  showAdd ={false}
                             canDelete= {false}
                             data = {website} 
-                            onDelete = {function(){}}
+                            onDelete = {this.props.onRefuse}
                             cardDragOver = {function(){}}
                             cardDragStart = {function(){}}
                             cardRightClick = {function(){}}

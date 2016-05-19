@@ -61,7 +61,7 @@ export default class App extends Component {
             } else {
                  this.setState({localDate: json.date})
                  this.saveData(json.data, json.date)     
-             }
+            }
         }).catch(function(err) {})
     }
     
@@ -203,6 +203,10 @@ export default class App extends Component {
         var newTrash = ninja.remove(this.state.trash, id)
         this.saveTrash(newTrash)  
     }  
+    refuseImage(id) {
+        var newWebsite = ninja.remove(this.state.website, id)
+        this.setState({website: newWebsite})
+    } 
     cardDragOver(id){
         var newData = ninja.move(this.state.data, this.state.cardDragStart, id)
         this.setState({cardDragStart: id,
@@ -400,7 +404,8 @@ export default class App extends Component {
                             openFolder = {this.openFolder.bind(this, "topFolder")}
                             canDelete = {false}
                             moveToFolder ={this.moveToFolder.bind(this)}
-                            website = {this.state.website}/>
+                            website = {this.state.website}
+                            onRefuse = {this.refuseImage.bind(this)}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}
                             onDrop ={this.moveToTrash.bind(this, this.state.cardDragStart)}/>
