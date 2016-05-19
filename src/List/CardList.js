@@ -17,7 +17,6 @@ export default class CardList extends Component {
   }
    
   render() {
-    console.log(this.props.website)
     var removeCard = this.props.onDelete 
     var cardDragOver = this.props.cardDragOver
     var dropCard = this.props.dropCard

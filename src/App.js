@@ -384,7 +384,9 @@ export default class App extends Component {
                             moveToFolder ={function(){}}
                             changeName ={this.changeName.bind(this)}
                             moveFromFolder = {this.moveFromFolder.bind(this)}
-                            closeOverlay = {this.hideOverlay.bind(this)}/>
+                            closeOverlay = {this.hideOverlay.bind(this)} 
+                            website = {this.state.website}
+                            onRefuse = {this.refuseImage.bind(this)}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )

@@ -14,7 +14,6 @@ export default class Folder extends Component {
       evt.preventDefault()
       evt.stopPropagation()
       this.props.moveFromFolder()
-      console.log("test")
   }
   onDragOver(evt){
         evt.preventDefault() 
@@ -41,6 +40,7 @@ export default class Folder extends Component {
             <div className = "folder">
                 {name}
                 <CardList   showAdd ={this.props.showAdd}
+                            onAdd ={this.props.onAdd}
                             canDelete= {this.props.canDelete}
                             data = {data} 
                             onDelete = {this.props.onDelete}
@@ -50,7 +50,9 @@ export default class Folder extends Component {
                             dropCard = {this.props.dropCard}
                             onUndelete = {this.props.onUndelete}
                             openFolder = {this.props.openFolder}
-                            moveToFolder = {this.props.moveToFolder}/>
+                            moveToFolder = {this.props.moveToFolder}
+                            website = {this.props.website}
+                            onRefuse = {this.props.onRefuse}/>
             
             </div>
             <div    className = "oZone"
