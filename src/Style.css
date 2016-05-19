@@ -73,7 +73,11 @@ h2 {
     background-color: black;
 }
 .name {
-    padding: 9px;
+    padding-top: 9px;
+    width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .crossWraper {
     width: 26px;

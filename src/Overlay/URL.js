@@ -23,8 +23,7 @@ export default class URL extends Component {
         this.setState({formState: 'loading'})
         var url = this.state.value.trim()
         this.props.onSubmit({url: url})
-        //this.props.onHide()
-        
+        //this.props.onHide()   
       } else {
         this.setState({formState: 'fail'})
         

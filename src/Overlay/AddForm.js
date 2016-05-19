@@ -4,6 +4,7 @@ import CardList from '../List/CardList'
 
 export default class AddForm extends Component {  
   render() {
+    var website = this.props.website.slice(0,8)
     return (
             <div className="addForm">
                 <h2>Přidat záložku</h2>
@@ -11,7 +12,7 @@ export default class AddForm extends Component {
                      onHide= {this.props.onHide}/>
                 <CardList  showAdd ={false}
                             canDelete= {false}
-                            data = {this.props.website} 
+                            data = {website} 
                             onDelete = {function(){}}
                             cardDragOver = {function(){}}
                             cardDragStart = {function(){}}

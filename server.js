@@ -36,14 +36,25 @@ proxy.on('error', function(e) {
   console.log('Could not connect to proxy, please try again...')
 })
 
-Array.prototype.clean = function(deleteValue) {
-  for (var i = 0; i < this.length; i++) {
-    if (this[i] == deleteValue) {         
-      this.splice(i, 1)
-      i--
-    }
-  }
-  return this
+Array.prototype.trim = function() {
+    var newData = []
+    for (let i = 0; i < this.length; i++) {
+        newData.push(this[i].replace('http://','').replace('https://','').replace('www.',''))
+    } 
+    return newData
+}
+
+Array.prototype.clean = function(seen) {
+    var unique = []
+    for (let i = 0; i < this.length; i++) {
+        var current = this.trim()[i]
+        if (unique.trim().indexOf(current) < 0){ 
+            unique.push(this[i])
+        }
+    } 
+    return unique.filter(function(item){
+        return /.+\.(png|jpg|ico|gif|jpeg|svg|tiff|webp).*/g.test(item)
+    })   
 }
 
 function parseWebsite(callback, url){
@@ -58,6 +69,8 @@ function parseWebsite(callback, url){
           callback(null)
         } else{   
         var website = []
+        console.log
+        var images = parsedData.images.clean("")
         if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
             website.push({ id: website.length,
                         name:   parsedData.title, 
@@ -79,12 +92,12 @@ function parseWebsite(callback, url){
                         description: parsedData.title, 
                         img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
         }
-        for (let i = 0; i < (parsedData.images.clean("").length - 1); i++) { 
+        for (let i = 0; i < (images.length - 1); i++) {
             website.push({ id: website.length,
                         name:   parsedData.title, 
                         url: url,
                         description: parsedData.title, 
-                        img: parsedData.images.clean("")[i+1]})    
+                        img: images[i+1]})    
         }  
         console.log(website)
         callback(website)
