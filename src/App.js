@@ -41,7 +41,8 @@ export default class App extends Component {
                         showFolder: false,
                         activeFolder: [],
                         topFolder: '',
-                        website:[]}  
+                        website:[],
+                        previewsLoaded: false}  
     }
           
     componentDidMount(){
@@ -123,6 +124,7 @@ export default class App extends Component {
                 return res.json()
             }).then(function(website){
                 that.setState({website: website})
+                that.setState({previewsLoaded: true})
             }).catch(function(err) {}) 
         
         
@@ -332,10 +334,12 @@ export default class App extends Component {
         if (this.state.showEdit){
             editOverlay = (  
                 <div>
-                    <EditForm    onSubmit={this.editItem.bind(this)} 
-                                 onHide={this.hideOverlay.bind(this)}
-                                 url={this.state.context.url}/>
-                    <Overlay     onClick={this.hideOverlay.bind(this)}/>
+                    <EditForm   onAdd={this.addItem.bind(this)} 
+                                website={this.state.website}
+                                onRefuse={this.props.onRefuse}
+                                onHide={this.hideOverlay.bind(this)}
+                                url={this.state.context.url}/>
+                    <Overlay    onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
         }
@@ -358,7 +362,8 @@ export default class App extends Component {
                             moveToFolder ={this.moveToFolder.bind(this)}
                             changeName ={function(){}}
                             moveFromFolder = {this.moveFromFolder.bind(this)}
-                            closeOverlay = {this.hideOverlay.bind(this)}/>
+                            closeOverlay = {this.hideOverlay.bind(this)}
+                            previewsLoaded = {function(){}}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -386,7 +391,8 @@ export default class App extends Component {
                             moveFromFolder = {this.moveFromFolder.bind(this)}
                             closeOverlay = {this.hideOverlay.bind(this)} 
                             website = {this.state.website}
-                            onRefuse = {this.refuseImage.bind(this)}/>
+                            onRefuse = {this.refuseImage.bind(this)}
+                            previewsLoaded = {this.state.previewsLoaded}/>
                     <Overlay  onClick={this.hideOverlay.bind(this)}/>
                 </div>
                 )
@@ -407,7 +413,8 @@ export default class App extends Component {
                             canDelete = {false}
                             moveToFolder ={this.moveToFolder.bind(this)}
                             website = {this.state.website}
-                            onRefuse = {this.refuseImage.bind(this)}/>
+                            onRefuse = {this.refuseImage.bind(this)}
+                            previewsLoaded = {this.state.previewsLoaded}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}
                             onDrop ={this.moveToTrash.bind(this, this.state.cardDragStart)}/>

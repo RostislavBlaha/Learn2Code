@@ -9,6 +9,13 @@ export default class URL extends Component {
         }  
   }
     
+    componentWillReceiveProps(nextProps){
+        if (nextProps.previewsLoaded){
+            this.setState({formState: 'default'})
+        }
+    
+    }
+    
   handleChange(evt) {
     this.setState({
       value: evt.target.value,
@@ -23,7 +30,6 @@ export default class URL extends Component {
         this.setState({formState: 'loading'})
         var url = this.state.value.trim()
         this.props.onSubmit({url: url})
-        //this.props.onHide()   
       } else {
         this.setState({formState: 'fail'})
         
@@ -44,7 +50,7 @@ export default class URL extends Component {
       this.refs.weburl.focus()
   }
     
-  render() {    
+  render() {  
     var loader;
     if (this.state.formState == 'default'){
         loader = (<img src="./src/arrow.svg" className="arrow"/>)

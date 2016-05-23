@@ -52,7 +52,8 @@ export default class Folder extends Component {
                             openFolder = {this.props.openFolder}
                             moveToFolder = {this.props.moveToFolder}
                             website = {this.props.website}
-                            onRefuse = {this.props.onRefuse}/>
+                            onRefuse = {this.props.onRefuse}
+                            previewsLoaded = {this.props.previewsLoaded}/>
             
             </div>
             <div    className = "oZone"
