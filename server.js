@@ -68,8 +68,13 @@ function parseWebsite(callback, url){
           console.error(err)
           callback(null)
         } else{   
-        var website = []
-        console.log
+        var website = [     {type: "preview",
+                            id: 0,
+                            name:   parsedData.title, 
+                            url: url,
+                            description: parsedData.title, 
+                            img: ""}]
+        
         var images = parsedData.images.clean("")
         if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
             website.push({  type: "preview",

@@ -38,6 +38,7 @@ export default class App extends Component {
                         context: '',
                         showEdit: false,
                         showTrash: false,
+                        showNew: false,
                         showFolder: false,
                         activeFolder: [],
                         topFolder: '',
@@ -136,6 +137,7 @@ export default class App extends Component {
         var newData = ninja.add(this.state.data, item)
         this.saveData(newData, Date.now()) 
         this.hideOverlay()
+        this.setState({showNew: true})
     } 
     addFolder(){   
         var item = {type: "folder",
@@ -421,7 +423,8 @@ export default class App extends Component {
                             moveToFolder ={this.moveToFolder.bind(this)}
                             website = {this.state.website}
                             onRefuse = {this.refuseImage.bind(this)}
-                            previewsLoaded = {this.state.previewsLoaded}/>
+                            previewsLoaded = {this.state.previewsLoaded}
+                            showNew = {(this.state.showNew)}/>
                 <LeftMenu   showTrash = {this.handleTrash.bind(this)}
                             addFolder = {this.addFolder.bind(this)}
                             onDrop ={this.moveToTrash.bind(this, this.state.cardDragStart)}/>

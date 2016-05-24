@@ -12,6 +12,13 @@ export default class CardList extends Component {
     this.state = {  showNew: false}
   }
     
+    componentWillReceiveProps(nextProps){
+        if (nextProps.showNew){
+            this.showNew()
+        }
+    
+    }
+    
   showNew (){
         this.setState({showNew: (this.state.showNew) ? false : true})
   }
