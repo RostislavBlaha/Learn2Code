@@ -108,15 +108,16 @@ export default class App extends Component {
     hideOverlay(){
         this.setState({ showEdit: false,
                         showTrash: false,
-                        showFolder: false})
+                        showFolder: false,
+                        website:[]})
     }
     
     showAdd(updatedList){
             this.state.filterList = (updatedList.length == this.state.initialData.length) ? true : false
     }
     
-    showPreviews(id){  
-        var item = card
+    showPreviews(url){  
+        var item = this.expandURL(url) 
         var apiURL = "/api/images/" + "?url=" + item.url
         var that = this
         fetch(apiURL, {
@@ -127,31 +128,14 @@ export default class App extends Component {
                 that.setState({website: website})
                 that.setState({previewsLoaded: true})
             }).catch(function(err) {}) 
-        
-        
-        
-        //var newData = ninja.add(this.state.data, item)
-        //this.saveData(newData, Date.now()) 
     } 
       
     addItem(card){  
         var item = card
         item.type = "link"
-        var apiURL = "/api/images/" + "?url=" + item.url
-        var that = this
-        fetch(apiURL, {
-                method: 'get'
-            }).then(function(res) {
-                return res.json()
-            }).then(function(website){
-                that.setState({website: website})
-                that.setState({previewsLoaded: true})
-            }).catch(function(err) {}) 
-        
-        
-        
-        //var newData = ninja.add(this.state.data, item)
-        //this.saveData(newData, Date.now()) 
+        var newData = ninja.add(this.state.data, item)
+        this.saveData(newData, Date.now()) 
+        this.hideOverlay()
     } 
     addFolder(){   
         var item = {type: "folder",
