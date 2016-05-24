@@ -8,7 +8,7 @@ export default class AddForm extends Component {
     return (
             <div className="addForm">
                 <h2>Přidat záložku</h2>
-                <URL onSubmit= {this.props.onAdd}
+                <URL onSubmit= {this.props.showPreviews}
                      onHide= {this.props.onHide}
                      previewsLoaded = {this.props.previewsLoaded}/>
                 <CardList  showAdd ={false}
@@ -22,7 +22,8 @@ export default class AddForm extends Component {
                             onUndelete = {function(){}}
                             openFolder = {function(){}}
                             moveToFolder = {function(){}}
-                            previewsLoaded = {function(){}}/>          
+                            previewsLoaded = {function(){}}
+                            addItem = {this.props.addItem}/>          
             </div>
     )
   }

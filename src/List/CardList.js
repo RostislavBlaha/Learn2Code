@@ -47,7 +47,8 @@ export default class CardList extends Component {
     if (this.state.showNew){
         newOverlay = (  
             <div>
-                <AddForm    onAdd={this.props.onAdd} 
+                <AddForm    showPreviews={this.props.showPreviews}
+                            addItem={this.props.addItem} 
                             onHide={this.showNew.bind(this)}
                             website={this.props.website}
                             onRefuse={this.props.onRefuse}

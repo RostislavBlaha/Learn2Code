@@ -72,32 +72,36 @@ function parseWebsite(callback, url){
         console.log
         var images = parsedData.images.clean("")
         if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
-            website.push({ id: website.length,
-                        name:   parsedData.title, 
-                        url: url,
-                        description: parsedData.title, 
-                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')] })
+            website.push({  type: "preview",
+                            id: website.length,
+                            name:   parsedData.title, 
+                            url: url,
+                            description: parsedData.title, 
+                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')] })
         }              
         if (parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]){
-            website.push({ id: website.length,
-                        name:   parsedData.title, 
-                        url: url,
-                        description: parsedData.title, 
-                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]})
+            website.push({  type: "preview", 
+                            id: website.length,
+                            name:   parsedData.title, 
+                            url: url,
+                            description: parsedData.title, 
+                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]})
         }              
         if (parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]){
-            website.push({ id: website.length,
-                        name:   parsedData.title, 
-                        url: url,
-                        description: parsedData.title, 
-                        img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
+            website.push({  type: "preview", 
+                            id: website.length,
+                            name:   parsedData.title, 
+                            url: url,
+                            description: parsedData.title, 
+                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
         }
         for (let i = 0; i < (images.length - 1); i++) {
-            website.push({ id: website.length,
-                        name:   parsedData.title, 
-                        url: url,
-                        description: parsedData.title, 
-                        img: images[i+1]})    
+            website.push({  type: "preview", 
+                            id: website.length,
+                            name:   parsedData.title, 
+                            url: url,
+                            description: parsedData.title, 
+                            img: images[i+1]})    
         }  
         console.log(website)
         callback(website)

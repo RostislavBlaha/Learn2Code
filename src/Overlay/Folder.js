@@ -39,8 +39,9 @@ export default class Folder extends Component {
         <div>
             <div className = "folder">
                 {name}
-                <CardList   showAdd ={this.props.showAdd}
-                            onAdd ={this.props.onAdd}
+                <CardList   showPreviews = {this.props.showPreviews}
+                            showAdd ={this.props.showAdd}
+                            addItem ={this.props.addItem}
                             canDelete= {this.props.canDelete}
                             data = {data} 
                             onDelete = {this.props.onDelete}

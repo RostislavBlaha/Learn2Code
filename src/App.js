@@ -87,7 +87,8 @@ export default class App extends Component {
     }
     
     expandURL(url){
-        var item = {    name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
+        var item = {    type: "link" ,   
+                        name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
                         url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
                         description:"Tady bude meta description", img:""} 
         return item             
@@ -113,9 +114,29 @@ export default class App extends Component {
     showAdd(updatedList){
             this.state.filterList = (updatedList.length == this.state.initialData.length) ? true : false
     }
+    
+    showPreviews(id){  
+        var item = card
+        var apiURL = "/api/images/" + "?url=" + item.url
+        var that = this
+        fetch(apiURL, {
+                method: 'get'
+            }).then(function(res) {
+                return res.json()
+            }).then(function(website){
+                that.setState({website: website})
+                that.setState({previewsLoaded: true})
+            }).catch(function(err) {}) 
+        
+        
+        
+        //var newData = ninja.add(this.state.data, item)
+        //this.saveData(newData, Date.now()) 
+    } 
       
-    addItem(url){  
-        var item = this.expandURL(url) 
+    addItem(card){  
+        var item = card
+        item.type = "link"
         var apiURL = "/api/images/" + "?url=" + item.url
         var that = this
         fetch(apiURL, {
@@ -374,8 +395,9 @@ export default class App extends Component {
             folderOverlay = (  
                 <div>
                     <Folder name = {this.state.activeFolder.name}
+                            showPreviews = {this.showPreviews.bind(this)}
                             showAdd = {(this.state.topFolder == "trash" ? false : true)}
-                            onAdd = {this.addItem.bind(this)}
+                            addItem = {this.addItem.bind(this)}
                             onHide={this.hideOverlay.bind(this)}
                             data = {this.state.activeFolder} 
                             onDelete = {this.moveToTrash.bind(this)} 
@@ -402,9 +424,10 @@ export default class App extends Component {
             <div>
                 <SearchBar  onFilter = {this.filterList.bind(this)}/>
                 <CardList   data = {this.state.data} 
+                            showPreviews = {this.showPreviews.bind(this)}
                             onDelete = {this.moveToTrash.bind(this)} 
                             showAdd = {this.state.filterList}
-                            onAdd = {this.addItem.bind(this)}
+                            addItem = {this.addItem.bind(this)}
                             cardDragOver = {this.cardDragOver.bind(this)}
                             cardDragStart = {this.cardDragStart.bind(this)}
                             cardRightClick = {this.cardRightClick.bind(this)}

@@ -16,13 +16,11 @@ export default class Card extends Component {
     mouseOut(){this.setState({hover: false})}
     
     /*Kartička s kterou táhnu*/
-    
     dragStart(evt){
         evt.stopPropagation()
         this.props.cardDragStart(this.props.card.id)
         this.setState({hover : false})
-    }
-    
+    }   
     dragEnd(evt){
         evt.stopPropagation()
         this.props.dropCard()
@@ -71,6 +69,11 @@ export default class Card extends Component {
     openFolder(evt){
         evt.preventDefault()
         this.props.openFolder(this.props.card.id)
+    }
+    
+    addItem(evt){
+        evt.preventDefault()
+        this.props.addItem(this.props.card)
     }
     
     handleUndelete(evt){
@@ -130,8 +133,8 @@ export default class Card extends Component {
         
         
         return (
-          <a href = {this.props.card.url}
-             onClick={(this.props.card.type=="folder" ? this.openFolder.bind(this) : "")}>
+          <a href = {(this.props.card.type=="preview" ? "" : this.props.card.url)}
+             onClick={(this.props.card.type=="folder" ? this.openFolder.bind(this) : this.props.card.type=="preview" ? this.addItem.bind(this) : "")}>
               <div  className={(this.state.invisible ? "card invisible" : "card")} 
               
                     draggable="true"
