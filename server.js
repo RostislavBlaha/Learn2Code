@@ -57,62 +57,58 @@ Array.prototype.clean = function(seen) {
     })   
 }
 
-function parseWebsite(callback, url){
-    parser(url, {   title: 'title',
-                    iconsRel: ['link@rel'],
-                    iconsHref: ['link@href'],
-                    images: ['img@src']
-                    })
-    (function(err, parsedData) {
-        if (err) {
-          console.error(err)
-          callback(null)
-        } else{   
-        var website = [     {type: "preview",
-                            id: 0,
-                            name:   parsedData.title, 
-                            url: url,
-                            description: parsedData.title, 
-                            img: ""}]
-        
-        var images = parsedData.images.clean("")
-        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
-            website.push({  type: "preview",
-                            id: website.length,
-                            name:   parsedData.title, 
-                            url: url,
-                            description: parsedData.title, 
-                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')] })
-        }              
-        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]){
-            website.push({  type: "preview", 
-                            id: website.length,
-                            name:   parsedData.title, 
-                            url: url,
-                            description: parsedData.title, 
-                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]})
-        }              
-        if (parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]){
-            website.push({  type: "preview", 
-                            id: website.length,
-                            name:   parsedData.title, 
-                            url: url,
-                            description: parsedData.title, 
-                            img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
+function parseWebsite(url){
+    return new Promise(function(resolve, reject) {
+        try {
+            parser(url, {   title: 'title',
+                            iconsRel: ['link@rel'],
+                            iconsHref: ['link@href'],
+                            images: ['img@src']
+                            })
+            (function(err, parsedData){
+                var website = []
+                var images = parsedData.images.clean("")
+                if (parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')]){
+                    website.push({  type: "preview",
+                                    id: website.length+1,
+                                    name:   parsedData.title, 
+                                    url: url,
+                                    description: parsedData.title, 
+                                    img: parsedData.iconsHref[parsedData.iconsRel.indexOf('shortcut icon')] })
+                        }              
+                if (parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]){
+                    website.push({  type: "preview", 
+                                    id: website.length+1,
+                                    name:   parsedData.title, 
+                                    url: url,
+                                    description: parsedData.title, 
+                                    img: parsedData.iconsHref[parsedData.iconsRel.indexOf('apple-touch-icon')]})
+                        }              
+                if (parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]){
+                    website.push({  type: "preview", 
+                                    id: website.length+1,
+                                    name:   parsedData.title, 
+                                    url: url,
+                                    description: parsedData.title, 
+                                    img: parsedData.iconsHref[parsedData.iconsRel.indexOf('icon')]})
+                        }
+                for (let i = 0; i < (images.length - 1); i++) {
+                    website.push({  type: "preview", 
+                                    id: website.length+1,
+                                    name:   parsedData.title, 
+                                    url: url,
+                                    description: parsedData.title, 
+                                    img: images[i+1]})    
+                }
+                console.log(website)
+                resolve(website)
+            })
+        } catch(err){
+            reject(err)
         }
-        for (let i = 0; i < (images.length - 1); i++) {
-            website.push({  type: "preview", 
-                            id: website.length,
-                            name:   parsedData.title, 
-                            url: url,
-                            description: parsedData.title, 
-                            img: images[i+1]})    
-        }  
-        console.log(website)
-        callback(website)
-        }
-    })    
+    })
 }
+
 
 
 
@@ -131,9 +127,12 @@ app.listen(port, function () {
    
    
    app.get('/api/images', function(req, res) {
-        parseWebsite(function(site){
-            res.send(site)
-        }, req.query.url)
+        parseWebsite(req.query.url)
+            .then(function(website){
+                res.send(website)})
+            .catch(function(err) {
+                console.log(err)
+            })
   }) 
   
   app.post('/api/data', function (req, res) {

@@ -4,6 +4,7 @@ import CardList from '../List/CardList'
 
 export default class AddForm extends Component {  
   render() {
+    console.log(this.props.website)
     var website = this.props.website.slice(0,8)
     return (
             <div className="addForm">

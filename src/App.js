@@ -88,11 +88,21 @@ export default class App extends Component {
     }
     
     expandURL(url){
-        var item = {    type: "link" ,   
+        var item = {    type: "preview" ,   
                         name:  url.url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0], 
                         url: ((!/^https?:\/\//i.test(url.url)) ? 'http://' + url.url : url.url),
-                        description:"Tady bude meta description", img:""} 
+                        desciption:"Tady bude meta description", 
+                        img:"", 
+                        id: 0}
         return item             
+    }
+    
+    sortByID(array) {
+        return array.sort(function(a, b) {
+            var x = a.id
+            var y = b.id
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0))
+        })
     }
     
     pageClick(){
@@ -117,18 +127,25 @@ export default class App extends Component {
             this.state.filterList = (updatedList.length == this.state.initialData.length) ? true : false
     }
     
-    showPreviews(url){  
+    showPreviews(url){   
         var item = this.expandURL(url) 
         var apiURL = "/api/images/" + "?url=" + item.url
         var that = this
+        this.setState({website: [item]})
         fetch(apiURL, {
                 method: 'get'
             }).then(function(res) {
                 return res.json()
             }).then(function(website){
-                that.setState({website: website})
-                that.setState({previewsLoaded: true})
-            }).catch(function(err) {}) 
+                console.log(website)
+                console.log(that.state.website)
+                var newWebsite = website
+                newWebsite.push(that.state.website[0]) 
+                that.setState({website: that.sortByID(newWebsite),
+                               previewsLoaded: true})
+            }).catch(function(err) {
+                console.log(err)
+        }) 
     } 
       
     addItem(card){  
